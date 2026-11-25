@@ -22,16 +22,16 @@ Three principles guide the design:
 
 ## What is available today
 
-| Part                                                                 | Status             |
-| -------------------------------------------------------------------- | ------------------ |
-| [Modules](modules) and [providers](providers)                        | Available          |
-| [Lifecycle events](lifecycle-events) and graceful shutdown           | Available          |
-| [Configuration](configuration) from the environment and `.env` files | Available          |
-| [Testing](testing) with overrides                                    | Available          |
-| HTTP controllers, guards and interceptors                            | [Planned](roadmap) |
-| Type-safe SQL layer and migrations                                   | [Planned](roadmap) |
-| CLI with generators and a watch mode                                 | [Planned](roadmap) |
+| Part                                                                                                    | Status             |
+| ------------------------------------------------------------------------------------------------------- | ------------------ |
+| [Modules](modules) and [providers](providers)                                                           | Available          |
+| [Lifecycle events](lifecycle-events) and graceful shutdown                                              | Available          |
+| [Configuration](configuration) from the environment and `.env` files                                    | Available          |
+| [Testing](testing) with overrides                                                                       | Available          |
+| [Controllers](controllers), [validation](validation), [guards](guards) and [interceptors](interceptors) | Available          |
+| Type-safe SQL layer and migrations                                                                      | [Planned](roadmap) |
+| CLI with generators and a watch mode                                                                    | [Planned](roadmap) |
 
 ## Next steps
 
-Start with [first steps](first-steps) to build a small application, then read about [modules](modules) and [providers](providers), the two concepts everything else is built on.
+Start with [first steps](first-steps) to build a small API, then read about [controllers](controllers), [providers](providers) and [modules](modules), the concepts everything else is built on.

@@ -14,13 +14,14 @@ var Module = &gonestly.Module{
 }
 ```
 
-| Field       | Purpose                                                                                                  |
-| ----------- | -------------------------------------------------------------------------------------------------------- |
-| `Name`      | Identifies the module in error messages and logs. It must be unique within the application.              |
-| `Imports`   | Modules whose exported providers this module can inject.                                                 |
-| `Providers` | Constructors and values that the application builds for this module. See [providers](providers).         |
-| `Exports`   | The providers that modules importing this one can inject.                                                |
-| `Global`    | Makes the exports available to every module without importing it. See [global modules](#global-modules). |
+| Field         | Purpose                                                                                                  |
+| ------------- | -------------------------------------------------------------------------------------------------------- |
+| `Name`        | Identifies the module in error messages and logs. It must be unique within the application.              |
+| `Imports`     | Modules whose exported providers this module can inject.                                                 |
+| `Providers`   | Constructors and values that the application builds for this module. See [providers](providers).         |
+| `Controllers` | Controllers that handle HTTP requests with the module's providers. See [controllers](controllers).       |
+| `Exports`     | The providers that modules importing this one can inject.                                                |
+| `Global`      | Makes the exports available to every module without importing it. See [global modules](#global-modules). |
 
 ## Declaring a module
 

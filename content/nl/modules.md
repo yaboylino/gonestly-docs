@@ -14,13 +14,14 @@ var Module = &gonestly.Module{
 }
 ```
 
-| Veld        | Doel                                                                                                   |
-| ----------- | ------------------------------------------------------------------------------------------------------ |
-| `Name`      | Herkent de module in foutmeldingen en logs. De naam moet uniek zijn binnen de applicatie.              |
-| `Imports`   | Modules waarvan deze module de geëxporteerde providers kan injecteren.                                 |
-| `Providers` | Constructors en waarden die de applicatie voor deze module bouwt. Zie [providers](providers).          |
-| `Exports`   | De providers die modules die deze module importeren kunnen injecteren.                                 |
-| `Global`    | Maakt de exports beschikbaar voor elke module, zonder import. Zie [globale modules](#globale-modules). |
+| Veld          | Doel                                                                                                     |
+| ------------- | -------------------------------------------------------------------------------------------------------- |
+| `Name`        | Herkent de module in foutmeldingen en logs. De naam moet uniek zijn binnen de applicatie.                |
+| `Imports`     | Modules waarvan deze module de geëxporteerde providers kan injecteren.                                   |
+| `Providers`   | Constructors en waarden die de applicatie voor deze module bouwt. Zie [providers](providers).            |
+| `Controllers` | Controllers die HTTP-requests afhandelen met de providers van de module. Zie [controllers](controllers). |
+| `Exports`     | De providers die modules die deze module importeren kunnen injecteren.                                   |
+| `Global`      | Maakt de exports beschikbaar voor elke module, zonder import. Zie [globale modules](#globale-modules).   |
 
 ## Een module declareren
 

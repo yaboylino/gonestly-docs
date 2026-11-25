@@ -1,9 +1,9 @@
 ---
 title: First steps
-description: Install Gonestly and build your first application with two modules, a provider and graceful shutdown.
+description: Install Gonestly and build your first API with two modules, a provider, a controller and graceful shutdown.
 ---
 
-In this guide you build a small application with two modules. Along the way you meet the core concepts: modules, providers and the application lifecycle.
+In this guide you build a small API with two modules. Along the way you meet the core concepts: modules, providers, controllers and the application lifecycle.
 
 ## Prerequisites
 
@@ -56,13 +56,20 @@ The `Exports` field makes `*DB` available to every module that imports this one.
 
 The users module imports the database module and asks for a `*database.DB` in its constructor. Gonestly sees the parameter and injects the instance.
 
-```go title="users/module.go"
+```go title="users/service.go"
 package users
 
 import (
+	"context"
+
 	"example.com/shop/database"
 	"github.com/yaboylino/gonestly"
 )
+
+type User struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
 
 type Service struct {
 	db *database.DB
@@ -72,17 +79,70 @@ func NewService(db *database.DB) *Service {
 	return &Service{db: db}
 }
 
+func (s *Service) Find(ctx context.Context, id string) (*User, error) {
+	if id != "1" {
+		return nil, gonestly.NotFound("user %s does not exist", id)
+	}
+	return &User{ID: "1", Name: "Ada"}, nil
+}
+```
+
+## A controller
+
+A controller turns HTTP requests into calls to the service. The request type says where each value comes from; here the `id` comes from the path:
+
+```go title="users/controller.go"
+package users
+
+import (
+	"context"
+
+	"github.com/yaboylino/gonestly"
+)
+
+type FindRequest struct {
+	ID string `path:"id"`
+}
+
+type Controller struct {
+	users *Service
+}
+
+func NewController(users *Service) *Controller {
+	return &Controller{users: users}
+}
+
+func (c *Controller) Routes(r *gonestly.Router) {
+	r.Prefix("/users")
+	gonestly.Get(r, "/{id}", c.Find)
+}
+
+func (c *Controller) Find(ctx context.Context, req FindRequest) (*User, error) {
+	return c.users.Find(ctx, req.ID)
+}
+```
+
+Register the service and the controller in the module:
+
+```go title="users/module.go"
+package users
+
+import (
+	"example.com/shop/database"
+	"github.com/yaboylino/gonestly"
+)
+
 var Module = &gonestly.Module{
-	Name:      "users",
-	Imports:   gonestly.Imports(database.Module),
-	Providers: gonestly.Providers(NewService),
-	Exports:   gonestly.Exports(NewService),
+	Name:        "users",
+	Imports:     gonestly.Imports(database.Module),
+	Providers:   gonestly.Providers(NewService),
+	Controllers: gonestly.Controllers(NewController),
 }
 ```
 
 ## The application
 
-Every application has one root module. Build it with `gonestly.New` and run it with `Run`, which starts every provider and waits for Ctrl+C or a termination signal before shutting down gracefully.
+Every application has one root module. Build it with `gonestly.New` and run it with `Run`, which starts every provider and the HTTP server, and waits for Ctrl+C or a termination signal before shutting down gracefully.
 
 ```go title="main.go"
 package main
@@ -111,7 +171,17 @@ func main() {
 }
 ```
 
-Run it with `go run .`. The application logs that it started, and stops cleanly when you press Ctrl+C.
+Run it with `go run .` and call the API:
+
+```sh
+curl localhost:3000/users/1
+# {"id":"1","name":"Ada"}
+
+curl localhost:3000/users/2
+# {"type":"about:blank","title":"Not Found","status":404,"detail":"user 2 does not exist","instance":"/users/2"}
+```
+
+The server listens on port 3000 by default; the [HTTP server](http-server) page explains how to change it. Press Ctrl+C and the application stops cleanly, after finishing the requests that are still running.
 
 ## When something is wrong
 
@@ -126,4 +196,4 @@ Every problem in the module graph is reported at once, before a single construct
 
 ## What is next
 
-Read about [modules](modules) to learn how to organise a larger application, and [providers](providers) for everything you can inject.
+Read about [controllers](controllers) for everything a route can do, [modules](modules) to organise a larger application and [providers](providers) for everything you can inject.

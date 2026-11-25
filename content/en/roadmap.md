@@ -3,32 +3,19 @@ title: Roadmap
 description: What Gonestly offers today and what comes next, from HTTP controllers to the SQL layer and the CLI.
 ---
 
-Gonestly is built in phases. Each phase is finished, tested and documented before the next one starts, and the first public release follows once the HTTP layer, the SQL layer and the CLI are in place.
+Gonestly is built in phases. Each phase is finished, tested and documented before the next one starts, and the first public release follows once the SQL layer and the CLI are in place.
 
 ## Available
 
 - **Modules and dependency injection**, with imports, exports, global modules and validation of the whole graph at startup.
 - **Lifecycle events**, graceful shutdown and stopping the application from a provider.
 - **Configuration** from environment variables and `.env` files.
-- **Testing** with overrides.
+- **Testing** with overrides and requests without a port.
+- **HTTP** [controllers](controllers) with typed handlers, request binding, [validation](validation), [guards](guards), [interceptors](interceptors), [middleware](middleware) and problem details for errors.
 
-## HTTP
+## OpenAPI
 
-Controllers with typed handlers. A handler is a plain function that receives a typed request and returns a typed response; binding, validation and errors follow from the types.
-
-```go
-func (c *Controller) Routes(r *gonestly.Router) {
-	r.Prefix("/users").Guard(auth.Required)
-	gonestly.Get(r, "/{id}", c.FindOne)
-	gonestly.Post(r, "/", c.Create)
-}
-
-func (c *Controller) FindOne(ctx context.Context, req FindOneRequest) (*User, error) {
-	return c.users.FindByID(ctx, req.ID)
-}
-```
-
-Built on `net/http`, with guards, interceptors, problem details for errors and OpenAPI generated from the handlers.
+An OpenAPI document generated from the routes and their request and response types, so the API is described without annotations, and served alongside it.
 
 ## SQL
 
@@ -49,7 +36,7 @@ Transactions travel through the context, relations are loaded explicitly, and mi
 - `gonestly new` creates a project that runs immediately.
 - `gonestly generate` creates modules, controllers, services and complete CRUD resources, and registers them in the right module.
 - `gonestly dev` watches the project and checks it on every save: it builds the code, runs `go vet` and, with `--test`, the tests of the packages you changed. When everything passes, the application restarts. When something fails, the application stops and every problem is listed with its file and line, so a broken change never looks like it works.
-- `gonestly migrate` and `gonestly routes`.
+- `gonestly migrate`, `gonestly routes` and `gonestly openapi`.
 
 ## Follow along
 

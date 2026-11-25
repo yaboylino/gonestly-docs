@@ -1,0 +1,74 @@
+---
+title: HTTP-server
+description: Stel de HTTP-server in die je controllers serveert, met adres, timeouts en limieten, en lees hoe hij start en stopt.
+---
+
+Zodra een applicatie een [controller](controllers) heeft, serveert Gonestly hem met een HTTP-server uit `net/http`. Je hoeft zelf niets te starten: `app.Run` start hem en sluit hem netjes af.
+
+## Lifecycle
+
+De server start nadat elke provider gestart is, zodat een request nooit een provider bereikt die nog niet klaar is. Bij het afsluiten stopt hij als eerste: hij neemt geen nieuwe verbindingen meer aan en wacht, binnen de shutdown-timeout, op lopende requests voordat de providers stoppen.
+
+Is het adres al in gebruik, dan faalt `Start` en stopt hij de providers die al gestart waren. Stopt de server onverwacht terwijl hij draait, dan sluit de applicatie af en geeft `Run` de fout terug.
+
+## Configuratie
+
+Lever een `gonestly.ServerConfig` in de rootmodule om de standaardwaarden aan te passen, meestal opgebouwd uit je [configuratie](configuration):
+
+```go title="main.go"
+func NewServerConfig(cfg Config) gonestly.ServerConfig {
+	return gonestly.ServerConfig{Addr: fmt.Sprintf(":%d", cfg.Port)}
+}
+
+var AppModule = &gonestly.Module{
+	Name:      "app",
+	Imports:   gonestly.Imports(config.Module[Config](config.Options{}), users.Module),
+	Providers: gonestly.Providers(NewServerConfig),
+}
+```
+
+| Veld                | Standaard | Doel                                                 |
+| ------------------- | --------- | ---------------------------------------------------- |
+| `Addr`              | `:3000`   | Het adres waarop de server luistert.                 |
+| `ReadHeaderTimeout` | 10s       | Tijd om de requestheaders te lezen.                  |
+| `ReadTimeout`       | 30s       | Tijd om het hele request te lezen.                   |
+| `WriteTimeout`      | 30s       | Tijd om het response te schrijven.                   |
+| `IdleTimeout`       | 120s      | Hoe lang een keep-aliveverbinding stil mag zijn.     |
+| `MaxBodyBytes`      | 1 MiB     | De grootste requestbody; grotere bodies krijgen 413. |
+| `Middleware`        | geen      | [Middleware](middleware) rond elk request.           |
+| `Guards`            | geen      | [Guards](guards) vóór elke route.                    |
+| `Interceptors`      | geen      | [Interceptors](interceptors) rond elke route.        |
+
+De timeouts beschermen de server tegen trage clients; laat ze staan, tenzij je een reden hebt, zoals lange uploads.
+
+## Automatisch een poort kiezen
+
+Met poort 0 kiest het besturingssysteem een vrije poort. `app.Addr` vertelt welke:
+
+```go
+gonestly.ServerConfig{Addr: "127.0.0.1:0"}
+// na Start:
+fmt.Println(app.Addr()) // 127.0.0.1:52341
+```
+
+## Zelf de handler serveren
+
+Om de applicatie vanuit je eigen server te serveren, of hem in een andere in te bouwen, bouw je hem zonder te luisteren en gebruik je zijn handler:
+
+```go
+app, err := gonestly.New(AppModule, gonestly.WithoutListener())
+// na Start:
+http.Handle("/api/", http.StripPrefix("/api", app.Handler()))
+```
+
+[Tests](testing) doen hetzelfde via het package `gonestlytest`.
+
+## De routes opvragen
+
+`app.Routes` geeft elke route met zijn methode, pad en controller, bijvoorbeeld om ze bij het starten te tonen of in een test te controleren:
+
+```go
+for _, route := range app.Routes() {
+	fmt.Println(route.Method, route.Path)
+}
+```

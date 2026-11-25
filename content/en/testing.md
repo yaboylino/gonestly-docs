@@ -3,7 +3,36 @@ title: Testing
 description: Test modules in isolation by overriding providers with fakes and resolving providers from a running application.
 ---
 
-Because every dependency is injected, testing a Gonestly module comes down to building the module with a few providers replaced. You use the standard `testing` package; there is no special test runner.
+Because every dependency is injected, testing a Gonestly module comes down to building the module with a few providers replaced. You use the standard `testing` package; there is no special test runner, and HTTP tests do not need a running server.
+
+## Testing controllers
+
+The `gonestlytest` package starts a module without opening a port, stops it when the test ends and sends requests straight to its handler:
+
+```go title="users/controller_test.go"
+func TestCreateUser(t *testing.T) {
+	app := gonestlytest.Start(t, users.Module, gonestly.Override(gonestly.Value[users.Store](newFakeStore())))
+
+	var created users.User
+	app.Post("/users", map[string]string{"name": "Ada"}).ExpectStatus(http.StatusCreated).JSON(&created)
+
+	problem := app.Post("/users", map[string]string{}).Problem()
+	if problem.Status != http.StatusBadRequest || problem.Errors[0].Field != "name" {
+		t.Errorf("unexpected problem: %+v", problem)
+	}
+}
+```
+
+| Helper                                        | Purpose                                                                                      |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `app.Get`, `Post`, `Put`, `Patch`, `Delete`   | Send a request; bodies are encoded as JSON. Extra arguments are header name and value pairs. |
+| `app.Request(method, path, body, headers...)` | Send any request; a string, `[]byte` or `io.Reader` body is sent as it is.                   |
+| `res.ExpectStatus(code)`                      | Fail the test, showing the body, if the status differs.                                      |
+| `res.JSON(&v)`                                | Decode the body.                                                                             |
+| `res.Problem()`                               | Decode an error response into `gonestly.Problem`.                                            |
+| `gonestlytest.Resolve[T](app)`                | Get a provider, failing the test if it is missing.                                           |
+
+`Start` uses a silent logger; options such as `gonestly.Override` are applied on top.
 
 ## A module test
 

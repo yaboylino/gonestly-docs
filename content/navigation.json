@@ -8,15 +8,61 @@
         {
           "label": "nav.sections.introduction",
           "items": [
-            { "slug": "introduction", "label": "nav.introduction", "icon": "house" },
-            { "slug": "first-steps", "label": "nav.firstSteps", "icon": "rocket-launch" }
+            {
+              "slug": "introduction",
+              "label": "nav.introduction",
+              "icon": "house"
+            },
+            {
+              "slug": "first-steps",
+              "label": "nav.firstSteps",
+              "icon": "rocket-launch"
+            }
           ]
         },
         {
           "label": "nav.sections.overview",
           "items": [
-            { "slug": "modules", "label": "nav.modules", "icon": "cube" },
-            { "slug": "providers", "label": "nav.providers", "icon": "plugs-connected" },
+            {
+              "slug": "controllers",
+              "label": "nav.controllers",
+              "icon": "signpost"
+            },
+            {
+              "slug": "providers",
+              "label": "nav.providers",
+              "icon": "plugs-connected"
+            },
+            {
+              "slug": "modules",
+              "label": "nav.modules",
+              "icon": "cube"
+            },
+            {
+              "slug": "middleware",
+              "label": "nav.middleware",
+              "icon": "stack"
+            },
+            {
+              "slug": "exception-handling",
+              "label": "nav.exceptionHandling",
+              "icon": "warning-octagon"
+            },
+            {
+              "slug": "validation",
+              "label": "nav.validation",
+              "icon": "check-circle"
+            },
+            {
+              "slug": "guards",
+              "label": "nav.guards",
+              "icon": "shield-check"
+            },
+            {
+              "slug": "interceptors",
+              "label": "nav.interceptors",
+              "icon": "funnel"
+            },
             {
               "slug": "lifecycle-events",
               "label": "nav.lifecycleEvents",
@@ -27,15 +73,36 @@
         {
           "label": "nav.sections.techniques",
           "items": [
-            { "slug": "configuration", "label": "nav.configuration", "icon": "sliders-horizontal" }
+            {
+              "slug": "configuration",
+              "label": "nav.configuration",
+              "icon": "sliders-horizontal"
+            },
+            {
+              "slug": "http-server",
+              "label": "nav.httpServer",
+              "icon": "hard-drives"
+            }
           ]
         },
         {
           "label": "nav.sections.fundamentals",
           "items": [
-            { "slug": "custom-providers", "label": "nav.customProviders", "icon": "puzzle-piece" },
-            { "slug": "testing", "label": "nav.testing", "icon": "test-tube" },
-            { "slug": "error-messages", "label": "nav.errorMessages", "icon": "warning-circle" }
+            {
+              "slug": "custom-providers",
+              "label": "nav.customProviders",
+              "icon": "puzzle-piece"
+            },
+            {
+              "slug": "testing",
+              "label": "nav.testing",
+              "icon": "test-tube"
+            },
+            {
+              "slug": "error-messages",
+              "label": "nav.errorMessages",
+              "icon": "warning-circle"
+            }
           ]
         }
       ]
@@ -47,7 +114,13 @@
       "sections": [
         {
           "label": "nav.sections.roadmap",
-          "items": [{ "slug": "roadmap", "label": "nav.roadmap", "icon": "flag-banner" }]
+          "items": [
+            {
+              "slug": "roadmap",
+              "label": "nav.roadmap",
+              "icon": "flag-banner"
+            }
+          ]
         }
       ]
     }

@@ -22,16 +22,16 @@ Drie principes sturen het ontwerp:
 
 ## Wat er nu beschikbaar is
 
-| Onderdeel                                                         | Status             |
-| ----------------------------------------------------------------- | ------------------ |
-| [Modules](modules) en [providers](providers)                      | Beschikbaar        |
-| [Lifecycle-events](lifecycle-events) en netjes afsluiten          | Beschikbaar        |
-| [Configuratie](configuration) uit de omgeving en `.env`-bestanden | Beschikbaar        |
-| [Testen](testing) met overrides                                   | Beschikbaar        |
-| HTTP-controllers, guards en interceptors                          | [Gepland](roadmap) |
-| Typeveilige SQL-laag en migraties                                 | [Gepland](roadmap) |
-| CLI met generators en een watch-modus                             | [Gepland](roadmap) |
+| Onderdeel                                                                                             | Status             |
+| ----------------------------------------------------------------------------------------------------- | ------------------ |
+| [Modules](modules) en [providers](providers)                                                          | Beschikbaar        |
+| [Lifecycle-events](lifecycle-events) en netjes afsluiten                                              | Beschikbaar        |
+| [Configuratie](configuration) uit de omgeving en `.env`-bestanden                                     | Beschikbaar        |
+| [Testen](testing) met overrides                                                                       | Beschikbaar        |
+| [Controllers](controllers), [validatie](validation), [guards](guards) en [interceptors](interceptors) | Beschikbaar        |
+| Typeveilige SQL-laag en migraties                                                                     | [Gepland](roadmap) |
+| CLI met generators en een watch-modus                                                                 | [Gepland](roadmap) |
 
 ## Volgende stappen
 
-Begin met de [eerste stappen](first-steps) om een kleine applicatie te bouwen, en lees daarna over [modules](modules) en [providers](providers), de twee begrippen waarop al het andere is gebouwd.
+Begin met de [eerste stappen](first-steps) om een kleine API te bouwen, en lees daarna over [controllers](controllers), [providers](providers) en [modules](modules), de begrippen waarop al het andere is gebouwd.

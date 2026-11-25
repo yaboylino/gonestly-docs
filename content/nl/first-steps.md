@@ -1,9 +1,9 @@
 ---
 title: Eerste stappen
-description: Installeer Gonestly en bouw je eerste applicatie met twee modules, een provider en netjes afsluiten.
+description: Installeer Gonestly en bouw je eerste API met twee modules, een provider, een controller en netjes afsluiten.
 ---
 
-In deze handleiding bouw je een kleine applicatie met twee modules. Onderweg leer je de kernbegrippen kennen: modules, providers en de lifecycle van de applicatie.
+In deze handleiding bouw je een kleine API met twee modules. Onderweg leer je de kernbegrippen kennen: modules, providers, controllers en de lifecycle van de applicatie.
 
 ## Vereisten
 
@@ -56,13 +56,20 @@ Door het veld `Exports` is `*DB` beschikbaar voor elke module die deze module im
 
 De usersmodule importeert de databasemodule en vraagt in zijn constructor om een `*database.DB`. Gonestly ziet de parameter en injecteert de instantie.
 
-```go title="users/module.go"
+```go title="users/service.go"
 package users
 
 import (
+	"context"
+
 	"example.com/shop/database"
 	"github.com/yaboylino/gonestly"
 )
+
+type User struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
 
 type Service struct {
 	db *database.DB
@@ -72,17 +79,70 @@ func NewService(db *database.DB) *Service {
 	return &Service{db: db}
 }
 
+func (s *Service) Find(ctx context.Context, id string) (*User, error) {
+	if id != "1" {
+		return nil, gonestly.NotFound("user %s does not exist", id)
+	}
+	return &User{ID: "1", Name: "Ada"}, nil
+}
+```
+
+## Een controller
+
+Een controller vertaalt HTTP-requests naar aanroepen van de service. Het requesttype zegt waar elke waarde vandaan komt; hier komt de `id` uit het pad:
+
+```go title="users/controller.go"
+package users
+
+import (
+	"context"
+
+	"github.com/yaboylino/gonestly"
+)
+
+type FindRequest struct {
+	ID string `path:"id"`
+}
+
+type Controller struct {
+	users *Service
+}
+
+func NewController(users *Service) *Controller {
+	return &Controller{users: users}
+}
+
+func (c *Controller) Routes(r *gonestly.Router) {
+	r.Prefix("/users")
+	gonestly.Get(r, "/{id}", c.Find)
+}
+
+func (c *Controller) Find(ctx context.Context, req FindRequest) (*User, error) {
+	return c.users.Find(ctx, req.ID)
+}
+```
+
+Registreer de service en de controller in de module:
+
+```go title="users/module.go"
+package users
+
+import (
+	"example.com/shop/database"
+	"github.com/yaboylino/gonestly"
+)
+
 var Module = &gonestly.Module{
-	Name:      "users",
-	Imports:   gonestly.Imports(database.Module),
-	Providers: gonestly.Providers(NewService),
-	Exports:   gonestly.Exports(NewService),
+	Name:        "users",
+	Imports:     gonestly.Imports(database.Module),
+	Providers:   gonestly.Providers(NewService),
+	Controllers: gonestly.Controllers(NewController),
 }
 ```
 
 ## De applicatie
 
-Elke applicatie heeft één rootmodule. Bouw hem met `gonestly.New` en draai hem met `Run`. Die start elke provider en wacht op Ctrl+C of een stopsignaal, waarna de applicatie netjes afsluit.
+Elke applicatie heeft één rootmodule. Bouw hem met `gonestly.New` en draai hem met `Run`. Die start elke provider en de HTTP-server, en wacht op Ctrl+C of een stopsignaal, waarna de applicatie netjes afsluit.
 
 ```go title="main.go"
 package main
@@ -111,7 +171,17 @@ func main() {
 }
 ```
 
-Start hem met `go run .`. De applicatie logt dat hij gestart is en stopt netjes als je op Ctrl+C drukt.
+Start hem met `go run .` en roep de API aan:
+
+```sh
+curl localhost:3000/users/1
+# {"id":"1","name":"Ada"}
+
+curl localhost:3000/users/2
+# {"type":"about:blank","title":"Not Found","status":404,"detail":"user 2 does not exist","instance":"/users/2"}
+```
+
+De server luistert standaard op poort 3000; de pagina [HTTP-server](http-server) legt uit hoe je dat aanpast. Druk op Ctrl+C en de applicatie stopt netjes, nadat de lopende requests zijn afgerond.
 
 ## Als er iets mis is
 
@@ -126,4 +196,4 @@ Alle problemen in de modulegraaf worden tegelijk gemeld, voordat er ook maar é�
 
 ## Hoe nu verder
 
-Lees over [modules](modules) om een grotere applicatie in te delen, en over [providers](providers) voor alles wat je kunt injecteren.
+Lees over [controllers](controllers) voor alles wat een route kan, over [modules](modules) om een grotere applicatie in te delen en over [providers](providers) voor alles wat je kunt injecteren.

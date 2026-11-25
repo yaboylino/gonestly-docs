@@ -20,6 +20,7 @@ Each problem wraps a sentinel error, so you can check for a kind of problem with
 | `gonestly.ErrMissingDependency` | A provider needs a type that is not available in its module. |
 | `gonestly.ErrDependencyCycle`   | Providers or modules depend on each other in a circle.       |
 | `gonestly.ErrInvalidModule`     | A module, provider or export is declared incorrectly.        |
+| `gonestly.ErrInvalidRoute`      | A route is declared incorrectly or conflicts with another.   |
 | `gonestly.ErrNotStarted`        | `Resolve` was called on an application that is not running.  |
 
 The individual problems are available as `BuildError.Problems`.
@@ -58,6 +59,24 @@ Break it by moving the shared logic into a third provider that both depend on, o
 | `exports module "x", which it does not import` | Only imported modules can be re-exported.                  |
 | `two different modules are named "x"`          | Module names must be unique, and `gonestly` is reserved.   |
 | `override X replaces no provider of T`         | An override in a test does not match any provider.         |
+
+## Invalid routes
+
+Routes are registered when the application starts, and `Start` reports every problem before the server listens. Each message names the route and its controller:
+
+```text
+invalid route: GET /users/{userId} in users.NewController in module "users": FindOneRequest.ID reads the path value "id", but the path /users/{userId} has no {id} wildcard
+```
+
+| Message                                                          | Cause                                                                   |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `reads the path value "x", but the path ... has no {x} wildcard` | A `path` tag does not match the route.                                  |
+| `has type T, which cannot be read from the query`                | The field type cannot be parsed from text.                              |
+| `has more than one of the tags query, header`                    | A field can come from one place only.                                   |
+| `the request type *T must be a struct, a slice or a map`         | Use the struct itself, not a pointer to it.                             |
+| `the status 404 is not a success status`                         | `gonestly.Status` is for successful responses; return an error instead. |
+| `conflicts with pattern`                                         | Two routes match the same requests.                                     |
+| `has no Routes(*gonestly.Router) method`                         | A type in `Controllers` is not a controller.                            |
 
 ## Errors while starting
 

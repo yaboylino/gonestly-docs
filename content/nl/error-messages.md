@@ -20,6 +20,7 @@ Elk probleem verpakt een vaste fout, zodat je met `errors.Is` op een soort probl
 | `gonestly.ErrMissingDependency` | Een provider heeft een type nodig dat in zijn module niet beschikbaar is. |
 | `gonestly.ErrDependencyCycle`   | Providers of modules hangen in een cirkel van elkaar af.                  |
 | `gonestly.ErrInvalidModule`     | Een module, provider of export is verkeerd gedeclareerd.                  |
+| `gonestly.ErrInvalidRoute`      | Een route is verkeerd gedeclareerd of botst met een andere.               |
 | `gonestly.ErrNotStarted`        | `Resolve` is aangeroepen op een applicatie die niet draait.               |
 
 De losse problemen staan in `BuildError.Problems`.
@@ -58,6 +59,24 @@ Doorbreek hem door de gedeelde logica naar een derde provider te verplaatsen waa
 | `exports module "x", which it does not import` | Alleen geïmporteerde modules kun je doorgeven.                |
 | `two different modules are named "x"`          | Modulenamen moeten uniek zijn, en `gonestly` is gereserveerd. |
 | `override X replaces no provider of T`         | Een override in een test vervangt geen enkele provider.       |
+
+## Ongeldige routes
+
+Routes worden geregistreerd als de applicatie start, en `Start` meldt elk probleem voordat de server luistert. Elke melding noemt de route en zijn controller:
+
+```text
+invalid route: GET /users/{userId} in users.NewController in module "users": FindOneRequest.ID reads the path value "id", but the path /users/{userId} has no {id} wildcard
+```
+
+| Melding                                                          | Oorzaak                                                                    |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `reads the path value "x", but the path ... has no {x} wildcard` | Een `path`-tag past niet bij de route.                                     |
+| `has type T, which cannot be read from the query`                | Het veldtype kan niet uit tekst worden gelezen.                            |
+| `has more than one of the tags query, header`                    | Een veld kan maar van één plek komen.                                      |
+| `the request type *T must be a struct, a slice or a map`         | Gebruik de struct zelf, geen pointer ernaar.                               |
+| `the status 404 is not a success status`                         | `gonestly.Status` is voor geslaagde responses; geef anders een fout terug. |
+| `conflicts with pattern`                                         | Twee routes passen bij dezelfde requests.                                  |
+| `has no Routes(*gonestly.Router) method`                         | Een type in `Controllers` is geen controller.                              |
 
 ## Fouten bij het starten
 

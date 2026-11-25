@@ -3,7 +3,36 @@ title: Testen
 description: Test modules los door providers te vervangen door nepversies en providers op te halen uit een draaiende applicatie.
 ---
 
-Omdat elke afhankelijkheid wordt geïnjecteerd, komt het testen van een Gonestly-module neer op het bouwen van die module met een paar providers vervangen. Je gebruikt het standaardpackage `testing`; een speciale testrunner is niet nodig.
+Omdat elke afhankelijkheid wordt geïnjecteerd, komt het testen van een Gonestly-module neer op het bouwen van die module met een paar providers vervangen. Je gebruikt het standaardpackage `testing`; een speciale testrunner is niet nodig, en voor HTTP-tests hoeft er geen server te draaien.
+
+## Controllers testen
+
+Het package `gonestlytest` start een module zonder een poort te openen, stopt hem als de test klaar is en stuurt requests direct naar zijn handler:
+
+```go title="users/controller_test.go"
+func TestCreateUser(t *testing.T) {
+	app := gonestlytest.Start(t, users.Module, gonestly.Override(gonestly.Value[users.Store](newFakeStore())))
+
+	var created users.User
+	app.Post("/users", map[string]string{"name": "Ada"}).ExpectStatus(http.StatusCreated).JSON(&created)
+
+	problem := app.Post("/users", map[string]string{}).Problem()
+	if problem.Status != http.StatusBadRequest || problem.Errors[0].Field != "name" {
+		t.Errorf("unexpected problem: %+v", problem)
+	}
+}
+```
+
+| Hulpfunctie                                   | Doel                                                                                                       |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `app.Get`, `Post`, `Put`, `Patch`, `Delete`   | Stuur een request; bodies worden als JSON verstuurd. Extra argumenten zijn paren van headernaam en waarde. |
+| `app.Request(method, path, body, headers...)` | Stuur elk request; een body als string, `[]byte` of `io.Reader` gaat ongewijzigd mee.                      |
+| `res.ExpectStatus(code)`                      | Laat de test falen, met de body erbij, als de status afwijkt.                                              |
+| `res.JSON(&v)`                                | Lees de body in.                                                                                           |
+| `res.Problem()`                               | Lees een foutresponse in als `gonestly.Problem`.                                                           |
+| `gonestlytest.Resolve[T](app)`                | Haal een provider op en laat de test falen als hij ontbreekt.                                              |
+
+`Start` gebruikt een stille logger; opties zoals `gonestly.Override` komen daar bovenop.
 
 ## Een moduletest
 

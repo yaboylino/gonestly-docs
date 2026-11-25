@@ -1,0 +1,38 @@
+<button
+  class="trigger"
+  type="button"
+  aria-haspopup="true"
+  [attr.aria-expanded]="open()"
+  [attr.aria-label]="
+    'language.change' | translate: { language: ('language.names.' + lang() | translate) }
+  "
+  (click)="toggle()"
+>
+  {{ lang() }}
+</button>
+
+@if (open()) {
+  <div class="menu" role="menu">
+    <div class="menu-title">
+      <app-icon name="translate" />
+      <span>{{ 'language.label' | translate }}</span>
+    </div>
+    @for (code of languages; track code) {
+      <a
+        class="menu-item"
+        role="menuitemradio"
+        [class.on]="code === lang()"
+        [attr.aria-checked]="code === lang()"
+        [attr.lang]="code"
+        [routerLink]="slug() ? ['/', code, slug()] : ['/', code]"
+        (click)="close()"
+      >
+        <span class="code">{{ code }}</span>
+        <span>{{ 'language.names.' + code | translate }}</span>
+        @if (code === lang()) {
+          <app-icon class="check" name="check" />
+        }
+      </a>
+    }
+  </div>
+}

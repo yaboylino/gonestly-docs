@@ -1,0 +1,70 @@
+{
+  "brand": {
+    "home": "Gonestly documentation home",
+    "tag": "Docs",
+    "status": "Pre-release, in active development"
+  },
+  "rail": {
+    "docs": "Docs",
+    "roadmap": "Roadmap",
+    "github": "GitHub"
+  },
+  "nav": {
+    "sections": {
+      "introduction": "Introduction",
+      "overview": "Overview",
+      "techniques": "Techniques",
+      "fundamentals": "Fundamentals",
+      "roadmap": "Roadmap"
+    },
+    "introduction": "Introduction",
+    "firstSteps": "First steps",
+    "modules": "Modules",
+    "providers": "Providers",
+    "lifecycleEvents": "Lifecycle events",
+    "configuration": "Configuration",
+    "customProviders": "Custom providers",
+    "testing": "Testing",
+    "errorMessages": "Error messages",
+    "roadmap": "Roadmap"
+  },
+  "shell": {
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "github": "Gonestly on GitHub",
+    "help": "Ask a question or report a problem"
+  },
+  "search": {
+    "placeholder": "Search the documentation",
+    "shortPlaceholder": "Search",
+    "label": "Search the documentation",
+    "close": "Close search",
+    "noResults": "No results for \"{{query}}\"",
+    "hint": "Type to search all pages",
+    "navigate": "to navigate",
+    "select": "to open",
+    "dismiss": "to close"
+  },
+  "language": {
+    "label": "Language",
+    "change": "Change language, current: {{language}}",
+    "names": {
+      "en": "English",
+      "nl": "Nederlands"
+    }
+  },
+  "page": {
+    "onThisPage": "On this page",
+    "previous": "Previous",
+    "next": "Next",
+    "edit": "Edit this page on GitHub",
+    "copy": "Copy code",
+    "copied": "Copied"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "This page does not exist, or it has moved.",
+    "home": "Go to the introduction"
+  }
+}

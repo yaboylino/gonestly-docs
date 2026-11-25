@@ -1,0 +1,63 @@
+{
+  "areas": [
+    {
+      "id": "docs",
+      "label": "rail.docs",
+      "icon": "book-open-text",
+      "sections": [
+        {
+          "label": "nav.sections.introduction",
+          "items": [
+            { "slug": "introduction", "label": "nav.introduction", "icon": "house" },
+            { "slug": "first-steps", "label": "nav.firstSteps", "icon": "rocket-launch" }
+          ]
+        },
+        {
+          "label": "nav.sections.overview",
+          "items": [
+            { "slug": "modules", "label": "nav.modules", "icon": "cube" },
+            { "slug": "providers", "label": "nav.providers", "icon": "plugs-connected" },
+            {
+              "slug": "lifecycle-events",
+              "label": "nav.lifecycleEvents",
+              "icon": "arrows-clockwise"
+            }
+          ]
+        },
+        {
+          "label": "nav.sections.techniques",
+          "items": [
+            { "slug": "configuration", "label": "nav.configuration", "icon": "sliders-horizontal" }
+          ]
+        },
+        {
+          "label": "nav.sections.fundamentals",
+          "items": [
+            { "slug": "custom-providers", "label": "nav.customProviders", "icon": "puzzle-piece" },
+            { "slug": "testing", "label": "nav.testing", "icon": "test-tube" },
+            { "slug": "error-messages", "label": "nav.errorMessages", "icon": "warning-circle" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "roadmap",
+      "label": "rail.roadmap",
+      "icon": "map-trifold",
+      "sections": [
+        {
+          "label": "nav.sections.roadmap",
+          "items": [{ "slug": "roadmap", "label": "nav.roadmap", "icon": "flag-banner" }]
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "id": "github",
+      "label": "rail.github",
+      "icon": "github-logo",
+      "href": "https://github.com/yaboylino/gonestly"
+    }
+  ]
+}

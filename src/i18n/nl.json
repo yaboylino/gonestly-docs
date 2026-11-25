@@ -1,0 +1,70 @@
+{
+  "brand": {
+    "home": "Startpagina van de Gonestly-documentatie",
+    "tag": "Docs",
+    "status": "Pre-release, volop in ontwikkeling"
+  },
+  "rail": {
+    "docs": "Docs",
+    "roadmap": "Roadmap",
+    "github": "GitHub"
+  },
+  "nav": {
+    "sections": {
+      "introduction": "Introductie",
+      "overview": "Overzicht",
+      "techniques": "Technieken",
+      "fundamentals": "Basisprincipes",
+      "roadmap": "Roadmap"
+    },
+    "introduction": "Introductie",
+    "firstSteps": "Eerste stappen",
+    "modules": "Modules",
+    "providers": "Providers",
+    "lifecycleEvents": "Lifecycle-events",
+    "configuration": "Configuratie",
+    "customProviders": "Eigen providers",
+    "testing": "Testen",
+    "errorMessages": "Foutmeldingen",
+    "roadmap": "Roadmap"
+  },
+  "shell": {
+    "skipToContent": "Direct naar de inhoud",
+    "openMenu": "Menu openen",
+    "closeMenu": "Menu sluiten",
+    "github": "Gonestly op GitHub",
+    "help": "Stel een vraag of meld een probleem"
+  },
+  "search": {
+    "placeholder": "Zoek in de documentatie",
+    "shortPlaceholder": "Zoeken",
+    "label": "Zoek in de documentatie",
+    "close": "Zoeken sluiten",
+    "noResults": "Geen resultaten voor \"{{query}}\"",
+    "hint": "Typ om alle pagina's te doorzoeken",
+    "navigate": "om te kiezen",
+    "select": "om te openen",
+    "dismiss": "om te sluiten"
+  },
+  "language": {
+    "label": "Taal",
+    "change": "Taal wijzigen, huidige taal: {{language}}",
+    "names": {
+      "en": "English",
+      "nl": "Nederlands"
+    }
+  },
+  "page": {
+    "onThisPage": "Op deze pagina",
+    "previous": "Vorige",
+    "next": "Volgende",
+    "edit": "Bewerk deze pagina op GitHub",
+    "copy": "Code kopiëren",
+    "copied": "Gekopieerd"
+  },
+  "notFound": {
+    "title": "Pagina niet gevonden",
+    "text": "Deze pagina bestaat niet, of hij is verplaatst.",
+    "home": "Naar de introductie"
+  }
+}

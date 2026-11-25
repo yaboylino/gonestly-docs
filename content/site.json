@@ -1,0 +1,9 @@
+{
+  "name": "Gonestly",
+  "url": "https://yaboylino.github.io/gonestly-docs",
+  "repository": "https://github.com/yaboylino/gonestly",
+  "editBaseUrl": "https://github.com/yaboylino/gonestly-docs/edit/main/content",
+  "issuesUrl": "https://github.com/yaboylino/gonestly/issues",
+  "defaultLanguage": "en",
+  "languages": ["en", "nl"]
+}

@@ -1,0 +1,67 @@
+<dialog #dialog class="dialog" [attr.aria-label]="'search.label' | translate">
+  <div class="panel">
+    <div class="field">
+      <app-icon name="magnifying-glass" />
+      <input
+        #input
+        type="search"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-controls="search-results"
+        autocomplete="off"
+        spellcheck="false"
+        [attr.aria-activedescendant]="results().length ? 'search-result-' + active() : null"
+        [attr.aria-expanded]="results().length > 0"
+        [placeholder]="'search.placeholder' | translate"
+        [value]="query()"
+        (input)="onInput(input.value)"
+        (keydown)="onKeydown($event)"
+      />
+      <button
+        class="close"
+        type="button"
+        [attr.aria-label]="'search.close' | translate"
+        (click)="close()"
+      >
+        <app-icon name="x" />
+      </button>
+    </div>
+
+    <div class="body">
+      @if (query().trim() === '') {
+        <p class="empty">{{ 'search.hint' | translate }}</p>
+      } @else if (results().length === 0) {
+        <p class="empty">{{ 'search.noResults' | translate: { query: query() } }}</p>
+      } @else {
+        <ul id="search-results" class="results" role="listbox">
+          @for (result of results(); track $index) {
+            <li
+              class="result"
+              role="option"
+              [id]="'search-result-' + $index"
+              [class.active]="$index === active()"
+              [attr.aria-selected]="$index === active()"
+              [attr.data-result]="$index"
+              (mousemove)="active.set($index)"
+            >
+              <span class="result-title">
+                {{ result.entry.title }}
+                @if (result.entry.heading) {
+                  <app-icon name="caret-right" />
+                  {{ result.entry.heading }}
+                }
+              </span>
+              <span class="result-snippet">{{ result.snippet }}</span>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="footer">
+      <span><kbd>↑</kbd><kbd>↓</kbd> {{ 'search.navigate' | translate }}</span>
+      <span><kbd>↵</kbd> {{ 'search.select' | translate }}</span>
+      <span><kbd>esc</kbd> {{ 'search.dismiss' | translate }}</span>
+    </div>
+  </div>
+</dialog>

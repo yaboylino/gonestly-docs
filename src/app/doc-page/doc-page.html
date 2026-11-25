@@ -1,0 +1,64 @@
+@if (page(); as page) {
+  <div class="layout">
+    <article class="article">
+      <header class="head">
+        @if (section(); as section) {
+          <p class="eyebrow">{{ section | translate }}</p>
+        }
+        <h1>{{ page.title }}</h1>
+      </header>
+
+      <div #content class="prose" [innerHTML]="html()"></div>
+
+      <footer class="foot">
+        <a class="edit" [href]="editUrl()" target="_blank" rel="noopener noreferrer">
+          <app-icon name="pencil-simple" />
+          <span>{{ 'page.edit' | translate }}</span>
+        </a>
+
+        <nav class="pager">
+          @if (adjacent().previous; as previous) {
+            <a class="pager-link" [routerLink]="['/', lang(), previous.slug]">
+              <span class="pager-direction">
+                <app-icon name="arrow-left" />
+                <span>{{ 'page.previous' | translate }}</span>
+              </span>
+              <span class="pager-title">{{ previous.label | translate }}</span>
+            </a>
+          }
+          @if (adjacent().next; as next) {
+            <a class="pager-link next" [routerLink]="['/', lang(), next.slug]">
+              <span class="pager-direction">
+                <span>{{ 'page.next' | translate }}</span>
+                <app-icon name="arrow-right" />
+              </span>
+              <span class="pager-title">{{ next.label | translate }}</span>
+            </a>
+          }
+        </nav>
+      </footer>
+    </article>
+
+    @if (page.headings.length > 0) {
+      <aside class="toc">
+        <p class="toc-title">{{ 'page.onThisPage' | translate }}</p>
+        <ul>
+          @for (heading of page.headings; track heading.id) {
+            <li [class.sub]="heading.level === 3">
+              <a
+                [routerLink]="[]"
+                [fragment]="heading.id"
+                [class.active]="heading.id === activeHeading()"
+                [attr.aria-current]="heading.id === activeHeading() ? 'location' : null"
+              >
+                {{ heading.text }}
+              </a>
+            </li>
+          }
+        </ul>
+      </aside>
+    }
+  </div>
+} @else {
+  <app-not-found />
+}

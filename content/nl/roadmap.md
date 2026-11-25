@@ -3,7 +3,7 @@ title: Roadmap
 description: Wat Gonestly nu biedt en wat er nog komt, van HTTP-controllers tot de SQL-laag en de CLI.
 ---
 
-Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voordat de volgende begint, en de eerste openbare release volgt zodra de SQL-laag en de CLI er zijn.
+Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voordat de volgende begint, en de eerste openbare release volgt zodra OpenAPI en de CLI er zijn.
 
 ## Beschikbaar
 
@@ -11,25 +11,16 @@ Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voord
 - **Lifecycle-events**, netjes afsluiten en de applicatie stoppen vanuit een provider.
 - **Configuratie** uit omgevingsvariabelen en `.env`-bestanden.
 - **Testen** met overrides en requests zonder poort.
+- **Database**: [repositories](repositories), een getypeerde [querybuilder](queries), [transacties](transactions) en [migraties](migrations) voor PostgreSQL en SQLite.
 - **HTTP**: [controllers](controllers) met getypeerde handlers, binding van requests, [validatie](validation), [guards](guards), [interceptors](interceptors), [middleware](middleware) en problem details voor fouten.
 
 ## OpenAPI
 
-Een OpenAPI-document dat uit de routes en hun request- en responsetypes wordt gegenereerd, zodat de API zonder annotaties beschreven is, en dat ernaast wordt geserveerd.
+Een OpenAPI-document dat automatisch voor elke route wordt gegenereerd, uit zijn pad, parameters, request- en responsetypes en validatieregels, en dat samen met Swagger UI wordt geserveerd. Net als bij FastAPI volgt de documentatie uit de code, zonder annotaties. Dit is de volgende fase.
 
-## SQL
+## MySQL
 
-Een typeveilige SQL-laag in drie niveaus: generieke repositories voor alledaagse CRUD, een getypeerde querybuilder met kolommen die de CLI genereert, en ruwe SQL die direct in structs wordt ingelezen.
-
-```go
-users, err := sql.From[User](db).
-	Where(user.Email.Like("%@example.com"), user.Active.Eq(true)).
-	OrderBy(user.CreatedAt.Desc()).
-	Limit(20).
-	All(ctx)
-```
-
-Transacties reizen mee via de context, relaties laad je expliciet, en migraties zijn gewone SQL-bestanden. PostgreSQL en SQLite komen eerst, MySQL volgt.
+Ondersteuning voor MySQL in de SQL-laag, na PostgreSQL en SQLite.
 
 ## CLI
 

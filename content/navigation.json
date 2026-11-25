@@ -86,6 +86,36 @@
           ]
         },
         {
+          "label": "nav.sections.database",
+          "items": [
+            {
+              "slug": "database",
+              "label": "nav.database",
+              "icon": "database"
+            },
+            {
+              "slug": "queries",
+              "label": "nav.queries",
+              "icon": "code"
+            },
+            {
+              "slug": "repositories",
+              "label": "nav.repositories",
+              "icon": "archive"
+            },
+            {
+              "slug": "transactions",
+              "label": "nav.transactions",
+              "icon": "arrows-left-right"
+            },
+            {
+              "slug": "migrations",
+              "label": "nav.migrations",
+              "icon": "git-diff"
+            }
+          ]
+        },
+        {
           "label": "nav.sections.fundamentals",
           "items": [
             {

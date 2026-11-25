@@ -78,6 +78,19 @@ invalid route: GET /users/{userId} in users.NewController in module "users": Fin
 | `conflicts with pattern`                                         | Two routes match the same requests.                                     |
 | `has no Routes(*gonestly.Router) method`                         | A type in `Controllers` is not a controller.                            |
 
+## Database errors
+
+The [SQL layer](database) reports its problems with these errors:
+
+| Error                 | Meaning                                                                              |
+| --------------------- | ------------------------------------------------------------------------------------ |
+| `sql.ErrNotFound`     | A query found no row. Returned from a handler, it answers 404.                       |
+| `sql.ErrTooManyRows`  | `QueryOne` found more than one row.                                                  |
+| `sql.ErrUnsafeQuery`  | An update or delete has no condition; use `sql.Always()` to affect every row.        |
+| `sql.ErrInvalidModel` | A struct cannot be mapped to a table, for example because two fields use one column. |
+
+Scanning reports a column without a matching field by name, such as `the column "email" has no field in User; add a field with db:"email"`, and placeholder mistakes as `the query has 1 placeholders but 2 arguments`. See [migrations](migrations#safety-checks) for the messages of the migrator.
+
 ## Errors while starting
 
 Errors from constructors and start hooks are returned by `Start` and `Run`, with the provider and module:

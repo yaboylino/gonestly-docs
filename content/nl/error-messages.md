@@ -78,6 +78,19 @@ invalid route: GET /users/{userId} in users.NewController in module "users": Fin
 | `conflicts with pattern`                                         | Twee routes passen bij dezelfde requests.                                  |
 | `has no Routes(*gonestly.Router) method`                         | Een type in `Controllers` is geen controller.                              |
 
+## Databasefouten
+
+De [SQL-laag](database) meldt zijn problemen met deze fouten:
+
+| Fout                  | Betekenis                                                                                |
+| --------------------- | ---------------------------------------------------------------------------------------- |
+| `sql.ErrNotFound`     | Een query vond geen rij. Teruggegeven vanuit een handler wordt het een 404.              |
+| `sql.ErrTooManyRows`  | `QueryOne` vond meer dan één rij.                                                        |
+| `sql.ErrUnsafeQuery`  | Een update of delete heeft geen conditie; gebruik `sql.Always()` om alle rijen te raken. |
+| `sql.ErrInvalidModel` | Een struct past niet op een tabel, bijvoorbeeld omdat twee velden één kolom gebruiken.   |
+
+Bij het inlezen wordt een kolom zonder bijbehorend veld bij naam gemeld, zoals `the column "email" has no field in User; add a field with db:"email"`, en fouten met placeholders als `the query has 1 placeholders but 2 arguments`. Zie [migraties](migrations#veiligheidscontroles) voor de meldingen van de migrator.
+
 ## Fouten bij het starten
 
 Fouten uit constructors en starthooks komen terug uit `Start` en `Run`, met de provider en de module:

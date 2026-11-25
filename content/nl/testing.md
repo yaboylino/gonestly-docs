@@ -63,6 +63,30 @@ func TestServiceFindsUser(t *testing.T) {
 }
 ```
 
+## Testen met een database
+
+Repositories en queries draaien tegen een echte database, dus test ze daar ook tegen. SQLite in een tijdelijk bestand heeft geen server nodig en voert je migraties in milliseconden uit:
+
+```go title="users/repository_test.go"
+func TestRepository(t *testing.T) {
+	db, err := sql.Open(t.Context(), sql.Options{Driver: "sqlite", DSN: "file:" + t.TempDir() + "/test.db"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { _ = db.Close() })
+	migrator, err := sql.NewMigrator(db, migrations.Files)
+	if err == nil {
+		_, err = migrator.Up(t.Context())
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	// ...
+}
+```
+
+Draai dezelfde tests tegen PostgreSQL als je queries functies gebruiken die SQLite niet heeft; de tests van Gonestly zelf draaien tegen allebei.
+
 ## Overrides
 
 `gonestly.Override` vervangt de provider van hetzelfde type, in welke module die ook staat. Hij accepteert constructors en providers, net als `Providers`:

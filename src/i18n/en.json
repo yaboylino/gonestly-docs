@@ -15,7 +15,8 @@
       "overview": "Overview",
       "techniques": "Techniques",
       "fundamentals": "Fundamentals",
-      "roadmap": "Roadmap"
+      "roadmap": "Roadmap",
+      "database": "Database"
     },
     "introduction": "Introduction",
     "firstSteps": "First steps",
@@ -26,6 +27,11 @@
     "guards": "Guards",
     "interceptors": "Interceptors",
     "httpServer": "HTTP server",
+    "database": "Database",
+    "queries": "Queries",
+    "repositories": "Repositories",
+    "transactions": "Transactions",
+    "migrations": "Migrations",
     "modules": "Modules",
     "providers": "Providers",
     "lifecycleEvents": "Lifecycle events",

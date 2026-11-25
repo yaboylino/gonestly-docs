@@ -63,6 +63,30 @@ func TestServiceFindsUser(t *testing.T) {
 }
 ```
 
+## Testing with a database
+
+Repositories and queries run against a real database, so test them against one. SQLite in a temporary file needs no server and runs your migrations in milliseconds:
+
+```go title="users/repository_test.go"
+func TestRepository(t *testing.T) {
+	db, err := sql.Open(t.Context(), sql.Options{Driver: "sqlite", DSN: "file:" + t.TempDir() + "/test.db"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { _ = db.Close() })
+	migrator, err := sql.NewMigrator(db, migrations.Files)
+	if err == nil {
+		_, err = migrator.Up(t.Context())
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	// ...
+}
+```
+
+Run the same tests against PostgreSQL when your queries use features SQLite does not have; the tests of Gonestly itself run against both.
+
 ## Overrides
 
 `gonestly.Override` replaces the provider of the same type in whichever module declares it. It accepts constructors and providers, just like `Providers`:

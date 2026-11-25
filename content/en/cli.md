@@ -75,7 +75,7 @@ GET      /products        products.NewController in module "products"
 POST     /products        products.NewController in module "products"
 ```
 
-They build and start the application without listening on a port, by setting the environment variable `GONESTLY_INSPECT`. Providers start as usual, so the database connects and pending migrations are applied.
+They build and start the application without listening on a port, by setting the environment variable `GONESTLY_INSPECT`. Providers start as usual, so the database connects and pending migrations are applied. The result is written to a file, so anything the application prints itself cannot end up in it.
 
 ## Migrations
 

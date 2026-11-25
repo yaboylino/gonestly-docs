@@ -42,7 +42,7 @@ func (c *Controller) FindOne(ctx context.Context, req FindOneRequest) (*User, er
 | `gonestly.TooManyRequests`          | 429        |
 | `gonestly.StatusError(status, ...)` | any status |
 
-The detail message is sent to the client. Add the underlying error with `WithCause`: it is available to `errors.Is` and logs, but never sent:
+The detail message is sent to the client. Add the underlying error with `WithCause`: it is available to `errors.Is` and logged at debug level, but never sent:
 
 ```go
 return nil, gonestly.Conflict("the email address is already in use").WithCause(err)
@@ -64,7 +64,7 @@ Any other error becomes a **500 Internal Server Error** with a generic message. 
 }
 ```
 
-A panic in a handler is recovered, logged with its stack trace and answered the same way.
+A panic in a handler, guard, interceptor or middleware is recovered, logged with its stack trace and answered the same way.
 
 ## Validation errors
 

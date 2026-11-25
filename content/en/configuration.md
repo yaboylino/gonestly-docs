@@ -57,7 +57,7 @@ A variable that is set but empty is used as it is: it does not fall back to the 
 
 ## Supported types
 
-Strings, booleans, all integer and float types, `time.Duration` (such as `30s` or `5m`), slices of these as a comma separated list, and every type that implements `encoding.TextUnmarshaler`, such as `netip.Addr`.
+Strings, booleans, all integer and float types, `time.Duration` (such as `30s` or `5m`), slices of these as a comma separated list, and every type that implements `encoding.TextUnmarshaler`, such as `netip.Addr`. A pointer to one of these, such as `*int`, stays `nil` when the variable is not set.
 
 ## Nested structs
 
@@ -96,7 +96,7 @@ config.Module[Config](config.Options{
 })
 ```
 
-Pass an empty slice to read no files at all. Values can be unquoted, single quoted (taken literally) or double quoted (with `\n`, `\t` and `\"` escapes). Variables are not expanded.
+Pass an empty slice to read no files at all. Values can be unquoted, single quoted (taken literally) or double quoted (with `\n`, `\t` and `\"` escapes). A quoted value can span several lines, which suits a certificate or a private key. Variables are not expanded.
 
 ## Prefix
 
@@ -111,7 +111,7 @@ config.Module[Config](config.Options{Prefix: "SHOP_"}) // reads SHOP_PORT, SHOP_
 Every invalid or missing value is reported at once, so you fix your configuration in one go:
 
 ```text
-config: PORT: "abc" is not a valid int
+config: PORT: "abc" is not a whole number
 config: DATABASE_URL is required
 config: TIMEOUT: "5" is not a valid duration, such as 30s or 5m
 ```

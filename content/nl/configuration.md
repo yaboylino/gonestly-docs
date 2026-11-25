@@ -57,7 +57,7 @@ Een variabele die wel gezet maar leeg is, wordt gebruikt zoals hij is: hij valt 
 
 ## Ondersteunde types
 
-Strings, booleans, alle integer- en floattypes, `time.Duration` (zoals `30s` of `5m`), slices daarvan als lijst gescheiden door komma's, en elk type dat `encoding.TextUnmarshaler` implementeert, zoals `netip.Addr`.
+Strings, booleans, alle integer- en floattypes, `time.Duration` (zoals `30s` of `5m`), slices daarvan als lijst gescheiden door komma's, en elk type dat `encoding.TextUnmarshaler` implementeert, zoals `netip.Addr`. Een pointer naar zo'n type, zoals `*int`, blijft `nil` als de variabele niet is gezet.
 
 ## Geneste structs
 
@@ -96,7 +96,7 @@ config.Module[Config](config.Options{
 })
 ```
 
-Geef een lege slice mee om helemaal geen bestanden te lezen. Waarden mogen zonder aanhalingstekens, met enkele aanhalingstekens (letterlijk overgenomen) of met dubbele aanhalingstekens (met `\n`, `\t` en `\"`). Variabelen worden niet uitgevuld.
+Geef een lege slice mee om helemaal geen bestanden te lezen. Waarden mogen zonder aanhalingstekens, met enkele aanhalingstekens (letterlijk overgenomen) of met dubbele aanhalingstekens (met `\n`, `\t` en `\"`). Een waarde tussen aanhalingstekens mag over meerdere regels lopen, handig voor een certificaat of een private key. Variabelen worden niet uitgevuld.
 
 ## Prefix
 
@@ -111,7 +111,7 @@ config.Module[Config](config.Options{Prefix: "SHOP_"}) // leest SHOP_PORT, SHOP_
 Alle ongeldige of ontbrekende waarden worden tegelijk gemeld, zodat je je configuratie in één keer goed zet:
 
 ```text
-config: PORT: "abc" is not a valid int
+config: PORT: "abc" is not a whole number
 config: DATABASE_URL is required
 config: TIMEOUT: "5" is not a valid duration, such as 30s or 5m
 ```

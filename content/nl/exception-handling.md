@@ -42,7 +42,7 @@ func (c *Controller) FindOne(ctx context.Context, req FindOneRequest) (*User, er
 | `gonestly.TooManyRequests`          | 429         |
 | `gonestly.StatusError(status, ...)` | elke status |
 
-De melding gaat naar de client. Voeg de onderliggende fout toe met `WithCause`: die is beschikbaar voor `errors.Is` en voor logs, maar wordt nooit verstuurd:
+De melding gaat naar de client. Voeg de onderliggende fout toe met `WithCause`: die is beschikbaar voor `errors.Is` en wordt op debugniveau gelogd, maar nooit verstuurd:
 
 ```go
 return nil, gonestly.Conflict("the email address is already in use").WithCause(err)
@@ -64,7 +64,7 @@ Elke andere fout wordt een **500 Internal Server Error** met een algemene meldin
 }
 ```
 
-Een panic in een handler wordt opgevangen, met stacktrace gelogd en op dezelfde manier beantwoord.
+Een panic in een handler, guard, interceptor of middleware wordt opgevangen, met stacktrace gelogd en op dezelfde manier beantwoord.
 
 ## Validatiefouten
 

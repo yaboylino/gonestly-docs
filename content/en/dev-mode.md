@@ -23,6 +23,8 @@ When every step passes, the running application stops gracefully and the new ver
 ✓ restarted in 450ms
 ```
 
+Ctrl+C stops the application the same way: it gets one interrupt and the time to finish its requests.
+
 When a step fails, the application is **stopped**, and every problem is listed with its file, line and message:
 
 ```text

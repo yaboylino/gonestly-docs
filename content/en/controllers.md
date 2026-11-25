@@ -97,7 +97,7 @@ type UpdateUserRequest struct {
 | Header | `header:"X-Tenant"`    | A slice collects repeated headers.                                          |
 | Body   | none, or `json:"name"` | Decoded with `encoding/json`.                                               |
 
-Path, query and header fields support strings, booleans, numbers, `time.Duration`, slices and every type that implements `encoding.TextUnmarshaler`, such as `time.Time` or `uuid.UUID`. A value that comes from the URL or the headers always wins: a client cannot set a path value through the body.
+Path, query and header fields support strings, booleans, numbers, `time.Duration`, slices and every type that implements `encoding.TextUnmarshaler`, such as `time.Time` or `uuid.UUID`. Use a pointer, such as `*int`, to tell a parameter that is absent from one that is zero: it stays `nil` when the client does not send it. A value that comes from the URL or the headers always wins: a client cannot set a path value through the body.
 
 A request type can also be a slice or a map, which is decoded from the whole body:
 
@@ -116,7 +116,7 @@ Input that cannot be bound never reaches the handler. The client receives a 400 
   "status": 400,
   "detail": "One or more fields are invalid.",
   "instance": "/users",
-  "errors": [{ "field": "page", "in": "query", "message": "\"two\" is not a valid int" }]
+  "errors": [{ "field": "page", "in": "query", "message": "\"two\" is not a whole number" }]
 }
 ```
 

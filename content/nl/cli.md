@@ -75,7 +75,7 @@ GET      /products        products.NewController in module "products"
 POST     /products        products.NewController in module "products"
 ```
 
-Ze bouwen en starten de applicatie zonder op een poort te luisteren, via de omgevingsvariabele `GONESTLY_INSPECT`. Providers starten gewoon, dus de database verbindt en openstaande migraties worden uitgevoerd.
+Ze bouwen en starten de applicatie zonder op een poort te luisteren, via de omgevingsvariabele `GONESTLY_INSPECT`. Providers starten gewoon, dus de database verbindt en openstaande migraties worden uitgevoerd. Het resultaat gaat naar een bestand, zodat wat de applicatie zelf print er niet in terecht kan komen.
 
 ## Migraties
 

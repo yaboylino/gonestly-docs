@@ -97,7 +97,7 @@ type UpdateUserRequest struct {
 | Header | `header:"X-Tenant"`    | Een slice verzamelt herhaalde headers.                                  |
 | Body   | geen, of `json:"name"` | Gelezen met `encoding/json`.                                            |
 
-Velden uit pad, query en headers ondersteunen strings, booleans, getallen, `time.Duration`, slices en elk type dat `encoding.TextUnmarshaler` implementeert, zoals `time.Time` of `uuid.UUID`. Een waarde uit de URL of de headers wint altijd: een client kan een padwaarde niet via de body zetten.
+Velden uit pad, query en headers ondersteunen strings, booleans, getallen, `time.Duration`, slices en elk type dat `encoding.TextUnmarshaler` implementeert, zoals `time.Time` of `uuid.UUID`. Gebruik een pointer, zoals `*int`, om een ontbrekende parameter te onderscheiden van de waarde nul: die blijft `nil` als de client hem niet meestuurt. Een waarde uit de URL of de headers wint altijd: een client kan een padwaarde niet via de body zetten.
 
 Een requesttype kan ook een slice of een map zijn, die uit de hele body wordt gelezen:
 
@@ -116,7 +116,7 @@ Invoer die niet gebonden kan worden, bereikt de handler nooit. De client krijgt 
   "status": 400,
   "detail": "One or more fields are invalid.",
   "instance": "/users",
-  "errors": [{ "field": "page", "in": "query", "message": "\"two\" is not a valid int" }]
+  "errors": [{ "field": "page", "in": "query", "message": "\"two\" is not a whole number" }]
 }
 ```
 

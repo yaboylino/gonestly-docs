@@ -23,6 +23,8 @@ Slaagt elke stap, dan stopt de draaiende applicatie netjes en start de nieuwe ve
 ✓ restarted in 450ms
 ```
 
+Ctrl+C stopt de applicatie op dezelfde manier: die krijgt één interrupt en de tijd om lopende requests af te maken.
+
 Faalt een stap, dan wordt de applicatie **gestopt** en staat elk probleem met bestand, regel en melding op een rij:
 
 ```text

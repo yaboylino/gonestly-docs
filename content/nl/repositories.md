@@ -72,6 +72,22 @@ func (c *Controller) Find(ctx context.Context, req FindRequest) (User, error) {
 
 Controleer erop met `errors.Is(err, sql.ErrNotFound)` als je hem zelf wilt afhandelen, bijvoorbeeld om met `gonestly.NotFound` een specifiekere melding te geven.
 
+## Een duplicaat is een 409
+
+Breekt een insert of update een unieke constraint, of herhaalt hij een primaire sleutel, dan is de fout `sql.ErrConflict`. Ook dat is een HTTP-fout, dus een tweede aanmelding met hetzelfde e-mailadres geeft **409 Conflict** in plaats van een 500:
+
+```json
+{
+  "type": "about:blank",
+  "title": "Conflict",
+  "status": 409,
+  "detail": "A record with these values already exists.",
+  "instance": "/users"
+}
+```
+
+Controleer erop met `errors.Is(err, sql.ErrConflict)` om te zeggen welke waarde bezet is, bijvoorbeeld met `gonestly.Conflict("the email address is already in use")`. De fout van de driver blijft beschikbaar voor `errors.As`. Hetzelfde geldt voor ruwe queries en de query builder.
+
 ## Je eigen repository
 
 Voor queries die bij één tabel horen, bed je de repository in je eigen type in:

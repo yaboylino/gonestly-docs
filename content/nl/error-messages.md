@@ -82,12 +82,13 @@ invalid route: GET /users/{userId} in users.NewController in module "users": Fin
 
 De [SQL-laag](database) meldt zijn problemen met deze fouten:
 
-| Fout                  | Betekenis                                                                                |
-| --------------------- | ---------------------------------------------------------------------------------------- |
-| `sql.ErrNotFound`     | Een query vond geen rij. Teruggegeven vanuit een handler wordt het een 404.              |
-| `sql.ErrTooManyRows`  | `QueryOne` vond meer dan één rij.                                                        |
-| `sql.ErrUnsafeQuery`  | Een update of delete heeft geen conditie; gebruik `sql.Always()` om alle rijen te raken. |
-| `sql.ErrInvalidModel` | Een struct past niet op een tabel, bijvoorbeeld omdat twee velden één kolom gebruiken.   |
+| Fout                  | Betekenis                                                                                            |
+| --------------------- | ---------------------------------------------------------------------------------------------------- |
+| `sql.ErrNotFound`     | Een query vond geen rij. Teruggegeven vanuit een handler wordt het een 404.                          |
+| `sql.ErrConflict`     | Een unieke waarde of primaire sleutel bestaat al. Teruggegeven vanuit een handler wordt het een 409. |
+| `sql.ErrTooManyRows`  | `QueryOne` vond meer dan één rij.                                                                    |
+| `sql.ErrUnsafeQuery`  | Een update of delete heeft geen conditie; gebruik `sql.Always()` om alle rijen te raken.             |
+| `sql.ErrInvalidModel` | Een struct past niet op een tabel, bijvoorbeeld omdat twee velden één kolom gebruiken.               |
 
 Bij het inlezen wordt een kolom zonder bijbehorend veld bij naam gemeld, zoals `the column "email" has no field in User; add a field with db:"email"`, en fouten met placeholders als `the query has 1 placeholders but 2 arguments`. Zie [migraties](migrations#veiligheidscontroles) voor de meldingen van de migrator.
 

@@ -72,6 +72,22 @@ func (c *Controller) Find(ctx context.Context, req FindRequest) (User, error) {
 
 Check for it with `errors.Is(err, sql.ErrNotFound)` when you want to handle it yourself, for example to return a more specific message with `gonestly.NotFound`.
 
+## A duplicate is a 409
+
+When an insert or update breaks a unique constraint or repeats a primary key, the error is `sql.ErrConflict`. It is an HTTP error too, so a second sign-up with the same email address answers **409 Conflict** instead of a 500:
+
+```json
+{
+  "type": "about:blank",
+  "title": "Conflict",
+  "status": 409,
+  "detail": "A record with these values already exists.",
+  "instance": "/users"
+}
+```
+
+Check for it with `errors.Is(err, sql.ErrConflict)` to say which value is taken, for example with `gonestly.Conflict("the email address is already in use")`. The error of the driver stays available to `errors.As`. The same holds for raw queries and the query builder.
+
 ## Your own repository
 
 For queries specific to a table, embed the repository in your own type:

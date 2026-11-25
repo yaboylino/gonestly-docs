@@ -54,6 +54,18 @@ err := db.Transaction(ctx, func(ctx context.Context) error {
 })
 ```
 
+## Read only and isolation
+
+Pass options to change how the transaction begins:
+
+```go
+err := db.Transaction(ctx, func(ctx context.Context) error {
+	return buildReport(ctx)
+}, sql.ReadOnly(), sql.Isolation(sql.LevelRepeatableRead))
+```
+
+`sql.ReadOnly()` makes the database reject every write in the transaction, which suits reports that must see one consistent state. `sql.Isolation` takes `sql.LevelReadCommitted`, `sql.LevelRepeatableRead` or `sql.LevelSerializable`; the database decides which levels it supports, and SQLite ignores the level because its transactions are always serializable. Options belong to the outermost transaction: a nested call with options returns an error, because a savepoint cannot change them.
+
 ## Concurrency
 
 A transaction uses a single connection. Do not run queries on the transaction's context from several goroutines at the same time; run concurrent work outside the transaction, or one query after another inside it.

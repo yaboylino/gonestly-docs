@@ -36,15 +36,29 @@ func (c *Controller) Routes(r *gonestly.Router) {
 Middleware voor de hele server hoort in de [serverconfiguratie](http-server#configuratie). Die draait ook voor requests die bij geen enkele route passen, wat belangrijk is voor CORS-preflightrequests:
 
 ```go
-func NewServerConfig(cfg Config) gonestly.ServerConfig {
+func NewServerConfig(cfg Config, logger *slog.Logger) gonestly.ServerConfig {
 	return gonestly.ServerConfig{
 		Addr:       fmt.Sprintf(":%d", cfg.Port),
-		Middleware: []gonestly.Middleware{middleware.RequestID, cors.Handler},
+		Middleware: []gonestly.Middleware{gonestly.RequestID(), gonestly.AccessLog(logger), cors.Handler},
 	}
 }
 ```
 
 In beide gevallen is de eerste middleware in de lijst de buitenste.
+
+## Request-ID's en de access-log
+
+Het framework levert twee stukken middleware mee, en een project van `gonestly new` gebruikt ze allebei.
+
+`gonestly.RequestID()` geeft elk request een ID. De header `X-Request-ID` van een proxy of client blijft behouden zolang die veilig te loggen is; anders komt er een willekeurig ID. Het ID gaat terug in de response-header, en de applicatie zet het in haar eigen logregels over dat request, zoals die van een 500. Lees het in een handler met `gonestly.RequestIDFrom(ctx)`, bijvoorbeeld om het door te geven aan een andere service.
+
+`gonestly.AccessLog(logger)` logt elk request zodra het beantwoord is:
+
+```text
+level=INFO msg=request method=GET path=/users/42 request_id=req-1 status=200 bytes=64 duration=1.2ms
+```
+
+Een 5xx-status wordt op errorniveau gelogd. Zet `RequestID` vooraan, zodat de access-log het ID kan tonen.
 
 ## Middleware, guards of interceptors
 

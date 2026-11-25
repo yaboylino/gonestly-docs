@@ -36,15 +36,29 @@ func (c *Controller) Routes(r *gonestly.Router) {
 Middleware for the whole server goes into the [server configuration](http-server#configuration). It also runs for requests that match no route, which matters for CORS preflight requests:
 
 ```go
-func NewServerConfig(cfg Config) gonestly.ServerConfig {
+func NewServerConfig(cfg Config, logger *slog.Logger) gonestly.ServerConfig {
 	return gonestly.ServerConfig{
 		Addr:       fmt.Sprintf(":%d", cfg.Port),
-		Middleware: []gonestly.Middleware{middleware.RequestID, cors.Handler},
+		Middleware: []gonestly.Middleware{gonestly.RequestID(), gonestly.AccessLog(logger), cors.Handler},
 	}
 }
 ```
 
 In both cases the first middleware in the list is the outermost.
+
+## Request IDs and the access log
+
+Two pieces of middleware come with the framework, and a project made with `gonestly new` uses both.
+
+`gonestly.RequestID()` gives every request an ID. It keeps the `X-Request-ID` header that a proxy or client sent, as long as it is safe to log, and makes a random one otherwise. The ID goes back in the response header, and the application adds it to its own log lines about that request, such as the one for a 500. Read it in a handler with `gonestly.RequestIDFrom(ctx)`, for example to pass it on to another service.
+
+`gonestly.AccessLog(logger)` logs every request once it is answered:
+
+```text
+level=INFO msg=request method=GET path=/users/42 request_id=req-1 status=200 bytes=64 duration=1.2ms
+```
+
+A 5xx status is logged at error level. Put `RequestID` first, so the access log can show the ID.
 
 ## Middleware, guards or interceptors
 

@@ -54,6 +54,18 @@ err := db.Transaction(ctx, func(ctx context.Context) error {
 })
 ```
 
+## Alleen-lezen en isolatie
+
+Geef opties mee om te bepalen hoe de transactie begint:
+
+```go
+err := db.Transaction(ctx, func(ctx context.Context) error {
+	return buildReport(ctx)
+}, sql.ReadOnly(), sql.Isolation(sql.LevelRepeatableRead))
+```
+
+Met `sql.ReadOnly()` weigert de database elke schrijfactie in de transactie, wat past bij rapporten die één consistente toestand moeten zien. `sql.Isolation` neemt `sql.LevelReadCommitted`, `sql.LevelRepeatableRead` of `sql.LevelSerializable`; de database bepaalt welke niveaus bestaan, en SQLite negeert het niveau omdat zijn transacties altijd serializable zijn. Opties horen bij de buitenste transactie: een geneste aanroep met opties geeft een fout, omdat een savepoint ze niet kan veranderen.
+
 ## Gelijktijdigheid
 
 Een transactie gebruikt één verbinding. Voer geen queries tegelijk uit op de context van de transactie vanuit meerdere goroutines; doe gelijktijdig werk buiten de transactie, of voer de queries binnen de transactie na elkaar uit.

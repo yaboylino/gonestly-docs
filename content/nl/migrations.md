@@ -43,6 +43,17 @@ import "embed"
 var Files embed.FS
 ```
 
+### Buiten een transactie
+
+Sommige statements kunnen niet in een transactie draaien, zoals `CREATE INDEX CONCURRENTLY` in PostgreSQL, dat een index bouwt zonder schrijfacties te blokkeren. Begin het bestand met dit commentaar om het erbuiten te draaien:
+
+```sql title="migrations/0007_index_orders.up.sql"
+-- gonestly:no-transaction
+CREATE INDEX CONCURRENTLY IF NOT EXISTS orders_customer ON orders (customer_id);
+```
+
+De statements draaien dan één voor één. Mislukt er een, dan blijven de eerdere staan en wordt de migratie niet vastgelegd. Houd zo'n bestand dus bij één statement, of schrijf het zo dat het opnieuw kan draaien, zoals met `IF NOT EXISTS` hierboven. Het commentaar geldt per bestand: zet het ook in het down-bestand als dat het nodig heeft.
+
 ## Uitvoeren bij het starten
 
 Geef de bestanden mee aan de [databasemodule](database), en openstaande migraties worden uitgevoerd voordat een provider de database gebruikt:

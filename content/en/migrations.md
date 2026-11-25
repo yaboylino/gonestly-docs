@@ -43,6 +43,17 @@ import "embed"
 var Files embed.FS
 ```
 
+### Outside a transaction
+
+Some statements cannot run in a transaction, such as `CREATE INDEX CONCURRENTLY` in PostgreSQL, which builds an index without blocking writes. Start the file with this comment to run it outside one:
+
+```sql title="migrations/0007_index_orders.up.sql"
+-- gonestly:no-transaction
+CREATE INDEX CONCURRENTLY IF NOT EXISTS orders_customer ON orders (customer_id);
+```
+
+The statements then run one by one. When one fails, the ones before it stay applied and the migration is not recorded, so keep such a file to a single statement, or write it so that it can run again, as with `IF NOT EXISTS` above. The comment works per file: add it to the down file as well when that needs it.
+
 ## Applying them at startup
 
 Pass the files to the [database module](database), and pending migrations are applied before any provider uses the database:

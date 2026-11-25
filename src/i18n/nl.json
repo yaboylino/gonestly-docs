@@ -16,7 +16,8 @@
       "techniques": "Technieken",
       "fundamentals": "Basisprincipes",
       "roadmap": "Roadmap",
-      "database": "Database"
+      "database": "Database",
+      "cli": "CLI"
     },
     "introduction": "Introductie",
     "firstSteps": "Eerste stappen",
@@ -40,7 +41,10 @@
     "customProviders": "Eigen providers",
     "testing": "Testen",
     "errorMessages": "Foutmeldingen",
-    "roadmap": "Roadmap"
+    "roadmap": "Roadmap",
+    "cli": "Overzicht",
+    "devMode": "Dev-modus",
+    "generators": "Generators"
   },
   "shell": {
     "skipToContent": "Direct naar de inhoud",

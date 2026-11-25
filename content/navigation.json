@@ -121,6 +121,26 @@
           ]
         },
         {
+          "label": "nav.sections.cli",
+          "items": [
+            {
+              "slug": "cli",
+              "label": "nav.cli",
+              "icon": "terminal-window"
+            },
+            {
+              "slug": "dev-mode",
+              "label": "nav.devMode",
+              "icon": "lightning"
+            },
+            {
+              "slug": "generators",
+              "label": "nav.generators",
+              "icon": "magic-wand"
+            }
+          ]
+        },
+        {
           "label": "nav.sections.fundamentals",
           "items": [
             {

@@ -77,4 +77,4 @@ reverted, err := migrator.Down(ctx)    // draai de laatst uitgevoerde migratie t
 status, err := migrator.Status(ctx)    // elke migratie en of hij is uitgevoerd
 ```
 
-De CLI gaat hetzelfde bieden via `gonestly migrate`.
+De [CLI](cli#migraties) biedt hetzelfde via `gonestly migrate`, plus `gonestly migrate create <naam>` om een nieuwe migratie te beginnen.

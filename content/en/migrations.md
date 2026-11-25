@@ -77,4 +77,4 @@ reverted, err := migrator.Down(ctx)    // revert the latest applied migration
 status, err := migrator.Status(ctx)    // every migration and whether it is applied
 ```
 
-The CLI will offer the same through `gonestly migrate`.
+The [CLI](cli#migrations) offers the same through `gonestly migrate`, together with `gonestly migrate create <name>` to start a new migration.

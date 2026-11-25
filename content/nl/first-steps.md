@@ -13,6 +13,19 @@ Je hebt **Go 1.26 of nieuwer** nodig. Controleer je versie met:
 go version
 ```
 
+## De snelle manier
+
+De [CLI](cli) maakt een project dat direct draait, met configuratie, validatie, een health check en de API-documentatie:
+
+```sh
+gonestly new shop --database sqlite
+cd shop
+gonestly generate resource products
+gonestly dev
+```
+
+Open http://localhost:3000/docs en de products-API staat klaar om uit te proberen. De rest van deze handleiding bouwt met de hand een kleine API, zodat je ziet wat elk onderdeel doet.
+
 ## Installatie
 
 Maak een nieuwe module en voeg Gonestly toe:

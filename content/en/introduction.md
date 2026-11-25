@@ -22,16 +22,16 @@ Three principles guide the design:
 
 ## What is available today
 
-| Part                                                                                                                              | Status             |
-| --------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| [Modules](modules) and [providers](providers)                                                                                     | Available          |
-| [Lifecycle events](lifecycle-events) and graceful shutdown                                                                        | Available          |
-| [Configuration](configuration) from the environment and `.env` files                                                              | Available          |
-| [Testing](testing) with overrides                                                                                                 | Available          |
-| [Controllers](controllers), [validation](validation), [guards](guards) and [interceptors](interceptors)                           | Available          |
-| [OpenAPI](openapi) and Swagger UI for every route                                                                                 | Available          |
-| [Database](database): [repositories](repositories), [queries](queries), [transactions](transactions) and [migrations](migrations) | Available          |
-| CLI with generators and a watch mode                                                                                              | [Planned](roadmap) |
+| Part                                                                                                                              | Status    |
+| --------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| [Modules](modules) and [providers](providers)                                                                                     | Available |
+| [Lifecycle events](lifecycle-events) and graceful shutdown                                                                        | Available |
+| [Configuration](configuration) from the environment and `.env` files                                                              | Available |
+| [Testing](testing) with overrides                                                                                                 | Available |
+| [Controllers](controllers), [validation](validation), [guards](guards) and [interceptors](interceptors)                           | Available |
+| [OpenAPI](openapi) and Swagger UI for every route                                                                                 | Available |
+| [Database](database): [repositories](repositories), [queries](queries), [transactions](transactions) and [migrations](migrations) | Available |
+| The [CLI](cli) with [generators](generators) and a [dev mode](dev-mode)                                                           | Available |
 
 ## Next steps
 

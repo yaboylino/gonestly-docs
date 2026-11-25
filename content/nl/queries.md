@@ -29,8 +29,8 @@ users, err := sql.From[User](db).
 
 Een kolom kent zijn type, dus `userTeamID.Eq("1")` compileert niet. Elke methode geeft een nieuwe query terug, zodat je een basisquery één keer opbouwt en veilig uitbreidt.
 
-> [!NOTE]
-> De CLI gaat de kolommen van je modellen genereren. Tot die tijd declareer je ze met `sql.Col`.
+> [!HINT]
+> `gonestly generate columns` schrijft deze kolommen voor elk model in een package; zie [generators](generators#getypeerde-kolommen).
 
 ### Condities
 

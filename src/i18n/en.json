@@ -16,7 +16,8 @@
       "techniques": "Techniques",
       "fundamentals": "Fundamentals",
       "roadmap": "Roadmap",
-      "database": "Database"
+      "database": "Database",
+      "cli": "CLI"
     },
     "introduction": "Introduction",
     "firstSteps": "First steps",
@@ -40,7 +41,10 @@
     "customProviders": "Custom providers",
     "testing": "Testing",
     "errorMessages": "Error messages",
-    "roadmap": "Roadmap"
+    "roadmap": "Roadmap",
+    "cli": "Overview",
+    "devMode": "Dev mode",
+    "generators": "Generators"
   },
   "shell": {
     "skipToContent": "Skip to content",

@@ -3,7 +3,7 @@ title: Roadmap
 description: What Gonestly offers today and what comes next, from HTTP controllers to the SQL layer and the CLI.
 ---
 
-Gonestly is built in phases. Each phase is finished, tested and documented before the next one starts, and the first public release follows once the CLI is in place.
+Gonestly is built in phases. Each phase is finished, tested and documented before the next one starts, and the first public release follows now that the CLI is in place.
 
 ## Available
 
@@ -14,17 +14,11 @@ Gonestly is built in phases. Each phase is finished, tested and documented befor
 - **Database**: [repositories](repositories), a typed [query builder](queries), [transactions](transactions) and [migrations](migrations) for PostgreSQL and SQLite.
 - **HTTP** [controllers](controllers) with typed handlers, request binding, [validation](validation), [guards](guards), [interceptors](interceptors), [middleware](middleware) and problem details for errors.
 - **OpenAPI** for every route, generated from the code and served with Swagger UI; see [OpenAPI](openapi).
+- **CLI**: [new projects, generators](cli), a [dev mode](dev-mode) that stops the application when a change breaks it, and migrations.
 
 ## MySQL
 
 MySQL support for the SQL layer, after PostgreSQL and SQLite.
-
-## CLI
-
-- `gonestly new` creates a project that runs immediately.
-- `gonestly generate` creates modules, controllers, services and complete CRUD resources, and registers them in the right module.
-- `gonestly dev` watches the project and checks it on every save: it builds the code, runs `go vet` and, with `--test`, the tests of the packages you changed. When everything passes, the application restarts. When something fails, the application stops and every problem is listed with its file and line, so a broken change never looks like it works.
-- `gonestly migrate`, `gonestly routes` and `gonestly openapi`.
 
 ## Follow along
 

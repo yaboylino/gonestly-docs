@@ -29,8 +29,8 @@ users, err := sql.From[User](db).
 
 A column carries its type, so `userTeamID.Eq("1")` does not compile. Every method returns a new query, so you can build a base query once and extend it safely.
 
-> [!NOTE]
-> The CLI will generate the columns of your models. Until then, declare them with `sql.Col`.
+> [!HINT]
+> `gonestly generate columns` writes these columns for every model in a package; see [generators](generators#typed-columns).
 
 ### Conditions
 

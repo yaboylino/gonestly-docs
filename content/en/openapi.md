@@ -116,6 +116,8 @@ Types that implement `encoding.TextMarshaler`, such as `uuid.UUID` or `netip.Add
 
 ## Using the document
 
+`gonestly openapi -o openapi.json` writes the document from the command line; see the [CLI](cli#routes-and-openapi).
+
 `app.OpenAPI()` returns the document as JSON, also when serving is disabled. Write it to a file in CI to generate clients or to check for breaking changes:
 
 ```go

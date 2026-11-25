@@ -22,16 +22,16 @@ Drie principes sturen het ontwerp:
 
 ## Wat er nu beschikbaar is
 
-| Onderdeel                                                                                                                      | Status             |
-| ------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| [Modules](modules) en [providers](providers)                                                                                   | Beschikbaar        |
-| [Lifecycle-events](lifecycle-events) en netjes afsluiten                                                                       | Beschikbaar        |
-| [Configuratie](configuration) uit de omgeving en `.env`-bestanden                                                              | Beschikbaar        |
-| [Testen](testing) met overrides                                                                                                | Beschikbaar        |
-| [Controllers](controllers), [validatie](validation), [guards](guards) en [interceptors](interceptors)                          | Beschikbaar        |
-| [OpenAPI](openapi) en Swagger UI voor elke route                                                                               | Beschikbaar        |
-| [Database](database): [repositories](repositories), [queries](queries), [transacties](transactions) en [migraties](migrations) | Beschikbaar        |
-| CLI met generators en een watch-modus                                                                                          | [Gepland](roadmap) |
+| Onderdeel                                                                                                                      | Status      |
+| ------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| [Modules](modules) en [providers](providers)                                                                                   | Beschikbaar |
+| [Lifecycle-events](lifecycle-events) en netjes afsluiten                                                                       | Beschikbaar |
+| [Configuratie](configuration) uit de omgeving en `.env`-bestanden                                                              | Beschikbaar |
+| [Testen](testing) met overrides                                                                                                | Beschikbaar |
+| [Controllers](controllers), [validatie](validation), [guards](guards) en [interceptors](interceptors)                          | Beschikbaar |
+| [OpenAPI](openapi) en Swagger UI voor elke route                                                                               | Beschikbaar |
+| [Database](database): [repositories](repositories), [queries](queries), [transacties](transactions) en [migraties](migrations) | Beschikbaar |
+| De [CLI](cli) met [generators](generators) en een [dev-modus](dev-mode)                                                        | Beschikbaar |
 
 ## Volgende stappen
 

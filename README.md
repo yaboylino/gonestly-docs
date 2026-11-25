@@ -49,6 +49,10 @@ Link to other pages by their slug, such as `[modules](modules#global-modules)`. 
 
 Add the language code to `content/site.json`, create `src/i18n/<language>.json` with every key of `en.json`, add it to the loader in `src/app/language/bundled-translate-loader.ts`, give the callouts a label in `scripts/content/markdown.mjs`, and translate every page into `content/<language>`.
 
+## Deployment
+
+Every push to `main` builds the site and publishes it to GitHub Pages at https://yaboylino.github.io/gonestly-docs. The base path comes from the `url` in `content/site.json`, so moving to another domain is a one line change.
+
 ## License
 
 [MIT](LICENSE)

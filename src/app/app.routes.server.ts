@@ -5,7 +5,7 @@ import { defaultLanguage, languages } from '../generated/site';
 
 const slugs = navAreas.flatMap((area) => area.sections.flatMap((s) => s.items.map((i) => i.slug)));
 
-// The extra "404" page is copied to 404.html after the build, for static hosts.
+// The extra "404" page becomes 404.html in scripts/build.mjs, for static hosts.
 export const serverRoutes: ServerRoute[] = [
   { path: '', renderMode: RenderMode.Prerender },
   {

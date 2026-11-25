@@ -29,6 +29,7 @@ Drie principes sturen het ontwerp:
 | [Configuratie](configuration) uit de omgeving en `.env`-bestanden                                                              | Beschikbaar        |
 | [Testen](testing) met overrides                                                                                                | Beschikbaar        |
 | [Controllers](controllers), [validatie](validation), [guards](guards) en [interceptors](interceptors)                          | Beschikbaar        |
+| [OpenAPI](openapi) en Swagger UI voor elke route                                                                               | Beschikbaar        |
 | [Database](database): [repositories](repositories), [queries](queries), [transacties](transactions) en [migraties](migrations) | Beschikbaar        |
 | CLI met generators en een watch-modus                                                                                          | [Gepland](roadmap) |
 

@@ -3,7 +3,7 @@ title: Roadmap
 description: Wat Gonestly nu biedt en wat er nog komt, van HTTP-controllers tot de SQL-laag en de CLI.
 ---
 
-Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voordat de volgende begint, en de eerste openbare release volgt zodra OpenAPI en de CLI er zijn.
+Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voordat de volgende begint, en de eerste openbare release volgt zodra de CLI er is.
 
 ## Beschikbaar
 
@@ -13,10 +13,7 @@ Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voord
 - **Testen** met overrides en requests zonder poort.
 - **Database**: [repositories](repositories), een getypeerde [querybuilder](queries), [transacties](transactions) en [migraties](migrations) voor PostgreSQL en SQLite.
 - **HTTP**: [controllers](controllers) met getypeerde handlers, binding van requests, [validatie](validation), [guards](guards), [interceptors](interceptors), [middleware](middleware) en problem details voor fouten.
-
-## OpenAPI
-
-Een OpenAPI-document dat automatisch voor elke route wordt gegenereerd, uit zijn pad, parameters, request- en responsetypes en validatieregels, en dat samen met Swagger UI wordt geserveerd. Net als bij FastAPI volgt de documentatie uit de code, zonder annotaties. Dit is de volgende fase.
+- **OpenAPI** voor elke route, gegenereerd uit de code en geserveerd met Swagger UI; zie [OpenAPI](openapi).
 
 ## MySQL
 

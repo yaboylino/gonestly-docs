@@ -63,6 +63,10 @@ http.Handle("/api/", http.StripPrefix("/api", app.Handler()))
 
 [Tests](testing) use the same approach through the `gonestlytest` package.
 
+## API documentation
+
+The server also serves the [OpenAPI](openapi) document at `/openapi.json` and Swagger UI at `/docs`. Configure or disable them with `gonestly.OpenAPIConfig`.
+
 ## Listing the routes
 
 `app.Routes` returns every route with its method, path and controller, for example to print them at startup or check them in a test:

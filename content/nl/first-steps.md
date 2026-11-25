@@ -181,7 +181,7 @@ curl localhost:3000/users/2
 # {"type":"about:blank","title":"Not Found","status":404,"detail":"user 2 does not exist","instance":"/users/2"}
 ```
 
-De server luistert standaard op poort 3000; de pagina [HTTP-server](http-server) legt uit hoe je dat aanpast. Druk op Ctrl+C en de applicatie stopt netjes, nadat de lopende requests zijn afgerond.
+Open http://localhost:3000/docs om de API in Swagger UI te zien, gegenereerd uit je code; zie [OpenAPI](openapi). De server luistert standaard op poort 3000; de pagina [HTTP-server](http-server) legt uit hoe je dat aanpast. Druk op Ctrl+C en de applicatie stopt netjes, nadat de lopende requests zijn afgerond.
 
 ## Als er iets mis is
 

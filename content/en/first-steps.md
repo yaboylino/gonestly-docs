@@ -181,7 +181,7 @@ curl localhost:3000/users/2
 # {"type":"about:blank","title":"Not Found","status":404,"detail":"user 2 does not exist","instance":"/users/2"}
 ```
 
-The server listens on port 3000 by default; the [HTTP server](http-server) page explains how to change it. Press Ctrl+C and the application stops cleanly, after finishing the requests that are still running.
+Open http://localhost:3000/docs to see the API in Swagger UI, generated from your code; see [OpenAPI](openapi). The server listens on port 3000 by default; the [HTTP server](http-server) page explains how to change it. Press Ctrl+C and the application stops cleanly, after finishing the requests that are still running.
 
 ## When something is wrong
 

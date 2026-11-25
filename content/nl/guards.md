@@ -86,6 +86,16 @@ var AdminOnly = gonestly.GuardFunc(func(ctx context.Context, r *http.Request) (c
 })
 ```
 
+## In de API-documentatie
+
+Een guard die `gonestly.SecuredGuard` implementeert, vertelt het [OpenAPI](openapi)-document hoe clients inloggen. Elke route die hij beschermt, krijgt het schema en een 401-response, en Swagger UI toont een Authorize-knop:
+
+```go
+func (g *Guard) SecurityScheme() (string, gonestly.SecurityScheme) {
+	return "bearer", gonestly.SecurityScheme{Type: "http", Scheme: "bearer", BearerFormat: "JWT"}
+}
+```
+
 ## Waar guards gelden
 
 | Bereik                                    | Hoe                                                           |

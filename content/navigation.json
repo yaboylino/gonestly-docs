@@ -82,6 +82,11 @@
               "slug": "http-server",
               "label": "nav.httpServer",
               "icon": "hard-drives"
+            },
+            {
+              "slug": "openapi",
+              "label": "nav.openapi",
+              "icon": "brackets-curly"
             }
           ]
         },

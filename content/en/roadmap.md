@@ -3,7 +3,7 @@ title: Roadmap
 description: What Gonestly offers today and what comes next, from HTTP controllers to the SQL layer and the CLI.
 ---
 
-Gonestly is built in phases. Each phase is finished, tested and documented before the next one starts, and the first public release follows once OpenAPI and the CLI are in place.
+Gonestly is built in phases. Each phase is finished, tested and documented before the next one starts, and the first public release follows once the CLI is in place.
 
 ## Available
 
@@ -13,10 +13,7 @@ Gonestly is built in phases. Each phase is finished, tested and documented befor
 - **Testing** with overrides and requests without a port.
 - **Database**: [repositories](repositories), a typed [query builder](queries), [transactions](transactions) and [migrations](migrations) for PostgreSQL and SQLite.
 - **HTTP** [controllers](controllers) with typed handlers, request binding, [validation](validation), [guards](guards), [interceptors](interceptors), [middleware](middleware) and problem details for errors.
-
-## OpenAPI
-
-An OpenAPI document generated automatically for every route, from its path, parameters, request and response types and validation rules, served together with Swagger UI. Like FastAPI, the documentation follows from the code, without annotations. This is the next phase.
+- **OpenAPI** for every route, generated from the code and served with Swagger UI; see [OpenAPI](openapi).
 
 ## MySQL
 

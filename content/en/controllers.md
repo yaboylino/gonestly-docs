@@ -142,6 +142,10 @@ For responses that are not JSON, such as files or streams, register a plain `htt
 gonestly.Handle(r, http.MethodGet, "/{id}/avatar", http.HandlerFunc(c.Avatar))
 ```
 
+## Documentation
+
+Every route appears in the [OpenAPI](openapi) document and Swagger UI automatically. Add a summary, description or tags with route options such as `gonestly.Summary`, and describe fields with `doc` and `example` tags.
+
 ## Groups
 
 `Group` registers routes under an extra prefix. Guards, interceptors and middleware added inside the group only apply to its routes:

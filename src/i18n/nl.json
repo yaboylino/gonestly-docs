@@ -27,6 +27,7 @@
     "guards": "Guards",
     "interceptors": "Interceptors",
     "httpServer": "HTTP-server",
+    "openapi": "OpenAPI",
     "database": "Database",
     "queries": "Queries",
     "repositories": "Repositories",

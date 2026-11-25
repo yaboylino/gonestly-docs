@@ -29,6 +29,7 @@ Three principles guide the design:
 | [Configuration](configuration) from the environment and `.env` files                                                              | Available          |
 | [Testing](testing) with overrides                                                                                                 | Available          |
 | [Controllers](controllers), [validation](validation), [guards](guards) and [interceptors](interceptors)                           | Available          |
+| [OpenAPI](openapi) and Swagger UI for every route                                                                                 | Available          |
 | [Database](database): [repositories](repositories), [queries](queries), [transactions](transactions) and [migrations](migrations) | Available          |
 | CLI with generators and a watch mode                                                                                              | [Planned](roadmap) |
 

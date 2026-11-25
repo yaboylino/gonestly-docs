@@ -232,10 +232,10 @@ async function writeGenerated(site, navigation, pages, iconSvgs) {
       const alternates = site.languages
         .map(
           (l) =>
-            `    <xhtml:link rel="alternate" hreflang="${l}" href="${site.url}/${l}/${slug}"/>`,
+            `    <xhtml:link rel="alternate" hreflang="${l}" href="${site.url}/${l}/${slug}/"/>`,
         )
         .join('\n');
-      return `  <url>\n    <loc>${site.url}/${lang}/${slug}</loc>\n${alternates}\n  </url>`;
+      return `  <url>\n    <loc>${site.url}/${lang}/${slug}/</loc>\n${alternates}\n  </url>`;
     }),
   );
   await write(

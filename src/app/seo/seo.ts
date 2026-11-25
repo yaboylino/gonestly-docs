@@ -3,6 +3,9 @@ import { Meta, Title } from '@angular/platform-browser';
 
 import { languages, site, type LanguageCode } from '../../generated/site';
 
+// Static hosts serve each page from a folder, so the URL with a trailing slash is the one without a redirect.
+const pageUrl = (lang: LanguageCode, slug: string) => `${site.url}/${lang}/${slug}/`;
+
 /** Keeps the title, description, canonical URL and language alternates in sync with the page. */
 @Injectable({ providedIn: 'root' })
 export class Seo {
@@ -24,13 +27,9 @@ export class Seo {
       return;
     }
     this.meta.removeTag('name="robots"');
-    this.addLink({ rel: 'canonical', href: `${site.url}/${lang}/${slug}` });
+    this.addLink({ rel: 'canonical', href: pageUrl(lang, slug) });
     for (const alternate of languages) {
-      this.addLink({
-        rel: 'alternate',
-        hreflang: alternate,
-        href: `${site.url}/${alternate}/${slug}`,
-      });
+      this.addLink({ rel: 'alternate', hreflang: alternate, href: pageUrl(alternate, slug) });
     }
   }
 

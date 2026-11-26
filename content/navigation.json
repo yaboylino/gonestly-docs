@@ -184,6 +184,11 @@
               "icon": "arrows-left-right"
             },
             {
+              "slug": "schema",
+              "label": "nav.schema",
+              "icon": "table"
+            },
+            {
               "slug": "migrations",
               "label": "nav.migrations",
               "icon": "git-diff"

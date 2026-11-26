@@ -3,7 +3,7 @@ title: Migrations
 description: Change the schema with versioned SQL files that are applied when the application starts, each in its own transaction.
 ---
 
-Migrations are plain SQL files that change the schema step by step. Gonestly applies the pending ones when the application starts, in order, each in its own transaction, and records them in the `gonestly_migrations` table.
+Migrations are plain SQL files that change the schema step by step. You can write them by hand, as this page shows, or let Gonestly write them from your models: see [schema from your models](schema). Gonestly applies the pending ones when the application starts, in order, each in its own transaction, and records them in the `gonestly_migrations` table.
 
 ## Writing migrations
 
@@ -55,6 +55,18 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS orders_customer ON orders (customer_id);
 ```
 
 The statements then run one by one. When one fails, the ones before it stay applied and the migration is not recorded, so keep such a file to a single statement, or write it so that it can run again, as with `IF NOT EXISTS` above. The comment works per file: add it to the down file as well when that needs it.
+
+### With foreign keys off
+
+SQLite can only add a column and little else, so changing a table means making it again, and dropping the old one would make foreign keys delete rows in the tables that point at it. For that, start the file with this comment, and the migration runs in a transaction with the foreign keys of SQLite switched off. They are checked at the end, and the migration fails when it left a row that violates one. Other databases ignore the comment, and `gonestly migrate dev` writes it when it is needed.
+
+```sql
+-- gonestly:foreign-keys-off
+CREATE TABLE orders__new (...);
+INSERT INTO orders__new SELECT ... FROM orders;
+DROP TABLE orders;
+ALTER TABLE orders__new RENAME TO orders;
+```
 
 ## Applying them at startup
 

@@ -3,7 +3,7 @@ title: Migraties
 description: Wijzig het schema met genummerde SQL-bestanden die bij het starten worden uitgevoerd, elk in een eigen transactie.
 ---
 
-Migraties zijn gewone SQL-bestanden die het schema stap voor stap wijzigen. Gonestly voert de openstaande migraties uit als de applicatie start, op volgorde, elk in een eigen transactie, en legt ze vast in de tabel `gonestly_migrations`.
+Migraties zijn gewone SQL-bestanden die het schema stap voor stap wijzigen. Je kunt ze met de hand schrijven, zoals deze pagina laat zien, of Gonestly ze uit je modellen laten schrijven: zie [schema vanuit je modellen](schema). Gonestly voert de openstaande migraties uit als de applicatie start, op volgorde, elk in een eigen transactie, en legt ze vast in de tabel `gonestly_migrations`.
 
 ## Migraties schrijven
 
@@ -55,6 +55,18 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS orders_customer ON orders (customer_id);
 ```
 
 De statements draaien dan één voor één. Mislukt er een, dan blijven de eerdere staan en wordt de migratie niet vastgelegd. Houd zo'n bestand dus bij één statement, of schrijf het zo dat het opnieuw kan draaien, zoals met `IF NOT EXISTS` hierboven. Het commentaar geldt per bestand: zet het ook in het down-bestand als dat het nodig heeft.
+
+### Met foreign keys uit
+
+SQLite kan alleen een kolom toevoegen en weinig anders, dus een tabel wijzigen betekent hem opnieuw maken, en de oude droppen zou foreign keys rijen laten verwijderen in de tabellen die ernaar wijzen. Begin het bestand daarvoor met deze comment, en de migratie draait in een transactie met de foreign keys van SQLite uitgezet. Ze worden aan het eind gecontroleerd, en de migratie faalt als hij een rij achterliet die er een schendt. Andere databases negeren de comment, en `gonestly migrate dev` schrijft hem als dat nodig is.
+
+```sql
+-- gonestly:foreign-keys-off
+CREATE TABLE orders__new (...);
+INSERT INTO orders__new SELECT ... FROM orders;
+DROP TABLE orders;
+ALTER TABLE orders__new RENAME TO orders;
+```
 
 ## Uitvoeren bij het starten
 

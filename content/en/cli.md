@@ -20,6 +20,7 @@ go install github.com/yaboylino/gonestly/cmd/gonestly@latest
 | `gonestly generate <kind> <name>`                        | Generates a resource, module, controller, service, guard or interceptor; see [generators](generators). |
 | `gonestly generate columns`                              | Generates the typed columns of your models for the [query builder](queries#the-query-builder).         |
 | `gonestly dev`                                           | Runs the application and checks and restarts it on every change; see [dev mode](dev-mode).             |
+| `gonestly migrate dev`, `diff`, `baseline`               | Writes migrations from your models; see [schema](schema).                                              |
 | `gonestly migrate up`, `down`, `status`, `create <name>` | Manages [migrations](migrations).                                                                      |
 | `gonestly routes`                                        | Lists every route.                                                                                     |
 | `gonestly openapi [-o file]`                             | Prints or writes the [OpenAPI](openapi) document.                                                      |
@@ -139,7 +140,8 @@ They build and start the application without listening on a port, by setting the
 `gonestly migrate` reads the database from `DATABASE_URL` in the environment or the `.env` file, and the migrations from the `migrations` directory:
 
 ```sh
-gonestly migrate create add_product_price   # writes an empty up and down file
+gonestly migrate dev                        # writes and applies a migration for the changes in your models
+gonestly migrate create add_product_price   # writes an empty up and down file to fill in by hand
 gonestly migrate status
 gonestly migrate up
 gonestly migrate down

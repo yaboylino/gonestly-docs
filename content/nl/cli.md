@@ -20,6 +20,7 @@ go install github.com/yaboylino/gonestly/cmd/gonestly@latest
 | `gonestly generate <soort> <naam>`                       | Genereert een resource, module, controller, service, guard of interceptor; zie [generators](generators). |
 | `gonestly generate columns`                              | Genereert de getypeerde kolommen van je modellen voor de [querybuilder](queries#de-querybuilder).        |
 | `gonestly dev`                                           | Draait de applicatie en controleert en herstart hem bij elke wijziging; zie [dev-modus](dev-mode).       |
+| `gonestly migrate dev`, `diff`, `baseline`               | Schrijft migraties uit je modellen; zie [schema](schema).                                                |
 | `gonestly migrate up`, `down`, `status`, `create <naam>` | Beheert [migraties](migrations).                                                                         |
 | `gonestly routes`                                        | Toont elke route.                                                                                        |
 | `gonestly openapi [-o bestand]`                          | Toont of schrijft het [OpenAPI](openapi)-document.                                                       |
@@ -139,7 +140,8 @@ Ze bouwen en starten de applicatie zonder op een poort te luisteren, via de omge
 `gonestly migrate` leest de database uit `DATABASE_URL` in de omgeving of het `.env`-bestand, en de migraties uit de map `migrations`:
 
 ```sh
-gonestly migrate create add_product_price   # schrijft een leeg up- en down-bestand
+gonestly migrate dev                        # schrijft en past een migratie toe voor de wijzigingen in je modellen
+gonestly migrate create add_product_price   # schrijft een leeg up- en down-bestand om met de hand in te vullen
 gonestly migrate status
 gonestly migrate up
 gonestly migrate down

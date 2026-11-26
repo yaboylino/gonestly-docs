@@ -47,6 +47,7 @@
     "repositories": "Repositories",
     "relations": "Relaties",
     "transactions": "Transacties",
+    "schema": "Schema",
     "migrations": "Migraties",
     "modules": "Modules",
     "providers": "Providers",

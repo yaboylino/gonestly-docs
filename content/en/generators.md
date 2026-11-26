@@ -41,9 +41,10 @@ internal/products/
 migrations/
   20261125183712_create_products.up.sql
   20261125183712_create_products.down.sql
+  schema.snapshot.json
 ```
 
-The migration uses the column types of your database, detected from the driver in `go.mod`. The test is generated for SQLite projects, where it runs without a server. Start the application and the routes appear in `/docs`.
+The migration is written from the model with [schema from your models](schema), in the column types of your database, detected from the driver in `go.mod`. Change the model later and `gonestly migrate dev` writes the next migration. The test is generated for SQLite projects, where it runs without a server. Start the application and the routes appear in `/docs`.
 
 A resource needs a project with a database; create one with `gonestly new <dir> --database postgres`, `--database mysql` or `--database sqlite`.
 

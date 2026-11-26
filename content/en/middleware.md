@@ -55,10 +55,10 @@ Two pieces of middleware come with the framework, and a project made with `gones
 `gonestly.AccessLog(logger)` logs every request once it is answered:
 
 ```text
-level=INFO msg=request method=GET path=/users/42 request_id=req-1 status=200 bytes=64 duration=1.2ms
+level=INFO msg=request method=GET path=/users/42 request_id=req-1 status=200 bytes=64 duration=1.2ms route=/users/{id} remote_addr=10.0.0.7
 ```
 
-A 5xx status is logged at error level. Put `RequestID` first, so the access log can show the ID.
+A 5xx status is logged at error level. Put `RequestID` first, so the access log can show the ID. `SkipPaths` and `SlowAfter` tune it, and every log line, not only these, can carry the ID: see [logging](logging).
 
 ## Rate limiting
 

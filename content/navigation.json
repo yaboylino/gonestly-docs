@@ -119,6 +119,11 @@
               "icon": "heartbeat"
             },
             {
+              "slug": "logging",
+              "label": "nav.logging",
+              "icon": "scroll"
+            },
+            {
               "slug": "background-jobs",
               "label": "nav.backgroundJobs",
               "icon": "timer"

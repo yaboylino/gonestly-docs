@@ -22,7 +22,7 @@ The SQL layer works at three levels, and you can mix them freely:
 
 ## Connecting
 
-Import `sql.Module` in the root module. It connects when the application starts, checks the connection, applies the [migrations](migrations) and provides a `*sql.DB` to every module:
+With the CLI, `gonestly add database` does all of this for you; see [adding a database](cli#adding-a-database). To do it by hand, import `sql.Module` in the root module. It connects when the application starts, checks the connection, applies the [migrations](migrations) and provides a `*sql.DB` to every module:
 
 ```go title="main.go"
 import (

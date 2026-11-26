@@ -16,6 +16,7 @@ go install github.com/yaboylino/gonestly/cmd/gonestly@latest
 | Commando                                                 | Wat het doet                                                                                             |
 | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `gonestly new <map>`                                     | Maakt een project dat direct draait.                                                                     |
+| `gonestly add database`                                  | Maakt een database en verbindt het project ermee; zie [een database toevoegen](#een-database-toevoegen). |
 | `gonestly generate <soort> <naam>`                       | Genereert een resource, module, controller, service, guard of interceptor; zie [generators](generators). |
 | `gonestly generate columns`                              | Genereert de getypeerde kolommen van je modellen voor de [querybuilder](queries#de-querybuilder).        |
 | `gonestly dev`                                           | Draait de applicatie en controleert en herstart hem bij elke wijziging; zie [dev-modus](dev-mode).       |
@@ -55,6 +56,50 @@ shop/
   migrations/   SQL-migraties, ingebed in de binary
   .env
 ```
+
+## Een database toevoegen
+
+Een project dat zonder `--database` is gemaakt kan er later een krijgen. `gonestly add database` vraagt welke database je wilt en hoe je erbij komt, maakt de database aan op zijn server en verbindt het project ermee:
+
+```text
+$ gonestly add database
+Which database do you want to add?
+  1) sqlite
+  2) mysql
+  3) postgres
+Choose (sqlite): 3
+Host (localhost): db.internal
+Port (5432):
+User (postgres): app
+Password:
+Name of the database (shop):
+✓ created the database shop on db.internal:5432
+```
+
+Het wachtwoord is niet te zien terwijl je het typt. Een leeg antwoord neemt de standaard tussen haakjes: de standaardpoort van de database, `root` of `postgres` als gebruiker, en de naam van het project als naam van de database. Bij SQLite kies je alleen het bestand.
+
+Het commando controleert eerst of de server met deze gegevens te bereiken is en maakt de database aan als hij nog niet bestaat, dus de gebruiker moet databases mogen aanmaken. Daarna past het het project aan:
+
+- `.env` krijgt `DATABASE_URL` met het wachtwoord, en `.env.example` hetzelfde met een verzonnen wachtwoord. `.env` is alleen door jou te lezen en staat al in `.gitignore`.
+- De root-module importeert de [databasemodule](database), de configuratie krijgt een veld `DatabaseURL` en `main.go` importeert de driver.
+- Er komt een map `migrations`, klaar voor `gonestly generate resource` en `gonestly migrate create`.
+
+Draai het waar geen terminal is, zoals in een script, door elk gegeven als flag mee te geven. Het wachtwoord komt uit de omgeving, zodat het niet in de proceslijst en je shell-geschiedenis staat:
+
+```sh
+GONESTLY_DB_PASSWORD=secret gonestly add database postgres --host db.internal --user app --name shop
+```
+
+| Flag            | Doel                                                                                             |
+| --------------- | ------------------------------------------------------------------------------------------------ |
+| `--host`        | De host van de server; standaard `localhost`.                                                    |
+| `--port`        | De poort van de server; standaard 3306 voor MySQL en 5432 voor PostgreSQL.                       |
+| `--user`        | De gebruiker om mee te verbinden; standaard `root` voor MySQL en `postgres` voor PostgreSQL.     |
+| `--password`    | Het wachtwoord; gebruik liever `GONESTLY_DB_PASSWORD` of de prompt. `--password=` is geen.       |
+| `--name`        | De naam van de database, of het bestand van een SQLite-database.                                 |
+| `--skip-create` | Verbind alleen het project, voor een database die al bestaat of op een andere manier is gemaakt. |
+
+Een project dat al een database heeft blijft met rust: pas `DATABASE_URL` in `.env` aan om een andere te gebruiken. Het commando verwacht de opzet van `gonestly new`; voor een andere opzet voeg je de [module](database#verbinden) zelf toe.
 
 ## Routes en OpenAPI
 

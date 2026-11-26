@@ -105,6 +105,16 @@ GONESTLY_DB_PASSWORD=secret gonestly add database postgres --host db.internal --
 
 Een project dat al een database heeft blijft met rust: pas `DATABASE_URL` in `.env` aan om een andere te gebruiken. Het commando verwacht de opzet van `gonestly new`; voor een andere opzet voeg je de [module](database#verbinden) zelf toe.
 
+## Jobs toevoegen
+
+Voeg achtergrondtaken toe aan een project met een database:
+
+```sh
+gonestly add jobs
+```
+
+Het schrijft een migratie die de tabel `gonestly_jobs` maakt en voegt de jobs-module toe aan de rootmodule. Zie [achtergrondtaken](background-jobs).
+
 ## Routes en OpenAPI
 
 `gonestly routes` en `gonestly openapi` lezen de routes en het document uit je applicatie zelf, zodat ze altijd kloppen met wat hij serveert:

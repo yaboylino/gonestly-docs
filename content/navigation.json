@@ -117,6 +117,11 @@
               "slug": "health-checks",
               "label": "nav.healthChecks",
               "icon": "heartbeat"
+            },
+            {
+              "slug": "background-jobs",
+              "label": "nav.backgroundJobs",
+              "icon": "timer"
             }
           ]
         },

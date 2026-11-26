@@ -11,9 +11,6 @@ De command line tool `gonestly` neemt het herhaalwerk van het bouwen van een app
 go install github.com/yaboylino/gonestly/cmd/gonestly@latest
 ```
 
-> [!NOTE]
-> Vanaf de eerste release is de CLI zo te installeren. Tot die tijd bouw je hem vanuit een checkout van de repository met `go build ./cmd/gonestly`.
-
 ## Commando's
 
 | Commando                                                 | Wat het doet                                                                                             |

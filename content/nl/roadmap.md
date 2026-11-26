@@ -3,7 +3,7 @@ title: Roadmap
 description: Wat Gonestly nu biedt en wat er nog komt, van HTTP-controllers tot de SQL-laag en de CLI.
 ---
 
-Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voordat de volgende begint, en de eerste openbare release volgt nu de CLI er is.
+Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voordat de volgende begint, en `v0.1.0` is de eerste release.
 
 ## Beschikbaar
 
@@ -16,9 +16,9 @@ Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voord
 - **OpenAPI** voor elke route, gegenereerd uit de code en geserveerd met Swagger UI; zie [OpenAPI](openapi).
 - **CLI**: [nieuwe projecten, generators](cli), een [dev-modus](dev-mode) die de applicatie stopt als een wijziging hem breekt, en migraties.
 
-## Eerste release
+## Hierna
 
-Versie `v0.1.0`, met Go-modules met een versie en een `gonestly`-tool die je installeert met `go install`.
+Tot `v1.0.0` gaat het werk naar wat echte projecten nodig hebben: feedback op de API, meer voorbeelden en fixes. Open een issue op GitHub om te laten weten wat je mist.
 
 ## Op de hoogte blijven
 

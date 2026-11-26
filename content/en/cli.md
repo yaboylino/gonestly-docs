@@ -11,9 +11,6 @@ The `gonestly` command line tool takes care of the repetitive parts of building 
 go install github.com/yaboylino/gonestly/cmd/gonestly@latest
 ```
 
-> [!NOTE]
-> The CLI can be installed this way from the first release on. Until then, build it from a checkout of the repository with `go build ./cmd/gonestly`.
-
 ## Commands
 
 | Command                                                  | What it does                                                                                           |

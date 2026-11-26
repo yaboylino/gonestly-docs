@@ -3,7 +3,7 @@ title: Roadmap
 description: What Gonestly offers today and what comes next, from HTTP controllers to the SQL layer and the CLI.
 ---
 
-Gonestly is built in phases. Each phase is finished, tested and documented before the next one starts, and the first public release follows now that the CLI is in place.
+Gonestly is built in phases. Each phase is finished, tested and documented before the next one starts, and `v0.1.0` is the first release.
 
 ## Available
 
@@ -16,9 +16,9 @@ Gonestly is built in phases. Each phase is finished, tested and documented befor
 - **OpenAPI** for every route, generated from the code and served with Swagger UI; see [OpenAPI](openapi).
 - **CLI**: [new projects, generators](cli), a [dev mode](dev-mode) that stops the application when a change breaks it, and migrations.
 
-## First release
+## Next
 
-Version `v0.1.0`, with versioned Go modules and a `gonestly` tool to install with `go install`.
+Until `v1.0.0` the work goes to what real projects need: feedback on the API, more examples and fixes. Open an issue on GitHub to tell what you miss.
 
 ## Follow along
 

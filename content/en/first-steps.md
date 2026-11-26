@@ -36,9 +36,6 @@ go mod init example.com/shop
 go get github.com/yaboylino/gonestly
 ```
 
-> [!NOTE]
-> Gonestly has not had its first release yet. Until then, `go get` fetches the latest commit of the framework, and the `sql` and `validator` modules can only be used from a checkout of the repository.
-
 ## A database module
 
 Start with a module that provides a database connection. A provider is an ordinary constructor: Gonestly calls it once and shares the result with every provider that needs it.

@@ -36,9 +36,6 @@ go mod init example.com/shop
 go get github.com/yaboylino/gonestly
 ```
 
-> [!NOTE]
-> Gonestly heeft nog geen eerste release. Tot die tijd haalt `go get` de laatste commit van het framework op, en zijn de modules `sql` en `validator` alleen te gebruiken vanuit een checkout van de repository.
-
 ## Een databasemodule
 
 Begin met een module die een databaseverbinding levert. Een provider is een gewone constructor: Gonestly roept hem één keer aan en deelt het resultaat met elke provider die het nodig heeft.

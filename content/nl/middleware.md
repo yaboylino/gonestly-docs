@@ -91,7 +91,7 @@ Een client die stil was mag zijn hele quotum in één keer versturen; daarna kom
 | `TrustedProxies` | Het aantal reverse proxies voor de applicatie; zie hieronder.                                      |
 | `Key`            | Herkent de client zelf, bijvoorbeeld aan een API-key. Een lege key laat het request ongeteld door. |
 
-Een client wordt herkend aan zijn adres. Achter een reverse proxy lijkt elk request van de proxy te komen, dus zet `TrustedProxies` op het aantal proxies dat je zelf draait: met `1` is de client het laatste adres in `X-Forwarded-For`, dat je eigen proxy heeft toegevoegd.
+Een client wordt herkend aan zijn adres; bij IPv6 is dat zijn /64-netwerk, omdat één client daar meestal alle adressen van heeft. Achter een reverse proxy lijkt elk request van de proxy te komen, dus zet `TrustedProxies` op het aantal proxies dat je zelf draait: met `1` is de client het laatste adres in `X-Forwarded-For`, dat je eigen proxy heeft toegevoegd.
 
 > [!WARNING]
 > Zet `TrustedProxies` nooit hoger dan het aantal proxies dat je zelf beheert. De rest van `X-Forwarded-For` schrijft de client, die dan voor elk request een nieuw adres kan kiezen.

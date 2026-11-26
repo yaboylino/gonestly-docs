@@ -91,7 +91,7 @@ A client that was quiet may send its whole quota at once; after that, room comes
 | `TrustedProxies` | The number of reverse proxies in front of the application; see below.                          |
 | `Key`            | Identifies the client yourself, for example by API key. An empty key lets the request through. |
 
-A client is recognized by its address. Behind a reverse proxy every request seems to come from the proxy, so set `TrustedProxies` to the number of proxies you run: with `1`, the client is the last address in `X-Forwarded-For`, which your own proxy added.
+A client is recognized by its address; for IPv6 that is its /64 network, because one client usually has all the addresses in it. Behind a reverse proxy every request seems to come from the proxy, so set `TrustedProxies` to the number of proxies you run: with `1`, the client is the last address in `X-Forwarded-For`, which your own proxy added.
 
 > [!WARNING]
 > Never set `TrustedProxies` higher than the number of proxies you control. The rest of `X-Forwarded-For` is written by the client, who could then pick a new address for every request.

@@ -93,14 +93,15 @@ Run it where there is no terminal, such as in a script, by giving every detail a
 GONESTLY_DB_PASSWORD=secret gonestly add database postgres --host db.internal --user app --name shop
 ```
 
-| Flag            | Purpose                                                                              |
-| --------------- | ------------------------------------------------------------------------------------ |
-| `--host`        | The host of the server; `localhost` by default.                                      |
-| `--port`        | The port of the server; 3306 for MySQL and 5432 for PostgreSQL by default.           |
-| `--user`        | The user to connect as; `root` for MySQL and `postgres` for PostgreSQL by default.   |
-| `--password`    | The password; prefer `GONESTLY_DB_PASSWORD` or the prompt. `--password=` means none. |
-| `--name`        | The name of the database, or the file of a SQLite database.                          |
-| `--skip-create` | Only connect the project, for a database that exists already or is made another way. |
+| Flag            | Purpose                                                                                    |
+| --------------- | ------------------------------------------------------------------------------------------ |
+| `--host`        | The host of the server; `localhost` by default.                                            |
+| `--port`        | The port of the server; 3306 for MySQL and 5432 for PostgreSQL by default.                 |
+| `--user`        | The user to connect as; `root` for MySQL and `postgres` for PostgreSQL by default.         |
+| `--password`    | The password; prefer `GONESTLY_DB_PASSWORD` or the prompt. `--password=` means none.       |
+| `--name`        | The name of the database, or the file of a SQLite database.                                |
+| `--ssl`         | The PostgreSQL `sslmode` or MySQL `tls` setting; off for this machine, on for other hosts. |
+| `--skip-create` | Only connect the project, for a database that exists already or is made another way.       |
 
 A project that already has a database is left alone: change `DATABASE_URL` in `.env` to use another one. The command expects the layout of `gonestly new`; for another layout, add the [module](database#connecting) by hand.
 

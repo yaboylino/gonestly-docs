@@ -100,6 +100,7 @@ GONESTLY_DB_PASSWORD=secret gonestly add database postgres --host db.internal --
 | `--user`        | De gebruiker om mee te verbinden; standaard `root` voor MySQL en `postgres` voor PostgreSQL.     |
 | `--password`    | Het wachtwoord; gebruik liever `GONESTLY_DB_PASSWORD` of de prompt. `--password=` is geen.       |
 | `--name`        | De naam van de database, of het bestand van een SQLite-database.                                 |
+| `--ssl`         | De `sslmode` van PostgreSQL of `tls` van MySQL; uit voor deze machine, aan voor andere hosts.    |
 | `--skip-create` | Verbind alleen het project, voor een database die al bestaat of op een andere manier is gemaakt. |
 
 Een project dat al een database heeft blijft met rust: pas `DATABASE_URL` in `.env` aan om een andere te gebruiken. Het commando verwacht de opzet van `gonestly new`; voor een andere opzet voeg je de [module](database#verbinden) zelf toe.

@@ -38,6 +38,12 @@ The `rel` tag names the column that holds the key, and the type of the field tel
 
 A relation field is never a column, so it needs no `db:"-"`. Use a pointer for a single row, because it can tell a missing row from an empty one. The key points at the primary key of the other model unless you say otherwise: `rel:"owner_code,references=code"`.
 
+When both models have the key column, as with a parent in the same table or a profile that shares the primary key of its user, a pointer is ambiguous and the application refuses to start until you add `,belongs` (this model holds the key) or `,has` (the other model does):
+
+```go
+Parent *Topic `rel:"parent_id,belongs"`
+```
+
 Mistakes in the declarations, such as a key column that does not exist or a key of another kind, are reported when the [repository](repositories) is created, so when the application starts, with the names of the model and the field.
 
 ## Loading relations

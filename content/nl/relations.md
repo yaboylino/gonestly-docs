@@ -38,6 +38,12 @@ De tag `rel` noemt de kolom die de sleutel bevat, en het type van het veld bepaa
 
 Een relatieveld is nooit een kolom, dus het heeft geen `db:"-"` nodig. Gebruik een pointer voor één rij, omdat die een ontbrekende rij van een lege kan onderscheiden. De sleutel wijst naar de primaire sleutel van het andere model, tenzij je iets anders zegt: `rel:"owner_code,references=code"`.
 
+Hebben beide modellen de sleutelkolom, zoals bij een ouder in dezelfde tabel of een profiel dat de primaire sleutel van zijn gebruiker deelt, dan is een pointer dubbelzinnig en start de applicatie niet totdat je `,belongs` (dit model bevat de sleutel) of `,has` (het andere model) toevoegt:
+
+```go
+Parent *Topic `rel:"parent_id,belongs"`
+```
+
 Fouten in de declaraties, zoals een sleutelkolom die niet bestaat of een sleutel van een ander soort, worden gemeld als de [repository](repositories) wordt gemaakt, dus als de applicatie start, met de namen van het model en het veld.
 
 ## Relaties laden

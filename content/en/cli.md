@@ -16,6 +16,7 @@ go install github.com/yaboylino/gonestly/cmd/gonestly@latest
 | Command                                                  | What it does                                                                                           |
 | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `gonestly new <dir>`                                     | Creates a project that runs immediately.                                                               |
+| `gonestly add database`                                  | Creates a database and connects the project to it; see [adding a database](#adding-a-database).        |
 | `gonestly generate <kind> <name>`                        | Generates a resource, module, controller, service, guard or interceptor; see [generators](generators). |
 | `gonestly generate columns`                              | Generates the typed columns of your models for the [query builder](queries#the-query-builder).         |
 | `gonestly dev`                                           | Runs the application and checks and restarts it on every change; see [dev mode](dev-mode).             |
@@ -55,6 +56,50 @@ shop/
   migrations/   SQL migrations, embedded in the binary
   .env
 ```
+
+## Adding a database
+
+A project made without `--database` can get one later. `gonestly add database` asks which database you want and how to reach it, creates the database on its server and connects the project to it:
+
+```text
+$ gonestly add database
+Which database do you want to add?
+  1) sqlite
+  2) mysql
+  3) postgres
+Choose (sqlite): 3
+Host (localhost): db.internal
+Port (5432):
+User (postgres): app
+Password:
+Name of the database (shop):
+✓ created the database shop on db.internal:5432
+```
+
+The password is not shown while you type it. An empty answer takes the default between the brackets: the standard port of the database, `root` or `postgres` as the user, and the name of the project as the name of the database. For SQLite you only choose the file.
+
+The command first checks that the server can be reached with these details and creates the database when it does not exist yet, so the user needs the right to create databases. Then it changes the project:
+
+- `.env` gets `DATABASE_URL` with the password, and `.env.example` gets the same with a made up password. `.env` is readable by you alone and is already in `.gitignore`.
+- The root module imports the [database module](database), the configuration gets a `DatabaseURL` field and `main.go` imports the driver.
+- A `migrations` directory is added, ready for `gonestly generate resource` and `gonestly migrate create`.
+
+Run it where there is no terminal, such as in a script, by giving every detail as a flag. The password comes from the environment, so it stays out of the process list and your shell history:
+
+```sh
+GONESTLY_DB_PASSWORD=secret gonestly add database postgres --host db.internal --user app --name shop
+```
+
+| Flag            | Purpose                                                                              |
+| --------------- | ------------------------------------------------------------------------------------ |
+| `--host`        | The host of the server; `localhost` by default.                                      |
+| `--port`        | The port of the server; 3306 for MySQL and 5432 for PostgreSQL by default.           |
+| `--user`        | The user to connect as; `root` for MySQL and `postgres` for PostgreSQL by default.   |
+| `--password`    | The password; prefer `GONESTLY_DB_PASSWORD` or the prompt. `--password=` means none. |
+| `--name`        | The name of the database, or the file of a SQLite database.                          |
+| `--skip-create` | Only connect the project, for a database that exists already or is made another way. |
+
+A project that already has a database is left alone: change `DATABASE_URL` in `.env` to use another one. The command expects the layout of `gonestly new`; for another layout, add the [module](database#connecting) by hand.
 
 ## Routes and OpenAPI
 

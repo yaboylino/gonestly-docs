@@ -22,7 +22,7 @@ De SQL-laag werkt op drie niveaus, en je kunt ze vrij combineren:
 
 ## Verbinden
 
-Importeer `sql.Module` in de rootmodule. Die verbindt als de applicatie start, controleert de verbinding, voert de [migraties](migrations) uit en levert een `*sql.DB` aan elke module:
+Met de CLI doet `gonestly add database` dit allemaal voor je; zie [een database toevoegen](cli#een-database-toevoegen). Om het zelf te doen, importeer je `sql.Module` in de rootmodule. Die verbindt als de applicatie start, controleert de verbinding, voert de [migraties](migrations) uit en levert een `*sql.DB` aan elke module:
 
 ```go title="main.go"
 import (

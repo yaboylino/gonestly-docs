@@ -119,6 +119,11 @@
               "icon": "heartbeat"
             },
             {
+              "slug": "events",
+              "label": "nav.events",
+              "icon": "broadcast"
+            },
+            {
               "slug": "logging",
               "label": "nav.logging",
               "icon": "scroll"

@@ -35,6 +35,7 @@
     "fileUploads": "Forms and uploads",
     "authentication": "Authentication",
     "healthChecks": "Health checks",
+    "events": "Events",
     "logging": "Logging",
     "backgroundJobs": "Background jobs",
     "database": "Database",

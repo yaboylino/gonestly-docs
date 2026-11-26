@@ -35,6 +35,7 @@
     "fileUploads": "Formulieren en uploads",
     "authentication": "Authenticatie",
     "healthChecks": "Health-checks",
+    "events": "Events",
     "logging": "Logging",
     "backgroundJobs": "Achtergrondtaken",
     "database": "Database",

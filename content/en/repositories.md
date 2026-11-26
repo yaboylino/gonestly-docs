@@ -48,7 +48,7 @@ It checks the model when the application starts: a model without a primary key, 
 | `Delete(ctx, id)`             | Removes the row, or returns `sql.ErrNotFound`.                   |
 | `Query()`                     | Starts a [query](queries#the-query-builder) on the table.        |
 
-`Create` leaves a zero primary key and zero fields tagged `db:",default"` to the database, and reads the stored row back, so generated IDs and timestamps are filled in. A primary key you set yourself, such as a UUID or a code, is inserted as it is.
+`Create` leaves a zero primary key and zero fields tagged `db:",default"` to the database, and reads the stored row back, so generated IDs and timestamps are filled in. A primary key you set yourself, such as a UUID or a code, is inserted as it is. MySQL and MariaDB can only report an auto increment key, so set any other key yourself there.
 
 ## Not found is a 404
 

@@ -1,14 +1,15 @@
 ---
 title: Database
-description: Verbind met PostgreSQL of SQLite via de sql-module, die de database aan elke module levert en hem bij het afsluiten sluit.
+description: Verbind met PostgreSQL, MySQL of SQLite via de sql-module, die de database aan elke module levert en hem bij het afsluiten sluit.
 ---
 
-De module `sql` is de SQL-laag van Gonestly. Hij bouwt op `database/sql` uit de standaardbibliotheek en werkt met PostgreSQL en SQLite. Hij staat in een eigen Go-module, zodat het framework vrij van dependencies blijft, en je kiest zelf de driver:
+De module `sql` is de SQL-laag van Gonestly. Hij bouwt op `database/sql` uit de standaardbibliotheek en werkt met PostgreSQL, MySQL, MariaDB en SQLite. Hij staat in een eigen Go-module, zodat het framework vrij van dependencies blijft, en je kiest zelf de driver:
 
 ```sh
 go get github.com/yaboylino/gonestly/sql
-go get github.com/jackc/pgx/v5   # PostgreSQL
-go get modernc.org/sqlite        # SQLite, zonder cgo
+go get github.com/jackc/pgx/v5         # PostgreSQL
+go get github.com/go-sql-driver/mysql  # MySQL en MariaDB
+go get modernc.org/sqlite              # SQLite, zonder cgo
 ```
 
 De SQL-laag werkt op drie niveaus, en je kunt ze vrij combineren:
@@ -39,7 +40,15 @@ var AppModule = &gonestly.Module{
 }
 ```
 
-De lege import registreert de driver bij `database/sql`; gebruik `_ "modernc.org/sqlite"` en de drivernaam `sqlite` voor SQLite. Als de applicatie stopt, wordt de connection pool gesloten nadat de HTTP-server zijn requests heeft afgerond.
+De lege import registreert de driver bij `database/sql`. Elke database heeft zijn eigen import en drivernaam:
+
+| Database         | Import                               | `Driver` | Voorbeeld van een `DSN`                 |
+| ---------------- | ------------------------------------ | -------- | --------------------------------------- |
+| PostgreSQL       | `_ "github.com/jackc/pgx/v5/stdlib"` | `pgx`    | `postgres://user:secret@localhost/shop` |
+| MySQL en MariaDB | `_ "github.com/go-sql-driver/mysql"` | `mysql`  | `user:secret@tcp(localhost:3306)/shop`  |
+| SQLite           | `_ "modernc.org/sqlite"`             | `sqlite` | `file:shop.db`                          |
+
+Als de applicatie stopt, wordt de connection pool gesloten nadat de HTTP-server zijn requests heeft afgerond.
 
 Is de database niet bereikbaar, dan start de applicatie niet, en de fout noemt de oorzaak. Een driver die niet is geïmporteerd, wordt gemeld met de importregel die je moet toevoegen.
 
@@ -66,15 +75,24 @@ var AppModule = &gonestly.Module{
 
 ## Opties
 
-| Optie                                | Doel                                                                           |
-| ------------------------------------ | ------------------------------------------------------------------------------ |
-| `Driver`                             | De naam van een geregistreerde `database/sql`-driver, zoals `pgx` of `sqlite`. |
-| `DSN`                                | De connection string voor de driver.                                           |
-| `Dialect`                            | `sql.Postgres` of `sql.SQLite`; volgt uit de drivernamen hierboven.            |
-| `MaxOpenConns`, `MaxIdleConns`       | De grootte van de connection pool.                                             |
-| `ConnMaxLifetime`, `ConnMaxIdleTime` | Hoe lang verbindingen worden hergebruikt.                                      |
-| `Migrations`                         | Een `fs.FS` met [migraties](migrations) die bij het starten worden uitgevoerd. |
-| `Logger`                             | Krijgt elke query op debugniveau; standaard de logger van de applicatie.       |
+| Optie                                | Doel                                                                                    |
+| ------------------------------------ | --------------------------------------------------------------------------------------- |
+| `Driver`                             | De naam van een geregistreerde `database/sql`-driver, zoals `pgx`, `mysql` of `sqlite`. |
+| `DSN`                                | De connection string voor de driver.                                                    |
+| `Dialect`                            | `sql.Postgres`, `sql.MySQL` of `sql.SQLite`; volgt uit de drivernamen hierboven.        |
+| `MaxOpenConns`, `MaxIdleConns`       | De grootte van de connection pool.                                                      |
+| `ConnMaxLifetime`, `ConnMaxIdleTime` | Hoe lang verbindingen worden hergebruikt.                                               |
+| `Migrations`                         | Een `fs.FS` met [migraties](migrations) die bij het starten worden uitgevoerd.          |
+| `Logger`                             | Krijgt elke query op debugniveau; standaard de logger van de applicatie.                |
+
+## MySQL en MariaDB
+
+Dezelfde code draait op elke database: schrijf `?` voor argumenten, en de repositories, de querybuilder, transacties en migraties gedragen zich hetzelfde. Een paar dingen zijn goed om te weten over MySQL en MariaDB:
+
+- **De connection string is geen URL.** Hij heeft de vorm `user:password@tcp(host:3306)/database`.
+- **Datums en tijden werken meteen.** Gonestly voegt `parseTime=true` toe aan de connection string als je die weglaat, zodat een `DATETIME`-kolom in een `time.Time` past.
+- **Alleen een auto-increment-sleutel wordt voor je gegenereerd.** [Repositories](repositories) lezen die terug na een insert. Elke andere sleutel, zoals een UUID, zet je zelf voor `Create`.
+- **Een schemawijziging wordt meteen vastgelegd.** Een [migratie](migrations) die halverwege faalt, houdt de tabellen die hij al heeft gemaakt.
 
 ## De database gebruiken
 

@@ -30,6 +30,8 @@ CREATE TABLE users (
 DROP TABLE users;
 ```
 
+Een bestand kan meerdere statements bevatten, ook triggers en routines met eigen puntkomma's in hun body; MySQL heeft daar geen `DELIMITER`-regel voor nodig.
+
 Het `.down.sql`-bestand draait de migratie terug en is optioneel. Versies zijn getallen: een teller als `0001` of een tijdstempel als `20261125143000` werkt allebei, zolang elke versie uniek is.
 
 Bed de bestanden in je binary in, zodat ze meegaan:
@@ -64,6 +66,9 @@ sql.Module(sql.Options{Driver: "pgx", DSN: dsn, Migrations: migrations.Files})
 
 Elke uitgevoerde migratie wordt gelogd. Faalt er een, dan wordt zijn transactie teruggedraaid, start de applicatie niet en noemt de fout de migratie.
 
+> [!NOTE]
+> MySQL en MariaDB leggen elke schemawijziging meteen vast, dus daar houdt een mislukte migratie de tabellen en kolommen die hij al heeft gemaakt. Houd zo'n migratie bij één schemawijziging, of schrijf hem zo dat hij opnieuw kan draaien.
+
 ## Veiligheidscontroles
 
 Gonestly weigert te migreren als de bestanden en de database het oneens zijn:
@@ -75,7 +80,7 @@ Gonestly weigert te migreren als de bestanden en de database het oneens zijn:
 | Een nieuwe migratie is ouder dan de laatst uitgevoerde | `migration 2_x is pending but the newer migration 3 is already applied; give it a higher version` |
 | Een bestandsnaam volgt het patroon niet                | `create_users.up.sql does not follow <version>_<name>.up.sql or .down.sql`                        |
 
-Van elk uitgevoerd bestand wordt een checksum bewaard, zodat een aanpassing wordt herkend, ook als de versie gelijk blijft. Op PostgreSQL zorgt een advisory lock ervoor dat twee instanties die tegelijk starten niet tegelijk migreren.
+Van elk uitgevoerd bestand wordt een checksum bewaard, zodat een aanpassing wordt herkend, ook als de versie gelijk blijft. Twee instanties die tegelijk starten, migreren niet tegelijk: PostgreSQL, MySQL en MariaDB houden een lock vast, en op SQLite wacht elke migratie op de migratie die loopt.
 
 ## De migrator
 

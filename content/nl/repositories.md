@@ -48,7 +48,7 @@ Hij controleert het model als de applicatie start: een model zonder primaire sle
 | `Delete(ctx, id)`             | Verwijdert de rij, of geeft `sql.ErrNotFound` terug.                         |
 | `Query()`                     | Start een [query](queries#de-querybuilder) op de tabel.                      |
 
-`Create` laat een lege primaire sleutel en lege velden met `db:",default"` over aan de database en leest de opgeslagen rij terug, zodat gegenereerde ID's en tijdstempels worden ingevuld. Een primaire sleutel die je zelf zet, zoals een UUID of een code, wordt zo ingevoegd.
+`Create` laat een lege primaire sleutel en lege velden met `db:",default"` over aan de database en leest de opgeslagen rij terug, zodat gegenereerde ID's en tijdstempels worden ingevuld. Een primaire sleutel die je zelf zet, zoals een UUID of een code, wordt zo ingevoegd. MySQL en MariaDB kunnen alleen een auto-increment-sleutel teruggeven, dus zet elke andere sleutel daar zelf.
 
 ## Niet gevonden is een 404
 

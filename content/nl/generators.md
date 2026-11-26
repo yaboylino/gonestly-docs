@@ -45,7 +45,7 @@ migrations/
 
 De migratie gebruikt de kolomtypes van je database, herkend aan de driver in `go.mod`. De test wordt gegenereerd voor SQLite-projecten, waar hij zonder server draait. Start de applicatie en de routes verschijnen in `/docs`.
 
-Een resource heeft een project met een database nodig; maak er een met `gonestly new <map> --database postgres` of `--database sqlite`.
+Een resource heeft een project met een database nodig; maak er een met `gonestly new <map> --database postgres`, `--database mysql` of `--database sqlite`.
 
 ## Registratie
 

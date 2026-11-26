@@ -37,10 +37,10 @@ cd shop
 gonestly dev
 ```
 
-| Optie        | Doel                                                                                                  |
-| ------------ | ----------------------------------------------------------------------------------------------------- |
-| `--module`   | Het Go-modulepad, zoals `github.com/acme/shop`; standaard de naam van de map.                         |
-| `--database` | `postgres` of `sqlite` voegt de [databasemodule](database), een driver en een map voor migraties toe. |
+| Optie        | Doel                                                                                                           |
+| ------------ | -------------------------------------------------------------------------------------------------------------- |
+| `--module`   | Het Go-modulepad, zoals `github.com/acme/shop`; standaard de naam van de map.                                  |
+| `--database` | `postgres`, `mysql` of `sqlite` voegt de [databasemodule](database), een driver en een map voor migraties toe. |
 
 Het project is direct klaar om te draaien, met:
 
@@ -88,4 +88,4 @@ gonestly migrate up
 gonestly migrate down
 ```
 
-Nieuwe migraties volgen de nummering van de bestaande: de volgende teller voor versies als `0001`, of een tijdstempel. Geef `--dsn` en `--driver` mee om een andere database te gebruiken.
+Nieuwe migraties volgen de nummering van de bestaande: de volgende teller voor versies als `0001`, of een tijdstempel. Geef `--dsn` mee om een andere database te gebruiken. De driver (`pgx`, `mysql` of `sqlite`) volgt uit de connection string; zet hem met `--driver` als dat niet lukt.

@@ -30,6 +30,8 @@ CREATE TABLE users (
 DROP TABLE users;
 ```
 
+A file can hold several statements, including triggers and routines whose body has semicolons of its own; MySQL needs no `DELIMITER` line for them.
+
 The `.down.sql` file reverts the migration and is optional. Versions are numbers: a counter such as `0001` or a timestamp such as `20261125143000` both work, as long as each version is unique.
 
 Embed the files in your binary, so they ship with it:
@@ -64,6 +66,9 @@ sql.Module(sql.Options{Driver: "pgx", DSN: dsn, Migrations: migrations.Files})
 
 Every applied migration is logged. If one fails, its transaction is rolled back, the application does not start and the error names the migration.
 
+> [!NOTE]
+> MySQL and MariaDB commit every schema change on its own, so there a failed migration keeps the tables and columns it already created. Keep such a migration to one schema change, or write it so that it can run again.
+
 ## Safety checks
 
 Gonestly refuses to migrate when the files and the database disagree:
@@ -75,7 +80,7 @@ Gonestly refuses to migrate when the files and the database disagree:
 | A new migration is older than the latest applied one | `migration 2_x is pending but the newer migration 3 is already applied; give it a higher version` |
 | A file name does not follow the pattern              | `create_users.up.sql does not follow <version>_<name>.up.sql or .down.sql`                        |
 
-A checksum of every applied file is stored, so an edit is detected even when the version stays the same. On PostgreSQL an advisory lock makes sure that two instances starting at the same time do not migrate at once.
+A checksum of every applied file is stored, so an edit is detected even when the version stays the same. Two instances that start at the same time do not migrate at once: PostgreSQL, MySQL and MariaDB hold a lock, and on SQLite each migration waits for the one that is running.
 
 ## The migrator
 

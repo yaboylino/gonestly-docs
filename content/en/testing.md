@@ -85,7 +85,7 @@ func TestRepository(t *testing.T) {
 }
 ```
 
-Run the same tests against PostgreSQL when your queries use features SQLite does not have; the tests of Gonestly itself run against both.
+Run the same tests against PostgreSQL or MySQL when your queries use features SQLite does not have; the tests of Gonestly itself run against all of them.
 
 ## Overrides
 

@@ -37,10 +37,10 @@ cd shop
 gonestly dev
 ```
 
-| Flag         | Purpose                                                                                           |
-| ------------ | ------------------------------------------------------------------------------------------------- |
-| `--module`   | The Go module path, such as `github.com/acme/shop`; it defaults to the directory name.            |
-| `--database` | `postgres` or `sqlite` adds the [database module](database), a driver and a migrations directory. |
+| Flag         | Purpose                                                                                                    |
+| ------------ | ---------------------------------------------------------------------------------------------------------- |
+| `--module`   | The Go module path, such as `github.com/acme/shop`; it defaults to the directory name.                     |
+| `--database` | `postgres`, `mysql` or `sqlite` adds the [database module](database), a driver and a migrations directory. |
 
 The project is ready to run, with:
 
@@ -88,4 +88,4 @@ gonestly migrate up
 gonestly migrate down
 ```
 
-New migrations follow the numbering of the existing ones: the next counter for versions like `0001`, or a timestamp. Pass `--dsn` and `--driver` to use another database.
+New migrations follow the numbering of the existing ones: the next counter for versions like `0001`, or a timestamp. Pass `--dsn` to use another database. The driver (`pgx`, `mysql` or `sqlite`) follows from the connection string; set it with `--driver` when it cannot be told.

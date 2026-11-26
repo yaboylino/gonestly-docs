@@ -11,14 +11,14 @@ Gonestly is built in phases. Each phase is finished, tested and documented befor
 - **Lifecycle events**, graceful shutdown and stopping the application from a provider.
 - **Configuration** from environment variables and `.env` files.
 - **Testing** with overrides and requests without a port.
-- **Database**: [repositories](repositories), a typed [query builder](queries), [transactions](transactions) and [migrations](migrations) for PostgreSQL and SQLite.
+- **Database**: [repositories](repositories), a typed [query builder](queries), [transactions](transactions) and [migrations](migrations) for PostgreSQL, MySQL, MariaDB and SQLite.
 - **HTTP** [controllers](controllers) with typed handlers, request binding, [validation](validation), [guards](guards), [interceptors](interceptors), [middleware](middleware) and problem details for errors.
 - **OpenAPI** for every route, generated from the code and served with Swagger UI; see [OpenAPI](openapi).
 - **CLI**: [new projects, generators](cli), a [dev mode](dev-mode) that stops the application when a change breaks it, and migrations.
 
-## MySQL
+## First release
 
-MySQL support for the SQL layer, after PostgreSQL and SQLite.
+Version `v0.1.0`, with versioned Go modules and a `gonestly` tool to install with `go install`.
 
 ## Follow along
 

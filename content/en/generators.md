@@ -45,7 +45,7 @@ migrations/
 
 The migration uses the column types of your database, detected from the driver in `go.mod`. The test is generated for SQLite projects, where it runs without a server. Start the application and the routes appear in `/docs`.
 
-A resource needs a project with a database; create one with `gonestly new <dir> --database postgres` or `--database sqlite`.
+A resource needs a project with a database; create one with `gonestly new <dir> --database postgres`, `--database mysql` or `--database sqlite`.
 
 ## Registration
 

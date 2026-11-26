@@ -18,11 +18,14 @@ go version
 The [CLI](cli) creates a project that runs immediately, with configuration, validation, a health check and the API documentation:
 
 ```sh
+go install github.com/yaboylino/gonestly/cmd/gonestly@latest
 gonestly new shop --database sqlite
 cd shop
 gonestly generate resource products
 gonestly dev
 ```
+
+If your shell cannot find `gonestly` after installation, add your Go binary directory to `PATH`. It is `$(go env GOPATH)/bin` by default or the directory set in `GOBIN`.
 
 Open http://localhost:3000/docs and the products API is there, ready to try. The rest of this guide builds a small API by hand, so you see what each part does.
 

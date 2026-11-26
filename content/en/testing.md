@@ -26,6 +26,7 @@ func TestCreateUser(t *testing.T) {
 | Helper                                        | Purpose                                                                                      |
 | --------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `app.Get`, `Post`, `Put`, `Patch`, `Delete`   | Send a request; bodies are encoded as JSON. Extra arguments are header name and value pairs. |
+| `url.Values` or `gonestlytest.Form` as a body | Send a [form](file-uploads#testing), with files in a `Form`.                                 |
 | `app.Request(method, path, body, headers...)` | Send any request; a string, `[]byte` or `io.Reader` body is sent as it is.                   |
 | `res.ExpectStatus(code)`                      | Fail the test, showing the body, if the status differs.                                      |
 | `res.JSON(&v)`                                | Decode the body.                                                                             |

@@ -92,12 +92,13 @@ type UpdateUserRequest struct {
 }
 ```
 
-| Bron   | Tag                    | Opmerking                                                               |
-| ------ | ---------------------- | ----------------------------------------------------------------------- |
-| Pad    | `path:"id"`            | De route moet `{id}` bevatten; dat wordt bij het starten gecontroleerd. |
-| Query  | `query:"page"`         | Een slice verzamelt herhaalde parameters.                               |
-| Header | `header:"X-Tenant"`    | Een slice verzamelt herhaalde headers.                                  |
-| Body   | geen, of `json:"name"` | Gelezen met `encoding/json`.                                            |
+| Bron   | Tag                    | Opmerking                                                                                |
+| ------ | ---------------------- | ---------------------------------------------------------------------------------------- |
+| Pad    | `path:"id"`            | De route moet `{id}` bevatten; dat wordt bij het starten gecontroleerd.                  |
+| Query  | `query:"page"`         | Een slice verzamelt herhaalde parameters.                                                |
+| Header | `header:"X-Tenant"`    | Een slice verzamelt herhaalde headers.                                                   |
+| Body   | geen, of `json:"name"` | Gelezen met `encoding/json`.                                                             |
+| Form   | `form:"name"`          | Een HTML-formulier, met of zonder bestanden; zie [formulieren en uploads](file-uploads). |
 
 Velden uit pad, query en headers ondersteunen strings, booleans, getallen, `time.Duration`, slices en elk type dat `encoding.TextUnmarshaler` implementeert, zoals `time.Time` of `uuid.UUID`. Gebruik een pointer, zoals `*int`, om een ontbrekende parameter te onderscheiden van de waarde nul: die blijft `nil` als de client hem niet meestuurt. Een waarde uit de URL of de headers wint altijd: een client kan een padwaarde niet via de body zetten.
 

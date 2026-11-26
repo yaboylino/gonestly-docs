@@ -13,6 +13,7 @@ Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voord
 - **Testen** met overrides en requests zonder poort.
 - **Database**: [repositories](repositories), een getypeerde [querybuilder](queries), [transacties](transactions) en [migraties](migrations) voor PostgreSQL, MySQL, MariaDB en SQLite.
 - **HTTP**: [controllers](controllers) met getypeerde handlers, binding van requests, [validatie](validation), [guards](guards), [interceptors](interceptors), [middleware](middleware) en problem details voor fouten.
+- **Formulieren en bestandsuploads**, [authenticatie](authentication) met JSON Web Tokens, [rate limiting](middleware#rate-limiting), CORS en [health-checks](health-checks).
 - **OpenAPI** voor elke route, gegenereerd uit de code en geserveerd met Swagger UI; zie [OpenAPI](openapi).
 - **CLI**: [nieuwe projecten, generators](cli), een [dev-modus](dev-mode) die de applicatie stopt als een wijziging hem breekt, en migraties.
 

@@ -96,6 +96,7 @@ type UpdateUserRequest struct {
 | Query  | `query:"page"`         | A slice collects repeated parameters.                                       |
 | Header | `header:"X-Tenant"`    | A slice collects repeated headers.                                          |
 | Body   | none, or `json:"name"` | Decoded with `encoding/json`.                                               |
+| Form   | `form:"name"`          | An HTML form, with or without files; see [forms and uploads](file-uploads). |
 
 Path, query and header fields support strings, booleans, numbers, `time.Duration`, slices and every type that implements `encoding.TextUnmarshaler`, such as `time.Time` or `uuid.UUID`. Use a pointer, such as `*int`, to tell a parameter that is absent from one that is zero: it stays `nil` when the client does not send it. A value that comes from the URL or the headers always wins: a client cannot set a path value through the body.
 

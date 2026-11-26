@@ -27,18 +27,18 @@ var AppModule = &gonestly.Module{
 }
 ```
 
-| Veld                | Standaard | Doel                                                 |
-| ------------------- | --------- | ---------------------------------------------------- |
-| `Addr`              | `:3000`   | Het adres waarop de server luistert.                 |
-| `ReadHeaderTimeout` | 10s       | Tijd om de requestheaders te lezen.                  |
-| `ReadTimeout`       | 30s       | Tijd om het hele request te lezen.                   |
-| `WriteTimeout`      | 30s       | Tijd om het response te schrijven.                   |
-| `IdleTimeout`       | 120s      | Hoe lang een keep-aliveverbinding stil mag zijn.     |
-| `MaxBodyBytes`      | 1 MiB     | De grootste requestbody; grotere bodies krijgen 413. |
-| `Middleware`        | geen      | [Middleware](middleware) rond elk request.           |
-| `CORS`              | geen      | De [origins](#cors) die de API mogen aanroepen.      |
-| `Guards`            | geen      | [Guards](guards) vóór elke route.                    |
-| `Interceptors`      | geen      | [Interceptors](interceptors) rond elke route.        |
+| Veld                | Standaard | Doel                                                                                                                          |
+| ------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `Addr`              | `:3000`   | Het adres waarop de server luistert.                                                                                          |
+| `ReadHeaderTimeout` | 10s       | Tijd om de requestheaders te lezen.                                                                                           |
+| `ReadTimeout`       | 30s       | Tijd om het hele request te lezen.                                                                                            |
+| `WriteTimeout`      | 30s       | Tijd om het response te schrijven.                                                                                            |
+| `IdleTimeout`       | 120s      | Hoe lang een keep-aliveverbinding stil mag zijn.                                                                              |
+| `MaxBodyBytes`      | 1 MiB     | De grootste requestbody; grotere bodies krijgen 413. Een route kan [zijn eigen limiet](file-uploads#de-groottelimiet) zetten. |
+| `Middleware`        | geen      | [Middleware](middleware) rond elk request.                                                                                    |
+| `CORS`              | geen      | De [origins](#cors) die de API mogen aanroepen.                                                                               |
+| `Guards`            | geen      | [Guards](guards) vóór elke route.                                                                                             |
+| `Interceptors`      | geen      | [Interceptors](interceptors) rond elke route.                                                                                 |
 
 De timeouts beschermen de server tegen trage clients; laat ze staan, tenzij je een reden hebt, zoals lange uploads.
 

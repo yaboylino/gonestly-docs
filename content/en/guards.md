@@ -96,6 +96,10 @@ func (g *Guard) SecurityScheme() (string, gonestly.SecurityScheme) {
 }
 ```
 
+## Ready-made authentication
+
+For JSON Web Tokens you do not have to write the guard yourself: the [jwt module](authentication) has one that verifies the token, puts the caller in the context and can require a role.
+
 ## Where guards apply
 
 | Scope                          | How                                                               |

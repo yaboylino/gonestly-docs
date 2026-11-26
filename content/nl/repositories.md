@@ -46,9 +46,39 @@ Hij controleert het model als de applicatie start: een model zonder primaire sle
 | `Create(ctx, &v)`             | Voegt de rij toe en vult `v` met de opgeslagen waarden.                      |
 | `Update(ctx, &v)`             | Slaat elk veld op via de primaire sleutel, of geeft `sql.ErrNotFound` terug. |
 | `Delete(ctx, id)`             | Verwijdert de rij, of geeft `sql.ErrNotFound` terug.                         |
+| `CreateAll(ctx, values)`      | Voegt veel rijen toe in weinig statements.                                   |
+| `Upsert(ctx, &v, columns...)` | Voegt de rij toe, of werkt de rij bij die zijn sleutel al heeft.             |
+| `UpsertAll(ctx, values, ...)` | Voegt veel rijen toe of werkt ze bij, in weinig statements.                  |
 | `Query()`                     | Start een [query](queries#de-querybuilder) op de tabel.                      |
 
 `Create` laat een lege primaire sleutel en lege velden met `db:",default"` over aan de database en leest de opgeslagen rij terug, zodat gegenereerde ID's en tijdstempels worden ingevuld. Een primaire sleutel die je zelf zet, zoals een UUID of een code, wordt zo ingevoegd. MySQL en MariaDB kunnen alleen een auto-increment-sleutel teruggeven, dus zet elke andere sleutel daar zelf.
+
+## Veel rijen tegelijk
+
+`CreateAll` voegt een slice met rijen toe in zo weinig statements als de database toestaat, in één transactie: of elke rij wordt opgeslagen, of geen enkele.
+
+```go
+err := products.CreateAll(ctx, imported)
+```
+
+Hij vult de waarden niet met de opgeslagen rijen, zoals `Create` doet; vraag ze op als je de gegenereerde sleutels nodig hebt.
+
+## Toevoegen of bijwerken
+
+`Upsert` voegt een rij toe, of werkt de rij bij die zijn sleutel al heeft. Zonder kolommen is de sleutel de primaire sleutel; noem een of meer unieke kolommen om die te gebruiken:
+
+```go
+// Maak de instelling aan, of wijzig de waarde als hij bestaat.
+err := settings.Upsert(ctx, &Setting{Name: "theme", Value: "dark"})
+
+// Maak de gebruiker aan, of werk de gebruiker met dit e-mailadres bij.
+err := users.Upsert(ctx, &user, "email")
+```
+
+`user` wordt gevuld met de opgeslagen rij, dus na een update is zijn ID het bestaande. Een update overschrijft de velden die je zet en houdt de rest: de primaire sleutel, en lege velden met `db:",default"`, zoals een aanmaaktijd. `UpsertAll` doet hetzelfde voor veel rijen, wat past bij synchroniseren met een ander systeem.
+
+> [!NOTE]
+> MySQL en MariaDB kun je niet vertellen welke kolommen beslissen: daar werkt een botsing met welke unieke sleutel van de tabel dan ook die rij bij.
 
 ## Niet gevonden is een 404
 

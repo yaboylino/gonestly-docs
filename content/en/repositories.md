@@ -46,9 +46,39 @@ It checks the model when the application starts: a model without a primary key, 
 | `Create(ctx, &v)`             | Inserts the row and fills `v` with the stored values.            |
 | `Update(ctx, &v)`             | Stores every field by primary key, or returns `sql.ErrNotFound`. |
 | `Delete(ctx, id)`             | Removes the row, or returns `sql.ErrNotFound`.                   |
+| `CreateAll(ctx, values)`      | Inserts many rows in few statements.                             |
+| `Upsert(ctx, &v, columns...)` | Inserts the row, or updates the one that already has its key.    |
+| `UpsertAll(ctx, values, ...)` | Inserts or updates many rows in few statements.                  |
 | `Query()`                     | Starts a [query](queries#the-query-builder) on the table.        |
 
 `Create` leaves a zero primary key and zero fields tagged `db:",default"` to the database, and reads the stored row back, so generated IDs and timestamps are filled in. A primary key you set yourself, such as a UUID or a code, is inserted as it is. MySQL and MariaDB can only report an auto increment key, so set any other key yourself there.
+
+## Many rows at once
+
+`CreateAll` inserts a slice of rows in as few statements as the database allows, in one transaction: either every row is stored, or none.
+
+```go
+err := products.CreateAll(ctx, imported)
+```
+
+It does not fill the values with the stored rows, as `Create` does; query them when you need the generated keys.
+
+## Insert or update
+
+`Upsert` inserts a row, or updates the row that already has its key. Without columns the key is the primary key; name one or more unique columns to use those instead:
+
+```go
+// Create the setting, or change its value when it exists.
+err := settings.Upsert(ctx, &Setting{Name: "theme", Value: "dark"})
+
+// Create the user, or update the user that has this email.
+err := users.Upsert(ctx, &user, "email")
+```
+
+`user` is filled with the stored row, so its ID is the existing one after an update. An update overwrites the fields you set and keeps the rest: the primary key, and zero fields tagged `db:",default"`, such as a creation time. `UpsertAll` does the same for many rows, which suits synchronizing with another system.
+
+> [!NOTE]
+> MySQL and MariaDB cannot be told which columns decide: there, a clash with any unique key of the table updates that row.
 
 ## Not found is a 404
 

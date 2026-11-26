@@ -26,6 +26,7 @@ func TestCreateUser(t *testing.T) {
 | Hulpfunctie                                   | Doel                                                                                                       |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `app.Get`, `Post`, `Put`, `Patch`, `Delete`   | Stuur een request; bodies worden als JSON verstuurd. Extra argumenten zijn paren van headernaam en waarde. |
+| `url.Values` of `gonestlytest.Form` als body  | Stuur een [formulier](file-uploads#testen), met bestanden in een `Form`.                                   |
 | `app.Request(method, path, body, headers...)` | Stuur elk request; een body als string, `[]byte` of `io.Reader` gaat ongewijzigd mee.                      |
 | `res.ExpectStatus(code)`                      | Laat de test falen, met de body erbij, als de status afwijkt.                                              |
 | `res.JSON(&v)`                                | Lees de body in.                                                                                           |

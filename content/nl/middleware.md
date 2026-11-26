@@ -60,6 +60,44 @@ level=INFO msg=request method=GET path=/users/42 request_id=req-1 status=200 byt
 
 Een 5xx-status wordt op errorniveau gelogd. Zet `RequestID` vooraan, zodat de access-log het ID kan tonen.
 
+## Rate limiting
+
+`gonestly.RateLimit` antwoordt met **429 Too Many Requests** als één client meer requests stuurt dan je toestaat:
+
+```go
+func NewServerConfig(cfg Config, logger *slog.Logger) gonestly.ServerConfig {
+	return gonestly.ServerConfig{
+		Middleware: []gonestly.Middleware{
+			gonestly.RequestID(),
+			gonestly.AccessLog(logger),
+			gonestly.RateLimit(gonestly.RateLimitConfig{Requests: 300, Window: time.Minute, TrustedProxies: 1}),
+		},
+	}
+}
+```
+
+Gebruik hem op een router voor routes die een strengere limiet verdienen, zoals een login:
+
+```go
+r.Prefix("/auth").Use(gonestly.RateLimit(gonestly.RateLimitConfig{Requests: 5, Window: time.Minute}))
+```
+
+Een client die stil was mag zijn hele quotum in één keer versturen; daarna komt er gelijkmatig over het venster weer ruimte bij. Elk response vertelt de client waar hij staat met de headers `RateLimit-Limit`, `RateLimit-Remaining` en `RateLimit-Reset`, en een 429 heeft `Retry-After`.
+
+| Veld             | Doel                                                                                               |
+| ---------------- | -------------------------------------------------------------------------------------------------- |
+| `Requests`       | Hoeveel requests een client per venster mag sturen.                                                |
+| `Window`         | De periode, zoals `time.Minute`.                                                                   |
+| `TrustedProxies` | Het aantal reverse proxies voor de applicatie; zie hieronder.                                      |
+| `Key`            | Herkent de client zelf, bijvoorbeeld aan een API-key. Een lege key laat het request ongeteld door. |
+
+Een client wordt herkend aan zijn adres. Achter een reverse proxy lijkt elk request van de proxy te komen, dus zet `TrustedProxies` op het aantal proxies dat je zelf draait: met `1` is de client het laatste adres in `X-Forwarded-For`, dat je eigen proxy heeft toegevoegd.
+
+> [!WARNING]
+> Zet `TrustedProxies` nooit hoger dan het aantal proxies dat je zelf beheert. De rest van `X-Forwarded-For` schrijft de client, die dan voor elk request een nieuw adres kan kiezen.
+
+De tellingen staan in het geheugen, dus elke instantie van de applicatie telt voor zichzelf: met drie instanties achter een load balancer kan een client drie keer de limiet versturen.
+
 ## Middleware, guards of interceptors
 
 |                              | Middleware                               | Guards                 | Interceptors                      |

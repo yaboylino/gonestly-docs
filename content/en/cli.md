@@ -42,7 +42,7 @@ gonestly dev
 The project is ready to run, with:
 
 - a root module that loads the [configuration](configuration) from the environment and `.env`, enables [validation](validation) and imports the other modules,
-- a health check at `/health` with a test,
+- [health checks](health-checks) at `/health/live` and `/health/ready`, with a test,
 - the [OpenAPI](openapi) documentation at `/docs`, which `DOCS=false` hides,
 - a `.env` file with the port and the database, and a `.gitignore`.
 
@@ -51,7 +51,7 @@ shop/
   main.go
   internal/
     app/        the root module and the configuration
-    health/     the health check and its test
+    health/     the health checks and their test
   migrations/   SQL migrations, embedded in the binary
   .env
 ```
@@ -67,7 +67,8 @@ gonestly openapi -o openapi.json
 
 ```text
 METHOD   PATH             CONTROLLER
-GET      /health          health.NewController in module "health"
+GET      /health/live     health.NewController in module "health"
+GET      /health/ready    health.NewController in module "health"
 GET      /products        products.NewController in module "products"
 POST     /products        products.NewController in module "products"
 ```

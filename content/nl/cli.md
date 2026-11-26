@@ -42,7 +42,7 @@ gonestly dev
 Het project is direct klaar om te draaien, met:
 
 - een rootmodule die de [configuratie](configuration) uit de omgeving en `.env` laadt, [validatie](validation) aanzet en de andere modules importeert,
-- een health check op `/health` met een test,
+- [health-checks](health-checks) op `/health/live` en `/health/ready`, met een test,
 - de [OpenAPI](openapi)-documentatie op `/docs`, die je met `DOCS=false` verbergt,
 - een `.env`-bestand met de poort en de database, en een `.gitignore`.
 
@@ -51,7 +51,7 @@ shop/
   main.go
   internal/
     app/        de rootmodule en de configuratie
-    health/     de health check en zijn test
+    health/     de health-checks en hun test
   migrations/   SQL-migraties, ingebed in de binary
   .env
 ```
@@ -67,7 +67,8 @@ gonestly openapi -o openapi.json
 
 ```text
 METHOD   PATH             CONTROLLER
-GET      /health          health.NewController in module "health"
+GET      /health/live     health.NewController in module "health"
+GET      /health/ready    health.NewController in module "health"
 GET      /products        products.NewController in module "products"
 POST     /products        products.NewController in module "products"
 ```

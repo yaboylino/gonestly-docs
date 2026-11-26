@@ -27,18 +27,18 @@ var AppModule = &gonestly.Module{
 }
 ```
 
-| Field               | Default | Purpose                                          |
-| ------------------- | ------- | ------------------------------------------------ |
-| `Addr`              | `:3000` | The address to listen on.                        |
-| `ReadHeaderTimeout` | 10s     | Time to read the request headers.                |
-| `ReadTimeout`       | 30s     | Time to read the whole request.                  |
-| `WriteTimeout`      | 30s     | Time to write the response.                      |
-| `IdleTimeout`       | 120s    | Time a keep-alive connection may stay idle.      |
-| `MaxBodyBytes`      | 1 MiB   | The largest request body; larger bodies get 413. |
-| `Middleware`        | none    | [Middleware](middleware) around every request.   |
-| `CORS`              | none    | The [origins](#cors) that may call the API.      |
-| `Guards`            | none    | [Guards](guards) before every route.             |
-| `Interceptors`      | none    | [Interceptors](interceptors) around every route. |
+| Field               | Default | Purpose                                                                                                  |
+| ------------------- | ------- | -------------------------------------------------------------------------------------------------------- |
+| `Addr`              | `:3000` | The address to listen on.                                                                                |
+| `ReadHeaderTimeout` | 10s     | Time to read the request headers.                                                                        |
+| `ReadTimeout`       | 30s     | Time to read the whole request.                                                                          |
+| `WriteTimeout`      | 30s     | Time to write the response.                                                                              |
+| `IdleTimeout`       | 120s    | Time a keep-alive connection may stay idle.                                                              |
+| `MaxBodyBytes`      | 1 MiB   | The largest request body; larger bodies get 413. A route can [set its own](file-uploads#the-size-limit). |
+| `Middleware`        | none    | [Middleware](middleware) around every request.                                                           |
+| `CORS`              | none    | The [origins](#cors) that may call the API.                                                              |
+| `Guards`            | none    | [Guards](guards) before every route.                                                                     |
+| `Interceptors`      | none    | [Interceptors](interceptors) around every route.                                                         |
 
 The timeouts protect the server against slow clients; keep them unless you have a reason, such as long uploads.
 

@@ -102,6 +102,21 @@
               "slug": "openapi",
               "label": "nav.openapi",
               "icon": "brackets-curly"
+            },
+            {
+              "slug": "file-uploads",
+              "label": "nav.fileUploads",
+              "icon": "upload-simple"
+            },
+            {
+              "slug": "authentication",
+              "label": "nav.authentication",
+              "icon": "key"
+            },
+            {
+              "slug": "health-checks",
+              "label": "nav.healthChecks",
+              "icon": "heartbeat"
             }
           ]
         },

@@ -60,6 +60,44 @@ level=INFO msg=request method=GET path=/users/42 request_id=req-1 status=200 byt
 
 A 5xx status is logged at error level. Put `RequestID` first, so the access log can show the ID.
 
+## Rate limiting
+
+`gonestly.RateLimit` answers **429 Too Many Requests** when one client sends more requests than you allow:
+
+```go
+func NewServerConfig(cfg Config, logger *slog.Logger) gonestly.ServerConfig {
+	return gonestly.ServerConfig{
+		Middleware: []gonestly.Middleware{
+			gonestly.RequestID(),
+			gonestly.AccessLog(logger),
+			gonestly.RateLimit(gonestly.RateLimitConfig{Requests: 300, Window: time.Minute, TrustedProxies: 1}),
+		},
+	}
+}
+```
+
+Use it on a router for routes that deserve a stricter limit, such as a login:
+
+```go
+r.Prefix("/auth").Use(gonestly.RateLimit(gonestly.RateLimitConfig{Requests: 5, Window: time.Minute}))
+```
+
+A client that was quiet may send its whole quota at once; after that, room comes back evenly over the window. Every response tells the client where it stands with the `RateLimit-Limit`, `RateLimit-Remaining` and `RateLimit-Reset` headers, and a 429 has `Retry-After`.
+
+| Field            | Purpose                                                                                        |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| `Requests`       | How many requests a client may send per window.                                                |
+| `Window`         | The period, such as `time.Minute`.                                                             |
+| `TrustedProxies` | The number of reverse proxies in front of the application; see below.                          |
+| `Key`            | Identifies the client yourself, for example by API key. An empty key lets the request through. |
+
+A client is recognized by its address. Behind a reverse proxy every request seems to come from the proxy, so set `TrustedProxies` to the number of proxies you run: with `1`, the client is the last address in `X-Forwarded-For`, which your own proxy added.
+
+> [!WARNING]
+> Never set `TrustedProxies` higher than the number of proxies you control. The rest of `X-Forwarded-For` is written by the client, who could then pick a new address for every request.
+
+The counts live in memory, so each instance of the application counts for itself: with three instances behind a load balancer, a client can send three times the limit.
+
 ## Middleware, guards or interceptors
 
 |                         | Middleware                                | Guards                      | Interceptors                    |

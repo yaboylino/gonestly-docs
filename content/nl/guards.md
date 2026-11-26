@@ -96,6 +96,10 @@ func (g *Guard) SecurityScheme() (string, gonestly.SecurityScheme) {
 }
 ```
 
+## Kant-en-klare authenticatie
+
+Voor JSON Web Tokens hoef je de guard niet zelf te schrijven: de [jwt-module](authentication) heeft er een die het token controleert, de aanroeper in de context zet en een rol kan eisen.
+
 ## Waar guards gelden
 
 | Bereik                                    | Hoe                                                           |

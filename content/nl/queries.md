@@ -112,7 +112,7 @@ Een lege slice is een fout, omdat `IN ()` geen geldige SQL is.
 
 ## Gerelateerde rijen
 
-De SQL-laag laadt nooit stiekem gerelateerde rijen, dus er zijn geen verborgen queries. Laad ze met één extra query en groepeer ze met `sql.GroupBy`:
+Declareer [relaties](relations) om gerelateerde rijen te laden met `Include`. De SQL-laag laadt ze nooit stiekem, dus er zijn geen verborgen queries. Zonder relatie laad je ze met één extra query en groepeer je ze met `sql.GroupBy`:
 
 ```go
 posts, err := sql.From[Post](db).Where(postUserID.In(userIDs...)).All(ctx)

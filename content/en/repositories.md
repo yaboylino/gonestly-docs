@@ -38,18 +38,20 @@ It checks the model when the application starts: a model without a primary key, 
 
 ## Methods
 
-| Method                        | What it does                                                     |
-| ----------------------------- | ---------------------------------------------------------------- |
-| `FindByID(ctx, id)`           | Returns the row, or `sql.ErrNotFound`.                           |
-| `FindAll(ctx, conditions...)` | Returns the rows that match all conditions, or every row.        |
-| `Count(ctx, conditions...)`   | Counts the rows that match.                                      |
-| `Create(ctx, &v)`             | Inserts the row and fills `v` with the stored values.            |
-| `Update(ctx, &v)`             | Stores every field by primary key, or returns `sql.ErrNotFound`. |
-| `Delete(ctx, id)`             | Removes the row, or returns `sql.ErrNotFound`.                   |
-| `CreateAll(ctx, values)`      | Inserts many rows in few statements.                             |
-| `Upsert(ctx, &v, columns...)` | Inserts the row, or updates the one that already has its key.    |
-| `UpsertAll(ctx, values, ...)` | Inserts or updates many rows in few statements.                  |
-| `Query()`                     | Starts a [query](queries#the-query-builder) on the table.        |
+| Method                        | What it does                                                                                          |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `FindByID(ctx, id)`           | Returns the row, or `sql.ErrNotFound`.                                                                |
+| `FindAll(ctx, conditions...)` | Returns the rows that match all conditions, or every row.                                             |
+| `Count(ctx, conditions...)`   | Counts the rows that match.                                                                           |
+| `Create(ctx, &v)`             | Inserts the row and fills `v` with the stored values.                                                 |
+| `Update(ctx, &v)`             | Stores every field by primary key, or returns `sql.ErrNotFound`.                                      |
+| `Delete(ctx, id)`             | Removes the row, or returns `sql.ErrNotFound`.                                                        |
+| `CreateAll(ctx, values)`      | Inserts many rows in few statements.                                                                  |
+| `Upsert(ctx, &v, columns...)` | Inserts the row, or updates the one that already has its key.                                         |
+| `UpsertAll(ctx, values, ...)` | Inserts or updates many rows in few statements.                                                       |
+| `Load(ctx, &v, relations...)` | Fills the [relations](relations) of a row that was loaded without them.                               |
+| `CreateNested(ctx, &v)`       | Inserts the row and the rows in its [relations](relations#creating-rows-together) in one transaction. |
+| `Query()`                     | Starts a [query](queries#the-query-builder) on the table.                                             |
 
 `Create` leaves a zero primary key and zero fields tagged `db:",default"` to the database, and reads the stored row back, so generated IDs and timestamps are filled in. A primary key you set yourself, such as a UUID or a code, is inserted as it is. MySQL and MariaDB can only report an auto increment key, so set any other key yourself there.
 

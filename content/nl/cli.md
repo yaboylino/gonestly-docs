@@ -59,6 +59,9 @@ shop/
 
 ## Een database toevoegen
 
+> [!NOTE]
+> `gonestly add database` is beschikbaar vanaf versie 0.3.0.
+
 Een project dat zonder `--database` is gemaakt kan er later een krijgen. `gonestly add database` vraagt welke database je wilt en hoe je erbij komt, maakt de database aan op zijn server en verbindt het project ermee:
 
 ```text

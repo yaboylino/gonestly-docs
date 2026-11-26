@@ -38,18 +38,20 @@ Hij controleert het model als de applicatie start: een model zonder primaire sle
 
 ## Methodes
 
-| Methode                       | Wat hij doet                                                                 |
-| ----------------------------- | ---------------------------------------------------------------------------- |
-| `FindByID(ctx, id)`           | Geeft de rij terug, of `sql.ErrNotFound`.                                    |
-| `FindAll(ctx, conditions...)` | Geeft de rijen die aan alle condities voldoen, of alle rijen.                |
-| `Count(ctx, conditions...)`   | Telt de rijen die matchen.                                                   |
-| `Create(ctx, &v)`             | Voegt de rij toe en vult `v` met de opgeslagen waarden.                      |
-| `Update(ctx, &v)`             | Slaat elk veld op via de primaire sleutel, of geeft `sql.ErrNotFound` terug. |
-| `Delete(ctx, id)`             | Verwijdert de rij, of geeft `sql.ErrNotFound` terug.                         |
-| `CreateAll(ctx, values)`      | Voegt veel rijen toe in weinig statements.                                   |
-| `Upsert(ctx, &v, columns...)` | Voegt de rij toe, of werkt de rij bij die zijn sleutel al heeft.             |
-| `UpsertAll(ctx, values, ...)` | Voegt veel rijen toe of werkt ze bij, in weinig statements.                  |
-| `Query()`                     | Start een [query](queries#de-querybuilder) op de tabel.                      |
+| Methode                       | Wat hij doet                                                                                       |
+| ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| `FindByID(ctx, id)`           | Geeft de rij terug, of `sql.ErrNotFound`.                                                          |
+| `FindAll(ctx, conditions...)` | Geeft de rijen die aan alle condities voldoen, of alle rijen.                                      |
+| `Count(ctx, conditions...)`   | Telt de rijen die matchen.                                                                         |
+| `Create(ctx, &v)`             | Voegt de rij toe en vult `v` met de opgeslagen waarden.                                            |
+| `Update(ctx, &v)`             | Slaat elk veld op via de primaire sleutel, of geeft `sql.ErrNotFound` terug.                       |
+| `Delete(ctx, id)`             | Verwijdert de rij, of geeft `sql.ErrNotFound` terug.                                               |
+| `CreateAll(ctx, values)`      | Voegt veel rijen toe in weinig statements.                                                         |
+| `Upsert(ctx, &v, columns...)` | Voegt de rij toe, of werkt de rij bij die zijn sleutel al heeft.                                   |
+| `UpsertAll(ctx, values, ...)` | Voegt veel rijen toe of werkt ze bij, in weinig statements.                                        |
+| `Load(ctx, &v, relations...)` | Vult de [relaties](relations) van een rij die zonder zijn geladen.                                 |
+| `CreateNested(ctx, &v)`       | Voegt de rij en de rijen in zijn [relaties](relations#rijen-samen-aanmaken) toe in één transactie. |
+| `Query()`                     | Start een [query](queries#de-querybuilder) op de tabel.                                            |
 
 `Create` laat een lege primaire sleutel en lege velden met `db:",default"` over aan de database en leest de opgeslagen rij terug, zodat gegenereerde ID's en tijdstempels worden ingevuld. Een primaire sleutel die je zelf zet, zoals een UUID of een code, wordt zo ingevoegd. MySQL en MariaDB kunnen alleen een auto-increment-sleutel teruggeven, dus zet elke andere sleutel daar zelf.
 

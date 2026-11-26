@@ -38,6 +38,7 @@
     "database": "Database",
     "queries": "Queries",
     "repositories": "Repositories",
+    "relations": "Relaties",
     "transactions": "Transacties",
     "migrations": "Migraties",
     "modules": "Modules",

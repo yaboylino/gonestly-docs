@@ -112,7 +112,7 @@ An empty slice is an error, because `IN ()` is not valid SQL.
 
 ## Related rows
 
-The SQL layer never loads related rows behind your back, so there are no hidden queries. Load them with one extra query and group them with `sql.GroupBy`:
+Declare [relations](relations) to load related rows with `Include`. The SQL layer never loads them behind your back, so there are no hidden queries. Without a relation, load them with one extra query and group them with `sql.GroupBy`:
 
 ```go
 posts, err := sql.From[Post](db).Where(postUserID.In(userIDs...)).All(ctx)

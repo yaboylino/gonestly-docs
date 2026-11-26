@@ -139,6 +139,11 @@
               "icon": "archive"
             },
             {
+              "slug": "relations",
+              "label": "nav.relations",
+              "icon": "graph"
+            },
+            {
               "slug": "transactions",
               "label": "nav.transactions",
               "icon": "arrows-left-right"

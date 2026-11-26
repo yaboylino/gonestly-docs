@@ -12,11 +12,16 @@ shop/
   main.go
   go.mod
   go.sum
+  Makefile
   .env.example
+  .editorconfig
+  .vscode/
+    settings.json
   internal/
     app/
       module.go
       config.go
+      logger.go
     health/
       module.go
       controller.go
@@ -38,6 +43,7 @@ shop/
     migrations.go
     20261126100000_create_products.up.sql
     20261126100000_create_products.down.sql
+    schema.snapshot.json
 ```
 
 ## Wat zet je waar?

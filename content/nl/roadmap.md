@@ -14,6 +14,12 @@ Gonestly wordt in fases gebouwd. Elke fase is af, getest en gedocumenteerd voord
 - **Database**: [repositories](repositories), een getypeerde [querybuilder](queries), [transacties](transactions) en [migraties](migrations) voor PostgreSQL, MySQL, MariaDB en SQLite.
 - **HTTP**: [controllers](controllers) met getypeerde handlers, binding van requests, [validatie](validation), [guards](guards), [interceptors](interceptors), [middleware](middleware) en problem details voor fouten.
 - **Achtergrondtaken** met nieuwe pogingen en cron, bewaard in de [database](background-jobs).
+- **Events**, een [event-bus](events) in het proces met sync en async handlers.
+- **Logging** met een [request-ID op elke regel](logging), een instelbare logger en een af te stellen access-log.
+- **Beveiliging**: [beveiligingsheaders, bescherming tegen cross-site request forgery en vertrouwde proxy's](security), en Argon2id-[wachtwoorden](passwords).
+- **Caching** met [geheugen- en Redis-stores](caching), responsecaching en ETags.
+- **Versies** van de API in het pad of een header, met [deprecation- en sunset-headers](versioning).
+- **Schema vanuit je modellen**: [migraties die voor je geschreven worden](schema) uit je structs, voor PostgreSQL, MySQL, MariaDB en SQLite.
 - **Formulieren en bestandsuploads**, [authenticatie](authentication) met JSON Web Tokens, [rate limiting](middleware#rate-limiting), CORS en [health-checks](health-checks).
 - **OpenAPI** voor elke route, gegenereerd uit de code en geserveerd met Swagger UI; zie [OpenAPI](openapi).
 - **CLI**: [nieuwe projecten, generators](cli), een [dev-modus](dev-mode) die de applicatie stopt als een wijziging hem breekt, en migraties.

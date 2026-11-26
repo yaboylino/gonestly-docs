@@ -14,6 +14,12 @@ Gonestly is built in phases. Each phase is finished, tested and documented befor
 - **Database**: [repositories](repositories), a typed [query builder](queries), [transactions](transactions) and [migrations](migrations) for PostgreSQL, MySQL, MariaDB and SQLite.
 - **HTTP** [controllers](controllers) with typed handlers, request binding, [validation](validation), [guards](guards), [interceptors](interceptors), [middleware](middleware) and problem details for errors.
 - **Background jobs** with retries and cron, stored in the [database](background-jobs).
+- **Events**, an in-process [event bus](events) with sync and async handlers.
+- **Logging** with a [request ID on every line](logging), a configurable logger and a tunable access log.
+- **Security**: [security headers, cross-site request forgery protection and trusted proxies](security), and Argon2id [passwords](passwords).
+- **Caching** with [memory and Redis stores](caching), response caching and ETags.
+- **Versioning** of the API in the path or a header, with [deprecation and sunset headers](versioning).
+- **Schema from your models**: [migrations written for you](schema) from your structs, for PostgreSQL, MySQL, MariaDB and SQLite.
 - **Forms and file uploads**, [authentication](authentication) with JSON Web Tokens, [rate limiting](middleware#rate-limiting), CORS and [health checks](health-checks).
 - **OpenAPI** for every route, generated from the code and served with Swagger UI; see [OpenAPI](openapi).
 - **CLI**: [new projects, generators](cli), a [dev mode](dev-mode) that stops the application when a change breaks it, and migrations.

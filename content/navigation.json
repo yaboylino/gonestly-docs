@@ -17,6 +17,11 @@
               "slug": "first-steps",
               "label": "nav.firstSteps",
               "icon": "rocket-launch"
+            },
+            {
+              "slug": "project-structure",
+              "label": "nav.projectStructure",
+              "icon": "folder-open"
             }
           ]
         },
@@ -52,6 +57,11 @@
               "slug": "validation",
               "label": "nav.validation",
               "icon": "check-circle"
+            },
+            {
+              "slug": "dtos",
+              "label": "nav.dtos",
+              "icon": "file-text"
             },
             {
               "slug": "guards",

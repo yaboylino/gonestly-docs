@@ -46,7 +46,7 @@ Every handler has the same shape:
 func(ctx context.Context, req Request) (Response, error)
 ```
 
-The request and response types are yours. Register the handler with the function for its HTTP method:
+The request and response types are yours. See [request and response DTOs](dtos) for a full `POST /users` example. Register the handler with the function for its HTTP method:
 
 | Function          | Method                       | Default status |
 | ----------------- | ---------------------------- | -------------- |

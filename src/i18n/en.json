@@ -21,6 +21,8 @@
     },
     "introduction": "Introduction",
     "firstSteps": "First steps",
+    "projectStructure": "Project structure",
+    "dtos": "Request and response DTOs",
     "controllers": "Controllers",
     "middleware": "Middleware",
     "exceptionHandling": "Exception handling",

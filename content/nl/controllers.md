@@ -40,6 +40,8 @@ Controllers worden net als providers gebouwd en kunnen alles injecteren wat hun 
 
 ## Handlers
 
+Bekijk [request- en response-DTO's](dtos) voor een compleet voorbeeld van `POST /users`.
+
 Elke handler heeft dezelfde vorm:
 
 ```go

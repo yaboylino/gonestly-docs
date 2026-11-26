@@ -29,6 +29,8 @@ If your shell cannot find `gonestly` after installation, add your Go binary dire
 
 Open http://localhost:3000/docs and the products API is there, ready to try. The rest of this guide builds a small API by hand, so you see what each part does.
 
+See [project structure](project-structure) for where to put DTOs, enums, and other files as the project grows.
+
 ## Installation
 
 Create a new module and add Gonestly to it:

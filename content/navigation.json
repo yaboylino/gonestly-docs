@@ -119,6 +119,11 @@
               "icon": "heartbeat"
             },
             {
+              "slug": "caching",
+              "label": "nav.caching",
+              "icon": "gauge"
+            },
+            {
               "slug": "versioning",
               "label": "nav.versioning",
               "icon": "git-branch"

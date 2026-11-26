@@ -37,7 +37,7 @@ go get github.com/yaboylino/gonestly
 ```
 
 > [!NOTE]
-> De repository is nog niet openbaar. Tot de eerste release werkt `go get` alleen voor mensen met toegang.
+> Gonestly heeft nog geen eerste release. Tot die tijd haalt `go get` de laatste commit van het framework op, en zijn de modules `sql` en `validator` alleen te gebruiken vanuit een checkout van de repository.
 
 ## Een databasemodule
 

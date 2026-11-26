@@ -37,7 +37,7 @@ go get github.com/yaboylino/gonestly
 ```
 
 > [!NOTE]
-> The repository is not public yet. Until the first release, `go get` only works for people with access to it.
+> Gonestly has not had its first release yet. Until then, `go get` fetches the latest commit of the framework, and the `sql` and `validator` modules can only be used from a checkout of the repository.
 
 ## A database module
 

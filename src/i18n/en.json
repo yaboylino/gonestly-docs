@@ -35,6 +35,7 @@
     "fileUploads": "Forms and uploads",
     "authentication": "Authentication",
     "healthChecks": "Health checks",
+    "versioning": "Versioning",
     "security": "Security",
     "passwords": "Passwords",
     "events": "Events",

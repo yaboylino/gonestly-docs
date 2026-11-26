@@ -22,6 +22,7 @@
     "introduction": "Introduction",
     "firstSteps": "First steps",
     "projectStructure": "Project structure",
+    "example": "Example application",
     "dtos": "Request and response DTOs",
     "controllers": "Controllers",
     "middleware": "Middleware",

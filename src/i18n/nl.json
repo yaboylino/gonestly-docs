@@ -22,6 +22,7 @@
     "introduction": "Introductie",
     "firstSteps": "Eerste stappen",
     "projectStructure": "Projectstructuur",
+    "example": "Voorbeeldapplicatie",
     "dtos": "Request- en response-DTO's",
     "controllers": "Controllers",
     "middleware": "Middleware",

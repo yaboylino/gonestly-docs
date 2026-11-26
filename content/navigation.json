@@ -22,6 +22,11 @@
               "slug": "project-structure",
               "label": "nav.projectStructure",
               "icon": "folder-open"
+            },
+            {
+              "slug": "example",
+              "label": "nav.example",
+              "icon": "kanban"
             }
           ]
         },

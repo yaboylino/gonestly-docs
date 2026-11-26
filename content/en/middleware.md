@@ -3,7 +3,7 @@ title: Middleware
 description: Use any net/http middleware around your routes or around the whole server.
 ---
 
-Middleware wraps an `http.Handler`, the standard way to extend `net/http`. Gonestly uses the same signature, so every middleware written for `net/http` works, such as CORS, compression or request IDs:
+Middleware wraps an `http.Handler`, the standard way to extend `net/http`. Gonestly uses the same signature, so every middleware written for `net/http` works, such as compression or rate limiting:
 
 ```go
 type Middleware = func(http.Handler) http.Handler
@@ -33,18 +33,18 @@ func (c *Controller) Routes(r *gonestly.Router) {
 }
 ```
 
-Middleware for the whole server goes into the [server configuration](http-server#configuration). It also runs for requests that match no route, which matters for CORS preflight requests:
+Middleware for the whole server goes into the [server configuration](http-server#configuration). It also runs for requests that match no route:
 
 ```go
 func NewServerConfig(cfg Config, logger *slog.Logger) gonestly.ServerConfig {
 	return gonestly.ServerConfig{
 		Addr:       fmt.Sprintf(":%d", cfg.Port),
-		Middleware: []gonestly.Middleware{gonestly.RequestID(), gonestly.AccessLog(logger), cors.Handler},
+		Middleware: []gonestly.Middleware{gonestly.RequestID(), gonestly.AccessLog(logger), middleware.Gzip},
 	}
 }
 ```
 
-In both cases the first middleware in the list is the outermost.
+In both cases the first middleware in the list is the outermost. CORS needs no middleware: it is part of the [server configuration](http-server#cors).
 
 ## Request IDs and the access log
 
@@ -65,7 +65,7 @@ A 5xx status is logged at error level. Put `RequestID` first, so the access log 
 |                         | Middleware                                | Guards                      | Interceptors                    |
 | ----------------------- | ----------------------------------------- | --------------------------- | ------------------------------- |
 | Works with              | `http.ResponseWriter` and `*http.Request` | the request                 | the handler's result            |
-| Typical use             | CORS, compression, request IDs            | authentication, permissions | logging, caching, error mapping |
+| Typical use             | compression, request IDs, rate limiting   | authentication, permissions | logging, caching, error mapping |
 | Runs for unknown routes | when global                               | no                          | no                              |
 | Can inject providers    | through a provider that returns it        | yes                         | yes                             |
 

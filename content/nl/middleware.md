@@ -3,7 +3,7 @@ title: Middleware
 description: Gebruik elke net/http-middleware rond je routes of rond de hele server.
 ---
 
-Middleware omsluit een `http.Handler`, de standaardmanier om `net/http` uit te breiden. Gonestly gebruikt dezelfde signatuur, dus elke middleware die voor `net/http` is geschreven werkt, zoals CORS, compressie of request-ID's:
+Middleware omsluit een `http.Handler`, de standaardmanier om `net/http` uit te breiden. Gonestly gebruikt dezelfde signatuur, dus elke middleware die voor `net/http` is geschreven werkt, zoals compressie of rate limiting:
 
 ```go
 type Middleware = func(http.Handler) http.Handler
@@ -33,18 +33,18 @@ func (c *Controller) Routes(r *gonestly.Router) {
 }
 ```
 
-Middleware voor de hele server hoort in de [serverconfiguratie](http-server#configuratie). Die draait ook voor requests die bij geen enkele route passen, wat belangrijk is voor CORS-preflightrequests:
+Middleware voor de hele server hoort in de [serverconfiguratie](http-server#configuratie). Die draait ook voor requests die bij geen enkele route passen:
 
 ```go
 func NewServerConfig(cfg Config, logger *slog.Logger) gonestly.ServerConfig {
 	return gonestly.ServerConfig{
 		Addr:       fmt.Sprintf(":%d", cfg.Port),
-		Middleware: []gonestly.Middleware{gonestly.RequestID(), gonestly.AccessLog(logger), cors.Handler},
+		Middleware: []gonestly.Middleware{gonestly.RequestID(), gonestly.AccessLog(logger), middleware.Gzip},
 	}
 }
 ```
 
-In beide gevallen is de eerste middleware in de lijst de buitenste.
+In beide gevallen is de eerste middleware in de lijst de buitenste. Voor CORS is geen middleware nodig: dat zit in de [serverconfiguratie](http-server#cors).
 
 ## Request-ID's en de access-log
 
@@ -65,7 +65,7 @@ Een 5xx-status wordt op errorniveau gelogd. Zet `RequestID` vooraan, zodat de ac
 |                              | Middleware                               | Guards                 | Interceptors                      |
 | ---------------------------- | ---------------------------------------- | ---------------------- | --------------------------------- |
 | Werkt met                    | `http.ResponseWriter` en `*http.Request` | het request            | het resultaat van de handler      |
-| Typisch gebruik              | CORS, compressie, request-ID's           | authenticatie, rechten | logging, caching, fouten vertalen |
+| Typisch gebruik              | compressie, request-ID's, rate limiting  | authenticatie, rechten | logging, caching, fouten vertalen |
 | Draait voor onbekende routes | als hij globaal is                       | nee                    | nee                               |
 | Kan providers injecteren     | via een provider die hem teruggeeft      | ja                     | ja                                |
 

@@ -36,10 +36,41 @@ var AppModule = &gonestly.Module{
 | `IdleTimeout`       | 120s    | Time a keep-alive connection may stay idle.      |
 | `MaxBodyBytes`      | 1 MiB   | The largest request body; larger bodies get 413. |
 | `Middleware`        | none    | [Middleware](middleware) around every request.   |
+| `CORS`              | none    | The [origins](#cors) that may call the API.      |
 | `Guards`            | none    | [Guards](guards) before every route.             |
 | `Interceptors`      | none    | [Interceptors](interceptors) around every route. |
 
 The timeouts protect the server against slow clients; keep them unless you have a reason, such as long uploads.
+
+## CORS
+
+A browser only lets a page call an API on another origin when the API allows it. This is the case for a frontend on its own domain, or on `localhost:4200` during development. List the origins of your frontends:
+
+```go
+func NewServerConfig(cfg Config) gonestly.ServerConfig {
+	return gonestly.ServerConfig{
+		CORS: gonestly.CORSConfig{AllowedOrigins: []string{"https://app.example.com"}},
+	}
+}
+```
+
+The server then answers the preflight requests of the browser and adds the CORS headers to every response, including errors. A project made with `gonestly new` reads the origins from `CORS_ORIGINS`, separated by commas.
+
+| Field              | Default                                | Purpose                                                            |
+| ------------------ | -------------------------------------- | ------------------------------------------------------------------ |
+| `AllowedOrigins`   | none                                   | The origins that may call the API. Without them, CORS is off.      |
+| `AllowedMethods`   | GET, HEAD, POST, PUT, PATCH and DELETE | The methods a page may use.                                        |
+| `AllowedHeaders`   | every header                           | The request headers a page may send.                               |
+| `ExposedHeaders`   | `X-Request-ID`                         | The response headers a page may read.                              |
+| `AllowCredentials` | `false`                                | Lets the browser send cookies and HTTP authentication.             |
+| `MaxAge`           | 10 minutes                             | How long a browser may remember the answer to a preflight request. |
+
+An origin is a scheme and a host, without a path: `https://app.example.com`. `https://*.example.com` allows every subdomain, which suits preview deployments, and `*` allows every origin, for a public API.
+
+A mistake is reported when the application starts: an origin with a path or a trailing slash, or `AllowCredentials` together with `*`, which browsers refuse.
+
+> [!WARNING]
+> CORS is not access control. It tells browsers which pages may read the responses; other clients can still call the API. Protect routes with [guards](guards).
 
 ## Choosing a port automatically
 

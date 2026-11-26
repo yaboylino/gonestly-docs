@@ -36,10 +36,41 @@ var AppModule = &gonestly.Module{
 | `IdleTimeout`       | 120s      | Hoe lang een keep-aliveverbinding stil mag zijn.     |
 | `MaxBodyBytes`      | 1 MiB     | De grootste requestbody; grotere bodies krijgen 413. |
 | `Middleware`        | geen      | [Middleware](middleware) rond elk request.           |
+| `CORS`              | geen      | De [origins](#cors) die de API mogen aanroepen.      |
 | `Guards`            | geen      | [Guards](guards) vóór elke route.                    |
 | `Interceptors`      | geen      | [Interceptors](interceptors) rond elke route.        |
 
 De timeouts beschermen de server tegen trage clients; laat ze staan, tenzij je een reden hebt, zoals lange uploads.
+
+## CORS
+
+Een browser laat een pagina alleen een API op een andere origin aanroepen als de API dat toestaat. Dat geldt voor een frontend op een eigen domein, of op `localhost:4200` tijdens het ontwikkelen. Noem de origins van je frontends:
+
+```go
+func NewServerConfig(cfg Config) gonestly.ServerConfig {
+	return gonestly.ServerConfig{
+		CORS: gonestly.CORSConfig{AllowedOrigins: []string{"https://app.example.com"}},
+	}
+}
+```
+
+De server beantwoordt dan de preflightrequests van de browser en zet de CORS-headers op elk response, ook op fouten. Een project van `gonestly new` leest de origins uit `CORS_ORIGINS`, gescheiden door komma's.
+
+| Veld               | Standaard                             | Doel                                                                     |
+| ------------------ | ------------------------------------- | ------------------------------------------------------------------------ |
+| `AllowedOrigins`   | geen                                  | De origins die de API mogen aanroepen. Zonder origins staat CORS uit.    |
+| `AllowedMethods`   | GET, HEAD, POST, PUT, PATCH en DELETE | De methodes die een pagina mag gebruiken.                                |
+| `AllowedHeaders`   | elke header                           | De requestheaders die een pagina mag sturen.                             |
+| `ExposedHeaders`   | `X-Request-ID`                        | De responseheaders die een pagina mag lezen.                             |
+| `AllowCredentials` | `false`                               | Laat de browser cookies en HTTP-authenticatie meesturen.                 |
+| `MaxAge`           | 10 minuten                            | Hoe lang een browser het antwoord op een preflightrequest mag onthouden. |
+
+Een origin is een schema en een host, zonder pad: `https://app.example.com`. `https://*.example.com` staat elk subdomein toe, wat past bij preview-omgevingen, en `*` staat elke origin toe, voor een openbare API.
+
+Een fout wordt gemeld als de applicatie start: een origin met een pad of een slash aan het eind, of `AllowCredentials` samen met `*`, wat browsers weigeren.
+
+> [!WARNING]
+> CORS is geen toegangscontrole. Het vertelt browsers welke pagina's de responses mogen lezen; andere clients kunnen de API nog steeds aanroepen. Bescherm routes met [guards](guards).
 
 ## Automatisch een poort kiezen
 

@@ -22,7 +22,7 @@ gonestly.Post(r, "/contact", c.Send)
 
 Formuliervelden ondersteunen dezelfde types als [queryparameters](controllers#requests-binden): strings, booleans, getallen, slices voor herhaalde velden en pointers voor optionele. Het formulier mag URL-encoded of multipart zijn; beide werken. Regels voor [validatie](validation) gelden zoals altijd, en een ongeldig veld wordt gemeld met `"in": "form"`.
 
-Een requesttype leest zijn body uit een formulier of uit JSON, niet uit allebei. Naast `form`-velden kun je wel `path`, `query` en `header` gebruiken. Een waarde in de querystring telt nooit als formulierveld.
+Een requesttype leest zijn body uit een formulier of uit JSON, niet uit allebei, en een formulier hoort bij een POST-, PUT- of PATCH-route; een fout in een van beide wordt gemeld als de applicatie start. Naast `form`-velden kun je wel `path`, `query` en `header` gebruiken. Een waarde in de querystring telt nooit als formulierveld.
 
 ## Bestanden uploaden
 

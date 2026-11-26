@@ -8,7 +8,7 @@ Gonestly is een framework voor serverapplicaties in Go die makkelijk aan te pass
 Dat gebeurt in gewoon, idiomatisch Go. Er zijn geen decorators om na te bootsen, er wordt geen code gegenereerd in je businesslogica en er is geen reflectie bij elk request. Een provider is een gewone constructorfunctie, en een module een gewone struct.
 
 > [!NOTE]
-> Gonestly staat op versie `v0.1.0`, de eerste release. Tot `v1.0.0` kan een minor-versie de API veranderen; de [changelog](https://github.com/yaboylino/gonestly/blob/main/CHANGELOG.md) noemt elke wijziging.
+> Gonestly is volop in ontwikkeling, met regelmatig een release. Tot `v1.0.0` kan een minor-versie de API veranderen; de [changelog](https://github.com/yaboylino/gonestly/blob/main/CHANGELOG.md) noemt elke wijziging.
 
 ## Filosofie
 

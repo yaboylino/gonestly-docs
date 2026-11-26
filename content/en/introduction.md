@@ -8,7 +8,7 @@ Gonestly is a framework for building server applications in Go that stay easy to
 It does this in plain, idiomatic Go. There are no decorators to imitate, no code generation in your business logic and no reflection on every request. A provider is an ordinary constructor function, and a module is an ordinary struct.
 
 > [!NOTE]
-> Gonestly is at version `v0.1.0`, its first release. Until `v1.0.0` a minor version may change the API; the [changelog](https://github.com/yaboylino/gonestly/blob/main/CHANGELOG.md) lists every change.
+> Gonestly is in active development, with regular releases. Until `v1.0.0` a minor version may change the API; the [changelog](https://github.com/yaboylino/gonestly/blob/main/CHANGELOG.md) lists every change.
 
 ## Philosophy
 

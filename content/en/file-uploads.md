@@ -22,7 +22,7 @@ gonestly.Post(r, "/contact", c.Send)
 
 Form fields support the same types as [query parameters](controllers#binding-requests): strings, booleans, numbers, slices for repeated fields and pointers for optional ones. The form may be URL encoded or multipart; both work. [Validation](validation) rules apply as usual, and an invalid field is reported with `"in": "form"`.
 
-A request type reads its body either from a form or from JSON, not both. Next to `form` fields you can still use `path`, `query` and `header`. A value in the query string never stands in for a form field.
+A request type reads its body either from a form or from JSON, not both, and a form belongs to a POST, PUT or PATCH route; a mistake in either is reported when the application starts. Next to `form` fields you can still use `path`, `query` and `header`. A value in the query string never stands in for a form field.
 
 ## Uploading files
 

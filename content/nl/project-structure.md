@@ -1,9 +1,9 @@
 ---
 title: Projectstructuur
-description: Deel Gonestly-apps in per feature, met afspraken over DTO's, enums, controllers, services, tests en migraties.
+description: Deel Gonestly-apps in per feature, met afspraken over DTO's, getypeerde constanten, controllers, services, tests en migraties.
 ---
 
-Deel je applicatie in per feature. Zet producten in `internal/products` en bestellingen in `internal/orders`. Elke feature heeft zijn eigen routes, bedrijfslogica en API-types. Maak dus geen centrale mappen zoals `controllers/`, `services/`, `dto/` en `enums/` voor de hele applicatie.
+Deel je applicatie in per feature. Zet producten in `internal/products` en bestellingen in `internal/orders`. Elke feature heeft zijn eigen routes, bedrijfslogica en API-types. Maak dus geen centrale mappen zoals `controllers/`, `services/` en `dto/` voor de hele applicatie.
 
 ## Aanbevolen mapindeling
 
@@ -28,14 +28,12 @@ shop/
       service.go
       service_test.go
       model.go
+      status.go
       columns_gen.go
       dto/
         create_product.go
         update_product.go
         product_response.go
-      enums/
-        status.go
-        status_test.go
   migrations/
     migrations.go
     20261126100000_create_products.up.sql
@@ -53,20 +51,19 @@ shop/
 | `service.go`                   | Plaats hier de bedrijfsregels en coördineer databasebewerkingen.                                                 |
 | `model.go` en `columns_gen.go` | Houd het databasemodel en de gegenereerde getypeerde kolommen bij elkaar. Pas de gegenereerde kolommen niet aan. |
 | `dto/`                         | Bewaar hier de types voor HTTP-verzoeken en -antwoorden, inclusief tags voor binding en validatie.               |
-| `enums/`                       | Bewaar hier types met een vaste reeks waarden, zoals `Status` en zijn getypeerde constanten.                     |
 | `*_test.go`                    | Zet tests naast de code die ze testen: routetests bij de controller en tests voor bedrijfsregels bij de service. |
 | `migrations/`                  | Bewaar genummerde SQL-migraties in de hoofdmap van het project, los van de featurecode.                          |
 
-## DTO's en enums
+## DTO's en getypeerde constanten
 
 Bekijk [request- en response-DTO's](dtos) voor een voorbeeld van hoe Gonestly invoer koppelt, valideert en als JSON antwoordt.
 
-Gebruik namen als `dto.CreateProductRequest`, `dto.UpdateProductRequest`, `dto.ProductResponse` en `enums.Status`. Met een response-DTO bepaal je welke velden je terugstuurt, zonder het databasemodel rechtstreeks te gebruiken. Een enum in Go is een benoemd type met constanten. Het type zelf houdt onbekende waarden niet tegen. Gebruik daarom [validatieregels](validation) voor waarden die via een HTTP-verzoek binnenkomen.
+Gebruik namen als `dto.CreateProductRequest`, `dto.UpdateProductRequest` en `dto.ProductResponse`. Met een response-DTO bepaal je welke velden je terugstuurt. Houd types met een vaste reeks waarden bij hun feature, zoals `Status` en de getypeerde constanten in `products/status.go`.
 
-Laat imports één kant op lopen: `products` mag `products/dto` en `products/enums` importeren, en `dto` mag `enums` importeren. Geen van beide subpackages importeert `products`. Zet het omzetten van DTO naar model en terug in het package van de feature. Gebruik kleine letters zonder scheidingstekens voor packagenamen, zoals `orderitems` voor bestelregels.
+Laat imports één kant op lopen: `products` mag `products/dto` importeren, maar `dto` importeert `products` niet. Gebruik een string in de DTO, controleer die met [validatieregels](validation) en zet hem in het feature-package om naar `Status`. Een typeconversie in Go controleert niet of de waarde overeenkomt met een constante. Gebruik kleine letters zonder scheidingstekens voor packagenamen, zoals `orderitems` voor bestelregels.
 
-```go title="internal/products/enums/status.go"
-package enums
+```go title="internal/products/status.go"
+package products
 
 type Status string
 
@@ -79,17 +76,15 @@ const (
 ```go title="internal/products/dto/create_product.go"
 package dto
 
-import "shop/internal/products/enums"
-
 type CreateProductRequest struct {
-	Name   string       `json:"name" validate:"required,max=200"`
-	Status enums.Status `json:"status" validate:"required,oneof=draft active"`
+	Name   string `json:"name" validate:"required,max=200"`
+	Status string `json:"status" validate:"required,oneof=draft active"`
 }
 ```
 
 ## Begin met de CLI
 
-De [resourcegenerator](generators) begint met een platte featuremap en zet requesttypes bij elkaar in `requests.go`. Als je de API-types opsplitst naar `dto/`, verplaats dan de definitie en pas de verwijzingen in de controller, service en tests aan. Voeg `enums/` alleen toe als de feature een vaste reeks waarden nodig heeft. Maak geen lege mappen aan.
+De [resourcegenerator](generators) begint met een platte featuremap en zet requesttypes bij elkaar in `requests.go`. Als je de API-types opsplitst naar `dto/`, verplaats dan de definitie en pas de verwijzingen in de controller, service en tests aan. Maak geen lege mappen aan.
 
 Houd databasetoegang bij de feature. De gegenereerde service gebruikt de generieke [repository](repositories) van Gonestly. Voeg pas een eigen `repository.go` toe als je maatwerk voor databasetoegang apart wilt houden. Wil je functionaliteit tussen features delen? Importeer de andere [module](modules) en gebruik een provider die die module expliciet exporteert.
 

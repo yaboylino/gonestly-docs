@@ -29,7 +29,7 @@ Kan je shell `gonestly` na de installatie niet vinden? Voeg dan de map met Go-pr
 
 Open http://localhost:3000/docs en de products-API staat klaar om uit te proberen. De rest van deze handleiding bouwt met de hand een kleine API, zodat je ziet wat elk onderdeel doet.
 
-Bekijk de [projectstructuur](project-structure) om te zien waar je DTO's, enums en andere bestanden zet als het project groeit.
+Bekijk de [projectstructuur](project-structure) om te zien waar je DTO's, getypeerde constanten en andere bestanden zet als het project groeit.
 
 ## Installatie
 

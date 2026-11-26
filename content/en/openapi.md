@@ -14,18 +14,18 @@ Start an application with a controller and open:
 
 ## What is derived
 
-| Source                               | In the document                                                           |
-| ------------------------------------ | ------------------------------------------------------------------------- |
-| The route                            | Path, method, success status (201 for POST, 204 for an `Empty` response). |
-| `path`, `query` and `header` tags    | Parameters with their types; path values are required.                    |
-| The other fields of the request      | The JSON request body.                                                    |
-| The response type                    | The JSON response, shared as a component per named type.                  |
-| `json` tags                          | Property names, and which properties are optional.                        |
-| `validate` tags                      | Required fields, lengths, ranges, enums and formats such as `email`.      |
-| `doc` and `example` tags             | Descriptions and examples.                                                |
-| Guards that implement `SecuredGuard` | Security schemes, the Authorize button and a 401 response.                |
-| The handler's name                   | The operation ID and the summary, so `FindOne` becomes "Find one".        |
-| The module                           | The tag that groups the route.                                            |
+| Source                               | In the document                                                                |
+| ------------------------------------ | ------------------------------------------------------------------------------ |
+| The route                            | Path, method, success status (201 for POST, 204 for an `Empty` response).      |
+| `path`, `query` and `header` tags    | Parameters with their types; path values are required.                         |
+| The other fields of the request      | The JSON request body.                                                         |
+| The response type                    | The JSON response, shared as a component per named type.                       |
+| `json` tags                          | Property names, and which properties are optional.                             |
+| `validate` tags                      | Required fields, lengths, ranges, allowed values, and formats such as `email`. |
+| `doc` and `example` tags             | Descriptions and examples.                                                     |
+| Guards that implement `SecuredGuard` | Security schemes, the Authorize button and a 401 response.                     |
+| The handler's name                   | The operation ID and the summary, so `FindOne` becomes "Find one".             |
+| The module                           | The tag that groups the route.                                                 |
 
 Every operation also documents its errors as [problem details](exception-handling): a 400 response when it has input, and a default error response.
 
@@ -41,7 +41,7 @@ type CreateUserRequest struct {
 }
 ```
 
-This produces a schema with a description, an example, a maximum length, the `email` format and an enum for `role`. A field is required unless it is a pointer, has `omitempty` or `omitzero`, or its `validate` tag starts with `omitempty`; `validate:"required"` always makes it required.
+This produces a schema with a description, an example, a maximum length, the `email` format and a list of allowed values for `role`. A field is required unless it is a pointer, has `omitempty` or `omitzero`, or its `validate` tag starts with `omitempty`; `validate:"required"` always makes it required.
 
 ## Describing routes
 

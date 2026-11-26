@@ -1,9 +1,9 @@
 ---
 title: Project structure
-description: Organize Gonestly apps by feature, with conventions for DTOs, enums, controllers, services, tests, and migrations.
+description: Organize Gonestly apps by feature, with conventions for DTOs, typed constants, controllers, services, tests, and migrations.
 ---
 
-Organize your application by feature. Put products in `internal/products` and orders in `internal/orders`. Each feature owns its routes, business logic, and API types. Avoid application-wide `controllers/`, `services/`, `dto/`, and `enums/` folders.
+Organize your application by feature. Put products in `internal/products` and orders in `internal/orders`. Each feature owns its routes, business logic, and API types. Avoid application-wide `controllers/`, `services/`, and `dto/` folders.
 
 ## Recommended layout
 
@@ -28,14 +28,12 @@ shop/
       service.go
       service_test.go
       model.go
+      status.go
       columns_gen.go
       dto/
         create_product.go
         update_product.go
         product_response.go
-      enums/
-        status.go
-        status_test.go
   migrations/
     migrations.go
     20261126100000_create_products.up.sql
@@ -53,20 +51,19 @@ shop/
 | `service.go`                    | Own business rules and coordinate database operations.                                             |
 | `model.go` and `columns_gen.go` | Keep the persistence model and generated typed columns together. Do not edit generated columns.    |
 | `dto/`                          | Keep HTTP request and response types here, including binding and validation tags.                  |
-| `enums/`                        | Keep named types with a fixed set of values here, such as `Status` and its typed constants.        |
 | `*_test.go`                     | Put tests next to what they cover: route tests by controllers and business-rule tests by services. |
 | `migrations/`                   | Keep numbered SQL migrations at the project root, separate from feature code.                      |
 
-## DTOs and enums
+## DTOs and typed constants
 
 See [request and response DTOs](dtos) for a complete example of how Gonestly binds input, validates it, and writes a JSON response.
 
-Use names such as `dto.CreateProductRequest`, `dto.UpdateProductRequest`, `dto.ProductResponse`, and `enums.Status`. A response DTO lets you decide which fields leave the application instead of returning the database model. A Go enum is a named type with constants; the type alone does not reject unknown values. Validate values coming from HTTP requests with [validation rules](validation).
+Use names such as `dto.CreateProductRequest`, `dto.UpdateProductRequest`, and `dto.ProductResponse`. A response DTO lets you choose which fields leave the application. Keep feature types with a fixed set of values in the feature package, such as `Status` and its typed constants in `products/status.go`.
 
-Keep imports flowing in one direction: `products` can import `products/dto` and `products/enums`, and `dto` can import `enums`. Neither child package should import `products`. Map between DTOs and models in the feature package. Use lowercase package names without separators, such as `orderitems` for order items.
+Keep imports flowing in one direction: `products` can import `products/dto`, but `dto` must not import `products`. Use a string in the DTO, check it with [validation rules](validation), and convert it to `Status` in the feature package. A Go type conversion does not check whether the value matches a constant. Use lowercase package names without separators, such as `orderitems` for order items.
 
-```go title="internal/products/enums/status.go"
-package enums
+```go title="internal/products/status.go"
+package products
 
 type Status string
 
@@ -79,17 +76,15 @@ const (
 ```go title="internal/products/dto/create_product.go"
 package dto
 
-import "shop/internal/products/enums"
-
 type CreateProductRequest struct {
-	Name   string       `json:"name" validate:"required,max=200"`
-	Status enums.Status `json:"status" validate:"required,oneof=draft active"`
+	Name   string `json:"name" validate:"required,max=200"`
+	Status string `json:"status" validate:"required,oneof=draft active"`
 }
 ```
 
 ## Start from the CLI
 
-The [resource generator](generators#a-resource) starts with a flat feature package and groups request types in `requests.go`. When you split a feature's API types into `dto/`, move those definitions and update the controller, service, and tests that reference them. Add `enums/` only when the feature has a fixed set of values to represent. Avoid creating empty folders.
+The [resource generator](generators#a-resource) starts with a flat feature package and groups request types in `requests.go`. When you split a feature's API types into `dto/`, move those definitions and update the controller, service, and tests that reference them. Avoid creating empty folders.
 
 Keep database access in the feature. The generated service uses Gonestly's generic [repository](repositories); add a feature-local `repository.go` only if you need custom data access worth separating. To share functionality between features, import the other [module](modules) and use a provider it explicitly exports.
 

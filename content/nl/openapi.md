@@ -14,18 +14,18 @@ Start een applicatie met een controller en open:
 
 ## Wat er wordt afgeleid
 
-| Bron                                    | In het document                                                              |
-| --------------------------------------- | ---------------------------------------------------------------------------- |
-| De route                                | Pad, methode en successtatus (201 voor POST, 204 voor een `Empty`-response). |
-| `path`-, `query`- en `header`-tags      | Parameters met hun types; padwaarden zijn verplicht.                         |
-| De andere velden van het request        | De JSON-requestbody.                                                         |
-| Het responsetype                        | Het JSON-response, gedeeld als component per type met een naam.              |
-| `json`-tags                             | Namen van properties, en welke properties optioneel zijn.                    |
-| `validate`-tags                         | Verplichte velden, lengtes, bereiken, enums en formaten zoals `email`.       |
-| `doc`- en `example`-tags                | Beschrijvingen en voorbeelden.                                               |
-| Guards die `SecuredGuard` implementeren | Security schemes, de Authorize-knop en een 401-response.                     |
-| De naam van de handler                  | De operation-ID en de samenvatting, dus `FindOne` wordt "Find one".          |
-| De module                               | De tag die de route groepeert.                                               |
+| Bron                                    | In het document                                                                     |
+| --------------------------------------- | ----------------------------------------------------------------------------------- |
+| De route                                | Pad, methode en successtatus (201 voor POST, 204 voor een `Empty`-response).        |
+| `path`-, `query`- en `header`-tags      | Parameters met hun types; padwaarden zijn verplicht.                                |
+| De andere velden van het request        | De JSON-requestbody.                                                                |
+| Het responsetype                        | Het JSON-response, gedeeld als component per type met een naam.                     |
+| `json`-tags                             | Namen van properties, en welke properties optioneel zijn.                           |
+| `validate`-tags                         | Verplichte velden, lengtes, bereiken, toegestane waarden en formaten zoals `email`. |
+| `doc`- en `example`-tags                | Beschrijvingen en voorbeelden.                                                      |
+| Guards die `SecuredGuard` implementeren | Security schemes, de Authorize-knop en een 401-response.                            |
+| De naam van de handler                  | De operation-ID en de samenvatting, dus `FindOne` wordt "Find one".                 |
+| De module                               | De tag die de route groepeert.                                                      |
 
 Elke operatie documenteert ook zijn fouten als [problem details](exception-handling): een 400-response als hij invoer heeft, en een standaard foutresponse.
 
@@ -41,7 +41,7 @@ type CreateUserRequest struct {
 }
 ```
 
-Dit levert een schema op met een beschrijving, een voorbeeld, een maximale lengte, het formaat `email` en een enum voor `role`. Een veld is verplicht, tenzij het een pointer is, `omitempty` of `omitzero` heeft, of zijn `validate`-tag met `omitempty` begint; `validate:"required"` maakt het altijd verplicht.
+Dit levert een schema op met een beschrijving, een voorbeeld, een maximale lengte, het formaat `email` en een lijst met toegestane waarden voor `role`. Een veld is verplicht, tenzij het een pointer is, `omitempty` of `omitzero` heeft, of zijn `validate`-tag met `omitempty` begint; `validate:"required"` maakt het altijd verplicht.
 
 ## Routes beschrijven
 

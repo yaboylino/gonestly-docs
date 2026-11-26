@@ -12,32 +12,28 @@ Put API types in `dto/` inside the feature. This example uses `shop` as the modu
 ```go title="internal/users/dto/create_user.go"
 package dto
 
-import "shop/internal/users/enums"
-
 type CreateUserRequest struct {
-	Name   string       `json:"name" validate:"required,max=100"`
-	Locale enums.Locale `json:"locale" validate:"required,oneof=en nl"`
+	Name   string `json:"name" validate:"required,max=100"`
+	Locale string `json:"locale" validate:"required,oneof=en nl"`
 }
 ```
 
 ```go title="internal/users/dto/user_response.go"
 package dto
 
-import "shop/internal/users/enums"
-
 type UserResponse struct {
-	ID     int64        `json:"id"`
-	Name   string       `json:"name"`
-	Locale enums.Locale `json:"locale"`
+	ID     int64  `json:"id"`
+	Name   string `json:"name"`
+	Locale string `json:"locale"`
 }
 ```
 
-## Use an enum for a fixed set
+## Use typed constants for a fixed set
 
-The application in this example supports only English and Dutch. In Go, represent that set with a named type and constants. The constants give your code consistent names; the `oneof` rule on the request DTO rejects other values.
+The application in this example supports only English and Dutch. Define a `Locale` type with typed constants in the `users` package. The DTO keeps its locale as a string so it does not need to import `users`. The `oneof` rule rejects unsupported values before the handler converts the string to `Locale`.
 
-```go title="internal/users/enums/locale.go"
-package enums
+```go title="internal/users/locale.go"
+package users
 
 type Locale string
 
@@ -56,9 +52,10 @@ package users
 
 import (
 	"context"
-	"shop/internal/users/dto"
 
 	"github.com/yaboylino/gonestly"
+
+	"shop/internal/users/dto"
 )
 
 func (c *Controller) Routes(r *gonestly.Router) {
@@ -67,11 +64,11 @@ func (c *Controller) Routes(r *gonestly.Router) {
 }
 
 func (c *Controller) Create(ctx context.Context, req dto.CreateUserRequest) (dto.UserResponse, error) {
-	user, err := c.users.Create(ctx, req.Name, req.Locale)
+	user, err := c.users.Create(ctx, req.Name, Locale(req.Locale))
 	if err != nil {
 		return dto.UserResponse{}, err
 	}
-	return dto.UserResponse{ID: user.ID, Name: user.Name, Locale: user.Locale}, nil
+	return dto.UserResponse{ID: user.ID, Name: user.Name, Locale: string(user.Locale)}, nil
 }
 ```
 
